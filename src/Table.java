@@ -4,6 +4,9 @@ import java.awt.*;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Scanner;
 
 // my packages
@@ -12,12 +15,11 @@ import tiles_classes.*;
 
 
 public class Table extends JFrame {
-    Icon pacman, redghost, pinkghost, blueghost, orangeghost;
 
     // 0 - pacman, 1 - red ghost, 2 - pink ghost, 3 - blue ghost, 4 - orange ghost
-    int[][] charactersPosition = new int[5][10];   // così accediamo alle loro posizioni subito
-
-    Tile[][] tiles = new Tile[36][28];
+    //int[][] charactersPosition = new int[5][10];   // così accediamo alle loro posizioni subito
+    //My2DSyncArray charactersPosition;
+    Tile[][] tiles;
 
     private void arrageWalls() {
         InputStream f;
@@ -62,7 +64,7 @@ public class Table extends JFrame {
                 String[] coordinates = s.nextLine().split(";");
                 int i = Integer.parseInt(coordinates[0]);
                 int j = Integer.parseInt(coordinates[1]);
-                if (i==6 && j==1 || i==6 && j==26 || i==29 && j==1 || i==29 && j==26) {
+                if (i==6 && j==1 || i==6 && j==26 || i==26 && j==1 || i==26 && j==26) {
                     tiles[i][j] = new CrossableTile(i, j);
                     ((CrossableTile) tiles[i][j]).setSuperFood(true);
                 } else ((CrossableTile) tiles[i][j]).setDot(true);
@@ -93,7 +95,9 @@ public class Table extends JFrame {
     }
 
 
-    public Table() {
+
+    public Table(Tile[][] tiles) {
+        this.tiles = tiles;
         setTitle("Table");
         setLayout(new GridLayout(36, 28));
         arrangeTable();
@@ -103,9 +107,6 @@ public class Table extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
 
-    }
-
-    public static void main(String[] args) {
-        new Table();
+        // aggiungere punteggio, vite e frutti
     }
 }
