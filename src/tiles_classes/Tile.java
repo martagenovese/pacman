@@ -12,4 +12,5 @@ public abstract class Tile extends JLabel {
     public abstract boolean isGhost();
     public abstract boolean isDot();
     public abstract boolean isSuperFood();
+
 }

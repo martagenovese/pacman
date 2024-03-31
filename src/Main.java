@@ -1,3 +1,4 @@
+import characters_classes.Pacman;
 import tiles_classes.Tile;
 
 public class Main {

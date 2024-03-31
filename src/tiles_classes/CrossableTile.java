@@ -1,5 +1,7 @@
 package tiles_classes;
 
+import characters_classes.Pacman;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -43,6 +45,23 @@ public class CrossableTile extends Tile {
         this.isSuperFood = isSuperFood;
         if (isSuperFood) this.setIcon(superFoodIcon);
         else this.setIcon(null);
+        this.repaint();
+        this.revalidate();
+    }
+    public void setPacman(Pacman pacman) {
+        if (pacman == null) {
+            this.isPacman = false;
+            this.setIcon(null);
+            this.repaint();
+            this.revalidate();
+            return;
+        }
+        this.isPacman = true;
+        String direction = pacman.getDirection();
+        ImageIcon originalIcon = new ImageIcon("src/images/pacman/" + direction + ".png");
+        Image originalImage = originalIcon.getImage();
+        Image scaledImageDot = originalImage.getScaledInstance(25, 25, Image.SCALE_SMOOTH);
+        this.setIcon(new ImageIcon(scaledImageDot));
         this.repaint();
         this.revalidate();
     }

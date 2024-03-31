@@ -1,3 +1,4 @@
+import characters_classes.Pacman;
 import tiles_classes.CrossableTile;
 import tiles_classes.Tile;
 import tiles_classes.WallTile;
@@ -11,10 +12,11 @@ public class EventManager implements KeyListener {
     Pacman character;
     My2DSyncArray charactersPosition;
     Tile[][] tiles;
+    Tile leftTile, rightTile, upTile, downTile, myTile;
     Table table;
-    private Timer timer = new Timer();
+    private Timer timer;
     private TimerTask moveTask;
-    private String lastDirection;
+    private String lastDirection, nextDirection;
     public EventManager() {
         timer = new Timer();
     }
@@ -39,15 +41,20 @@ public class EventManager implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
+
         int key = e.getKeyCode();
         if (key == KeyEvent.VK_LEFT) {
-            lastDirection = "left";
+            if (leftTile instanceof WallTile) nextDirection = "left";
+            else lastDirection = "left";
         } else if (key == KeyEvent.VK_RIGHT) {
-            lastDirection = "right";
+            if (rightTile instanceof WallTile) nextDirection = "right";
+            else lastDirection = "right";
         } else if (key == KeyEvent.VK_UP) {
-            lastDirection = "up";
+            if (upTile instanceof WallTile) nextDirection = "up";
+            else lastDirection = "up";
         } else if (key == KeyEvent.VK_DOWN) {
-            lastDirection = "down";
+            if (downTile instanceof WallTile) nextDirection = "down";
+            else lastDirection = "down";
         }
 
         if (moveTask != null) {
@@ -55,24 +62,72 @@ public class EventManager implements KeyListener {
         }
 
         moveTask = new TimerTask() {
+            boolean flag;
             @Override
             public void run() {
-                if (lastDirection.equals("left") && !(tiles[character.x][character.y - 1] instanceof WallTile)) {
-                    tiles[character.x][character.y].setIcon(null);
+                flag = false;
+                try {
+                    leftTile = tiles[character.x][character.y - 1];
+                } catch (ArrayIndexOutOfBoundsException e) {
+                    leftTile = tiles[character.x][27];
+                }
+                try {
+                    rightTile = tiles[character.x][character.y + 1];
+                } catch (ArrayIndexOutOfBoundsException e) {
+                    rightTile = tiles[character.x][0];
+                }
+                upTile = tiles[character.x - 1][character.y];
+                downTile = tiles[character.x + 1][character.y];
+                myTile = tiles[character.x][character.y];
+                //System.out.println("left: " + leftTile);
+
+                /*
+                // aspetta che la direzione sia valida
+                if (nextDirection != null) {
+                    if (nextDirection.equals("left") && !(leftTile instanceof WallTile)) {
+                        flag = true;
+                    } else if (nextDirection.equals("right") && !(rightTile instanceof WallTile)) {
+                        flag = true;
+                    } else if (nextDirection.equals("up") && !(upTile instanceof WallTile)) {
+                        flag = true;
+                    } else if (nextDirection.equals("down") && !(downTile instanceof WallTile)) {
+                        flag = true;
+                    } else flag = false;
+
+                    if (flag) lastDirection = nextDirection;
+                }
+                 */
+
+                // continua ad andare nella stessa direzione dell'ultimo tasto premuto
+                if (lastDirection.equals("left") && !(leftTile instanceof WallTile)) {
+                    if (leftTile.isSuperFood()) {
+                        ((CrossableTile) leftTile).setSuperFood(false);
+                    } else ((CrossableTile) myTile).setDot(false);
+                    myTile.setIcon(null);
                     character.move("left");
-                } else if (lastDirection.equals("right") && !(tiles[character.x][character.y + 1] instanceof WallTile)) {
-                    tiles[character.x][character.y].setIcon(null);
+                } else if (lastDirection.equals("right") && !(rightTile instanceof WallTile)) {
+                    if (rightTile.isSuperFood()) {
+                        ((CrossableTile) rightTile).setSuperFood(false);
+                    } else ((CrossableTile) myTile).setDot(false);
+                    myTile.setIcon(null);
                     character.move("right");
-                } else if (lastDirection.equals("up") && !(tiles[character.x - 1][character.y] instanceof WallTile)) {
-                    tiles[character.x][character.y].setIcon(null);
+                } else if (lastDirection.equals("up") && !(upTile instanceof WallTile)) {
+                    if (upTile.isSuperFood()) {
+                        ((CrossableTile) upTile).setSuperFood(false);
+                    } else ((CrossableTile) myTile).setDot(false);
+                    myTile.setIcon(null);
                     character.move("up");
-                } else if (lastDirection.equals("down") && !(tiles[character.x + 1][character.y] instanceof WallTile)) {
-                    tiles[character.x][character.y].setIcon(null);
+                } else if (lastDirection.equals("down") && !(downTile instanceof WallTile)) {
+                    if (downTile.isSuperFood()) {
+                        ((CrossableTile) downTile).setSuperFood(false);
+                    } else ((CrossableTile) myTile).setDot(false);
+                    myTile.setIcon(null);
                     character.move("down");
                 }
                 updatePosition();
                 table.repaint();
             }
+
         };
 
         timer.scheduleAtFixedRate(moveTask, 0, 200);

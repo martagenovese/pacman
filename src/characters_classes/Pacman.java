@@ -1,14 +1,15 @@
+package characters_classes;
+
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-
-import static com.sun.java.accessibility.util.AWTEventMonitor.addKeyListener;
 
 public class Pacman extends ImageIcon {
-    int x, y;
+    public int x, y;
+    private String imagePath; // Add this line
+
     public Pacman() {
-        ImageIcon originalIcon = new ImageIcon("src/images/pacman/right.png");
+        imagePath = "src/images/pacman/right.png"; // Modify this line
+        ImageIcon originalIcon = new ImageIcon(imagePath);
         Image originalImage = originalIcon.getImage();
         Image scaledImageDot = originalImage.getScaledInstance(25, 25, Image.SCALE_SMOOTH);
         setImage(new ImageIcon(scaledImageDot).getImage());
@@ -17,7 +18,8 @@ public class Pacman extends ImageIcon {
         y=13;
     }
     private void setDirection(String direction) {
-        ImageIcon originalIcon = new ImageIcon("src/images/pacman/" + direction + ".png");
+        imagePath = "src/images/pacman/" + direction + ".png"; // Modify this line
+        ImageIcon originalIcon = new ImageIcon(imagePath);
         Image originalImage = originalIcon.getImage();
         Image scaledImageDot = originalImage.getScaledInstance(25, 25, Image.SCALE_SMOOTH);
         setImage(new ImageIcon(scaledImageDot).getImage());
@@ -25,20 +27,19 @@ public class Pacman extends ImageIcon {
     public void move(String direction) {
         setDirection(direction);
         if (direction.equals("left")) {
-            y--;
+            if (y == 0) y = 27;
+            else y--;
         } else if (direction.equals("right")) {
-            y++;
+            if (y == 27) y = 0;
+            else y++;
         } else if (direction.equals("up")) {
             x--;
         } else if (direction.equals("down")) {
             x++;
         }
-        //System.out.println(x + " " + y);
     }
 
     public String getDirection() {
-        String path = getDescription();
-        return path.substring(path.length() - 9, path.length() - 4);
+        return imagePath.substring(imagePath.length() - 9, imagePath.length() - 4);
     }
-
 }
