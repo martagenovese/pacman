@@ -17,9 +17,8 @@ import tiles_classes.*;
 public class Table extends JFrame {
 
     // 0 - pacman, 1 - red ghost, 2 - pink ghost, 3 - blue ghost, 4 - orange ghost
-    //int[][] charactersPosition = new int[5][10];   // così accediamo alle loro posizioni subito
-    //My2DSyncArray charactersPosition;
-    Tile[][] tiles;
+    protected Tile[][] tiles;
+    protected EventManager eventManager;
 
     private void arrageWalls() {
         InputStream f;
@@ -37,6 +36,7 @@ public class Table extends JFrame {
             throw new RuntimeException(e);
         }
     }
+
     private void arrangeIntersections() {
         InputStream f;
         Scanner s;
@@ -54,6 +54,7 @@ public class Table extends JFrame {
             throw new RuntimeException(e);
         }
     }
+
     private void arrangeDots() {
         InputStream f;
         Scanner s;
@@ -64,7 +65,7 @@ public class Table extends JFrame {
                 String[] coordinates = s.nextLine().split(";");
                 int i = Integer.parseInt(coordinates[0]);
                 int j = Integer.parseInt(coordinates[1]);
-                if (i==6 && j==1 || i==6 && j==26 || i==26 && j==1 || i==26 && j==26) {
+                if (i == 6 && j == 1 || i == 6 && j == 26 || i == 26 && j == 1 || i == 26 && j == 26) {
                     tiles[i][j] = new CrossableTile(i, j);
                     ((CrossableTile) tiles[i][j]).setSuperFood(true);
                 } else ((CrossableTile) tiles[i][j]).setDot(true);
@@ -86,6 +87,8 @@ public class Table extends JFrame {
         arrangeIntersections();
         arrangeDots();
 
+        eventManager.getCharacter();
+
         // aggiungiamo tutti i tiles al frame
         for (int i = 0; i < 36; i++) {
             for (int j = 0; j < 28; j++) {
@@ -95,14 +98,13 @@ public class Table extends JFrame {
     }
 
 
-
     public Table() {
-        this.tiles = tiles;
         setTitle("pacman");
+        tiles = new Tile[36][28];
         setLayout(new GridLayout(36, 28));
         arrangeTable();
 
-        setSize(224*3, 288*3);
+        setSize(224 * 3, 288 * 3);
         setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
@@ -111,5 +113,11 @@ public class Table extends JFrame {
     }
 
     public void setEventManager(EventManager eventManager) {
+        this.eventManager = eventManager;
+        addKeyListener(eventManager);
+    }
+
+    public Tile[][] getTiles() {
+        return tiles;
     }
 }

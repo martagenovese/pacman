@@ -4,8 +4,8 @@ import javax.swing.*;
 import java.awt.*;
 
 public class Pacman extends ImageIcon {
-    public int x, y;
-    private String imagePath; // Add this line
+    protected int x, y;
+    private String imagePath;
 
     public Pacman() {
         imagePath = "src/images/pacman/right.png"; // Modify this line
@@ -18,7 +18,7 @@ public class Pacman extends ImageIcon {
         y=13;
     }
     private void setDirection(String direction) {
-        imagePath = "src/images/pacman/" + direction + ".png"; // Modify this line
+        imagePath = "src/images/pacman/" + direction + ".png";
         ImageIcon originalIcon = new ImageIcon(imagePath);
         Image originalImage = originalIcon.getImage();
         Image scaledImageDot = originalImage.getScaledInstance(25, 25, Image.SCALE_SMOOTH);
@@ -41,5 +41,11 @@ public class Pacman extends ImageIcon {
 
     public String getDirection() {
         return imagePath.substring(imagePath.length() - 9, imagePath.length() - 4);
+    }
+    public int getX() {
+        return x;
+    }
+    public int getY() {
+        return y;
     }
 }
