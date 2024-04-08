@@ -96,9 +96,9 @@ public class Table extends JFrame {
 
 
 
-    public Table(Tile[][] tiles) {
+    public Table() {
         this.tiles = tiles;
-        setTitle("Table");
+        setTitle("pacman");
         setLayout(new GridLayout(36, 28));
         arrangeTable();
 
@@ -108,5 +108,8 @@ public class Table extends JFrame {
         setVisible(true);
 
         // aggiungere punteggio, vite e frutti
+    }
+
+    public void setEventManager(EventManager eventManager) {
     }
 }
