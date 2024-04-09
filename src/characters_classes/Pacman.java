@@ -8,7 +8,7 @@ public class Pacman extends ImageIcon {
     private String imagePath;
 
     public Pacman() {
-        imagePath = "src/images/pacman/right.png"; // Modify this line
+        imagePath = "src/images/pacman/right.png";
         ImageIcon originalIcon = new ImageIcon(imagePath);
         Image originalImage = originalIcon.getImage();
         Image scaledImageDot = originalImage.getScaledInstance(25, 25, Image.SCALE_SMOOTH);
