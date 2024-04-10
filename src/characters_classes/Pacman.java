@@ -1,11 +1,17 @@
 package characters_classes;
 
+import game.EventManager;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+
+import static java.lang.Thread.sleep;
 
 public class Pacman extends ImageIcon {
     protected int x, y;
     private String imagePath;
+    protected int att;
 
     public Pacman() {
         imagePath = "src/images/pacman/right.png";
@@ -26,16 +32,17 @@ public class Pacman extends ImageIcon {
     }
     public void move(String direction) {
         setDirection(direction);
-        if (direction.equals("left")) {
-            if (y == 0) y = 27;
-            else y--;
-        } else if (direction.equals("right")) {
-            if (y == 27) y = 0;
-            else y++;
-        } else if (direction.equals("up")) {
-            x--;
-        } else if (direction.equals("down")) {
-            x++;
+        switch (direction) {
+            case "left" -> {
+                if (y == 0) y = 27;
+                else y--;
+            }
+            case "right" -> {
+                if (y == 27) y = 0;
+                else y++;
+            }
+            case "up" -> x--;
+            case "down" -> x++;
         }
     }
 

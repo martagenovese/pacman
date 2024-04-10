@@ -1,24 +1,23 @@
-// java packages
+package game;// java packages
 import javax.swing.*;
 import java.awt.*;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.Scanner;
 
 // my packages
+import characters_classes.Pacman;
+import game.EventManager;
 import tiles_classes.*;
 
 
 
 public class Table extends JFrame {
 
-    // 0 - pacman, 1 - red ghost, 2 - pink ghost, 3 - blue ghost, 4 - orange ghost
     protected Tile[][] tiles;
     protected EventManager eventManager;
+    protected Pacman character;
 
     private void arrageWalls() {
         InputStream f;
@@ -36,7 +35,6 @@ public class Table extends JFrame {
             throw new RuntimeException(e);
         }
     }
-
     private void arrangeIntersections() {
         InputStream f;
         Scanner s;
@@ -54,7 +52,6 @@ public class Table extends JFrame {
             throw new RuntimeException(e);
         }
     }
-
     private void arrangeDots() {
         InputStream f;
         Scanner s;
@@ -75,7 +72,6 @@ public class Table extends JFrame {
             throw new RuntimeException(e);
         }
     }
-
     private void arrangeTable() {
         // creiamo inizialmente tutte come crossable
         for (int i = 0; i < 36; i++) {
@@ -86,8 +82,6 @@ public class Table extends JFrame {
         arrageWalls();
         arrangeIntersections();
         arrangeDots();
-
-        eventManager.getCharacter();
 
         // aggiungiamo tutti i tiles al frame
         for (int i = 0; i < 36; i++) {
@@ -119,5 +113,13 @@ public class Table extends JFrame {
 
     public Tile[][] getTiles() {
         return tiles;
+    }
+    public void setCharacter(Pacman character) {
+        this.character = character;
+        tiles[26][13].setIcon(character);
+    }
+
+    public void updatePosition() {
+        tiles[character.getX()][character.getY()].setIcon(character);
     }
 }
