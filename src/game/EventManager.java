@@ -52,29 +52,37 @@ public class EventManager implements KeyListener {
             System.out.println("key pressed maybe");
 
             int key = e.getKeyCode();
+            String s;
 
             if (key == KeyEvent.VK_LEFT) {
-                nextDirection = model.movePacman("left", model.getLeftTile(), model.getMyTile());
-                if (lastDirection==null) return;
-                try {
-                    Method m = this.getClass().getDeclaredMethod("movePacman", String.class, Tile.class, Tile.class);
-                    m.invoke(this, nextDirection, model.getMyTile(), model.getMyTile());
-                } catch (NoSuchMethodException ex) {
-                    throw new RuntimeException(ex);
-                } catch (InvocationTargetException ex) {
-                    throw new RuntimeException(ex);
-                } catch (IllegalAccessException ex) {
-                    throw new RuntimeException(ex);
-                }
+                s = "Left";
             } else if (key == KeyEvent.VK_RIGHT) {
+                s = "Right";
                 model.movePacman("right", model.getRightTile(), model.getMyTile());
             } else if (key == KeyEvent.VK_UP) {
+                s = "Up";
                 model.movePacman("up", model.getUpTile(), model.getMyTile());
             } else if (key == KeyEvent.VK_DOWN) {
+                s = "Down";
                 model.movePacman("down", model.getDownTile(), model.getMyTile());
             } else {
                 return;
             }
+
+            Method method;
+            try {
+                method = model.getClass().getMethod("get"+s+"Tile");
+            } catch (NoSuchMethodException ex) {
+                throw new RuntimeException(ex);
+            }
+            try {
+                String s2 = s.charAt(0)+"";
+                s2 = s2.toLowerCase();
+                model.movePacman(s2, (Tile) method.invoke(model), model.getMyTile());
+            } catch (IllegalAccessException | InvocationTargetException ex) {
+                throw new RuntimeException(ex);
+            }
+
 
             model.updatePosition();
             table.updatePosition();
