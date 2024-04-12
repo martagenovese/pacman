@@ -8,7 +8,7 @@ public class Main {
         System.out.println("game.EventManager created");
         Table grafica = new Table();
         System.out.println("game.Table created");
-
+        //tuu tuu
 
         grafica.setEventManager(eventManager);
         System.out.println("game.EventManager set to game.Table");
