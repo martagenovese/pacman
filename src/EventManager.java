@@ -48,6 +48,7 @@ public class EventManager implements KeyListener {
             }
         }
 
+        table.tiles[17][12].setBackground(Color.RED);
         table.setCharacter(model.getPacman());
     }
 
@@ -84,6 +85,7 @@ public class EventManager implements KeyListener {
             } else {
                 return;
             }
+            if (lastDirection == null) lastDirection = s.toLowerCase();
 
             Method method;
             try {
@@ -91,13 +93,24 @@ public class EventManager implements KeyListener {
             } catch (NoSuchMethodException ex) {
                 throw new RuntimeException(ex);
             }
+
             try {
-                String s2 = s.toLowerCase();
-                table.clearPacman(model.getPacman().getX(), model.getPacman().getY());
-                model.movePacman(s2, (Tile) method.invoke(model), model.getMyTile());
+                Tile nextTile = (Tile) method.invoke(model);
+                if (!(model.checkSameDirection(s.toLowerCase(), nextTile))) {
+                    lastDirection = nextDirection;
+                }
+                nextDirection = s.toLowerCase();
             } catch (IllegalAccessException | InvocationTargetException ex) {
                 throw new RuntimeException(ex);
             }
+
+            try {
+                table.clearPacman(model.getPacman().getX(), model.getPacman().getY());
+                model.movePacman(lastDirection, (Tile) method.invoke(model), model.getMyTile());
+            } catch (IllegalAccessException | InvocationTargetException ex) {
+                throw new RuntimeException(ex);
+            }
+
 
             model.updatePosition();
             table.updatePosition();

@@ -129,8 +129,8 @@ public class Model {
         return myTile;
     }
 
-    protected void movePacman(String direction, Tile tile, Tile myTile) {
-        if (tile==null) return;
+    public void movePacman(String direction, Tile tile, Tile myTile) {
+        if (tile==null) { return; }
         if (!(tile instanceof WallTile)) {
             if (tile.isSuperFood()) {
                 ((CrossableTile) tile).setSuperFood(false);
@@ -138,7 +138,13 @@ public class Model {
             myTile.setPacman(false);
             pacman.move(direction);
             tile.setPacman(false);
-        } else nextDirection = direction;
+        }
+    }
+
+    public boolean checkSameDirection(String direction, Tile tile) {
+        if (tile==null || lastDirection==null) return false;
+        if (lastDirection.equals(direction)) return true;
+        return !(tile instanceof WallTile);
     }
 
 }

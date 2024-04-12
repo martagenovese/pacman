@@ -5,7 +5,6 @@ import java.awt.*;
 
 public class RedGhost extends Ghost {
 
-    protected int x, y;
     private String imagePath;
 
     public RedGhost(){
@@ -15,5 +14,8 @@ public class RedGhost extends Ghost {
             Image originalImage = originalIcon.getImage();
             Image scaledImageDot = originalImage.getScaledInstance(25, 25, Image.SCALE_SMOOTH);
             setImage(new ImageIcon(scaledImageDot).getImage());
+
+            x=17;
+            y=12;
     }
 }

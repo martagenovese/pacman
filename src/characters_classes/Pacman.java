@@ -6,7 +6,7 @@ import java.awt.*;
 import static java.lang.Thread.sleep;
 
 public class Pacman extends ImageIcon {
-    protected int x, y;
+    int x, y;
     private String imagePath;
     protected int att;
 
