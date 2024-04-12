@@ -1,7 +1,9 @@
 package game;
 
 import characters_classes.Pacman;
+import tiles_classes.CrossableTile;
 import tiles_classes.Tile;
+import tiles_classes.WallTile;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -27,7 +29,28 @@ public class EventManager implements KeyListener {
         this.model = model;
         this.table = table;
         table.setCharacter(model.getPacman());
-        model.setTiles(table.getTiles());
+    }
+    public void setModel(Model model) {
+        this.model = model;
+    }
+    public void setTable(Table table) {
+        this.table = table;
+
+        for (int i = 0; i < 36; i++) {
+            for (int j = 0; j < 28; j++) {
+                if (model.tiles[i][j] instanceof WallTile) {
+                    table.tiles[i][j].setBackground(Color.BLUE);
+                } else if (model.tiles[i][j] instanceof CrossableTile tile) {
+                    if (tile.isDot()) {
+                        table.setDot(i, j);
+                    } else if (tile.isSuperFood()) {
+                        table.setSuperFood(i, j);
+                    }
+                    table.tiles[i][j].setBackground(Color.BLACK);
+                }
+            }
+        }
+
         table.setCharacter(model.getPacman());
     }
 
@@ -49,7 +72,6 @@ public class EventManager implements KeyListener {
     public void keyPressed(KeyEvent e) {
         if (isListenerActive) {
             disableListenerFor(200);
-            System.out.println("key pressed maybe");
 
             int key = e.getKeyCode();
             String s;
@@ -58,13 +80,10 @@ public class EventManager implements KeyListener {
                 s = "Left";
             } else if (key == KeyEvent.VK_RIGHT) {
                 s = "Right";
-                model.movePacman("right", model.getRightTile(), model.getMyTile());
             } else if (key == KeyEvent.VK_UP) {
                 s = "Up";
-                model.movePacman("up", model.getUpTile(), model.getMyTile());
             } else if (key == KeyEvent.VK_DOWN) {
                 s = "Down";
-                model.movePacman("down", model.getDownTile(), model.getMyTile());
             } else {
                 return;
             }
@@ -76,17 +95,16 @@ public class EventManager implements KeyListener {
                 throw new RuntimeException(ex);
             }
             try {
-                String s2 = s.charAt(0)+"";
-                s2 = s2.toLowerCase();
+                String s2 = s.toLowerCase();
+                table.clearPacman(model.getPacman().getX(), model.getPacman().getY());
                 model.movePacman(s2, (Tile) method.invoke(model), model.getMyTile());
             } catch (IllegalAccessException | InvocationTargetException ex) {
                 throw new RuntimeException(ex);
             }
 
-
             model.updatePosition();
             table.updatePosition();
-            table.repaint();
+            //table.repaint();
         }
     }
     @Override

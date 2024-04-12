@@ -3,9 +3,7 @@ package tiles_classes;
 import java.awt.*;
 
 public class WallTile extends Tile {
-    public WallTile() {
-        this.setBackground(Color.BLUE);
-    }
+    public WallTile() {}
 
     @Override
     public boolean isWall() {

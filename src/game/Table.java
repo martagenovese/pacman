@@ -15,95 +15,29 @@ import tiles_classes.*;
 
 public class Table extends JFrame {
 
-    protected Tile[][] tiles;
+    protected JLabel[][] tiles;
     protected EventManager eventManager;
     protected Pacman character;
-
-    private void arrageWalls() {
-        InputStream f;
-        Scanner s;
-        try {
-            f = new FileInputStream("src/construction/walls.csv");
-            s = new Scanner(f);
-            while (s.hasNextLine()) {
-                String[] coordinates = s.nextLine().split(";");
-                int i = Integer.parseInt(coordinates[0]);
-                int j = Integer.parseInt(coordinates[1]);
-                tiles[i][j] = new WallTile();
-            }
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-    }
-    private void arrangeIntersections() {
-        InputStream f;
-        Scanner s;
-        try {
-            f = new FileInputStream("src/construction/intersections.csv");
-            s = new Scanner(f);
-            while (s.hasNextLine()) {
-                String[] coordinates = s.nextLine().split(";");
-                int i = Integer.parseInt(coordinates[0]);
-                int j = Integer.parseInt(coordinates[1]);
-                tiles[i][j] = new Intersection(i, j);
-                //tiles[i][j].setBackground(Color.PINK);
-            }
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-    }
-    private void arrangeDots() {
-        InputStream f;
-        Scanner s;
-        try {
-            f = new FileInputStream("src/construction/dots.csv");
-            s = new Scanner(f);
-            while (s.hasNextLine()) {
-                String[] coordinates = s.nextLine().split(";");
-                int i = Integer.parseInt(coordinates[0]);
-                int j = Integer.parseInt(coordinates[1]);
-                if (i == 6 && j == 1 || i == 6 && j == 26 || i == 26 && j == 1 || i == 26 && j == 26) {
-                    tiles[i][j] = new CrossableTile(i, j);
-                    ((CrossableTile) tiles[i][j]).setSuperFood(true);
-                } else ((CrossableTile) tiles[i][j]).setDot(true);
-                //tiles[i][j].setBackground(Color.PINK);
-            }
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-    }
-    private void arrangeTable() {
-        // creiamo inizialmente tutte come crossable
-        for (int i = 0; i < 36; i++) {
-            for (int j = 0; j < 28; j++) {
-                tiles[i][j] = new CrossableTile(i, j);
-            }
-        }
-        arrageWalls();
-        arrangeIntersections();
-        arrangeDots();
-
-        // aggiungiamo tutti i tiles al frame
-        for (int i = 0; i < 36; i++) {
-            for (int j = 0; j < 28; j++) {
-                add(tiles[i][j]);
-            }
-        }
-    }
 
 
     public Table() {
         setTitle("pacman");
-        tiles = new Tile[36][28];
+        tiles = new JLabel[36][28];
         setLayout(new GridLayout(36, 28));
-        arrangeTable();
+        for (int i = 0; i < 36; i++) {
+            for (int j = 0; j < 28; j++) {
+                tiles[i][j] = new JLabel();
+                tiles[i][j].setHorizontalAlignment(SwingConstants.CENTER);
+                tiles[i][j].setVerticalAlignment(SwingConstants.CENTER);
+                tiles[i][j].setOpaque(true);
+                add(tiles[i][j]);
+            }
+        }
 
         setSize(224 * 3, 288 * 3);
         setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
-
-        // aggiungere punteggio, vite e frutti
     }
 
     public void setEventManager(EventManager eventManager) {
@@ -111,9 +45,23 @@ public class Table extends JFrame {
         addKeyListener(eventManager);
     }
 
-    public Tile[][] getTiles() {
-        return tiles;
+
+    public void setDot(int i, int j) {
+        ImageIcon originalIcon = new ImageIcon("src/images/dot.png");
+        Image originalImage = originalIcon.getImage();
+        Image scaledImageDot = originalImage.getScaledInstance(10, 10, Image.SCALE_SMOOTH);
+        tiles[i][j].setIcon(new ImageIcon(scaledImageDot));
     }
+    public void setSuperFood(int i, int j) {
+        ImageIcon originalIcon = new ImageIcon("src/images/dot.png");
+        Image originalImage = originalIcon.getImage();
+        Image scaledImageSFood = originalImage.getScaledInstance(25, 25, Image.SCALE_SMOOTH);
+        tiles[i][j].setIcon(new ImageIcon(scaledImageSFood));
+    }
+    public void clearPacman(int i, int j) {
+        tiles[i][j].setIcon(null);
+    }
+
     public void setCharacter(Pacman character) {
         this.character = character;
         tiles[26][13].setIcon(character);
