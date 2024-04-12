@@ -1,6 +1,3 @@
-package game;
-
-import characters_classes.Pacman;
 import tiles_classes.CrossableTile;
 import tiles_classes.Tile;
 import tiles_classes.WallTile;

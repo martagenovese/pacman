@@ -1,10 +1,7 @@
 package characters_classes;
 
-import game.EventManager;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 
 import static java.lang.Thread.sleep;
 

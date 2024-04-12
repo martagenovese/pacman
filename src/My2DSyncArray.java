@@ -1,5 +1,3 @@
-package game;
-
 public class My2DSyncArray {
         private int[][] array;
 

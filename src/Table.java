@@ -1,16 +1,8 @@
-package game;// java packages
 import javax.swing.*;
 import java.awt.*;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
-import java.util.Scanner;
 
 // my packages
 import characters_classes.Pacman;
-import game.EventManager;
-import tiles_classes.*;
-
 
 
 public class Table extends JFrame {
