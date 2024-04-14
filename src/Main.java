@@ -15,12 +15,5 @@ public class Main {
         eventManager.setTable(grafica);
         System.out.println("Table set to EventManager");
 
-
-        /*
-        grafica.setEventManager(eventManager);
-        System.out.println("EventManager set to Table");
-        eventManager.setModelandTable(model, grafica);
-        System.out.println("Model and Table set to EventManager");
-        */
     }
 }

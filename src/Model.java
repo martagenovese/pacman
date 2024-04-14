@@ -1,4 +1,5 @@
 import characters_classes.Pacman;
+import myclasses.My2DSyncArray;
 import tiles_classes.CrossableTile;
 import tiles_classes.Tile;
 import tiles_classes.WallTile;
@@ -11,9 +12,7 @@ import java.util.Scanner;
 public class Model {
     protected Tile[][] tiles;
     protected Pacman pacman;
-    protected Thread pacmanThread;
-    protected String nextDirection, lastDirection;
-
+    protected int score, lives, dotsCounter, fruit;
 
     // 0 - pacman, 1 - red ghost, 2 - pink ghost, 3 - blue ghost, 4 - orange ghost
     protected My2DSyncArray charactersPosition;
@@ -90,6 +89,10 @@ public class Model {
         tiles[26][13].setPacman(true);
 
         // aggiungere punteggio, vite e frutti
+        score = 0;
+        lives = 3;
+        dotsCounter = 0;
+        fruit = 2;
     }
 
     public Pacman getPacman() {
@@ -134,17 +137,34 @@ public class Model {
         if (!(tile instanceof WallTile)) {
             if (tile.isSuperFood()) {
                 ((CrossableTile) tile).setSuperFood(false);
-            } else if (tile.isDot()) ((CrossableTile) myTile).setDot(false);
+                score += 50;
+                dotsCounter++;
+                if (dotsCounter == 70 || dotsCounter == 240) {
+                    fruit--;
+                }
+            } else if (tile.isDot()) {
+                ((CrossableTile) myTile).setDot(false);
+                score += 10;
+            }
             myTile.setPacman(false);
             pacman.move(direction);
             tile.setPacman(false);
         }
     }
 
-    public boolean checkSameDirection(String direction, Tile tile) {
-        if (tile==null || lastDirection==null) return false;
-        if (lastDirection.equals(direction)) return true;
-        return !(tile instanceof WallTile);
+    public int getScore() {
+        return score;
     }
-
+    public int getLives() {
+        return lives;
+    }
+    public int getFruit() {
+        return fruit;
+    }
+    public boolean getDotsCounter() {
+        return (dotsCounter==70 || dotsCounter==240);
+    }
+    public boolean isGameOver() {
+        return lives == 0;
+    }
 }

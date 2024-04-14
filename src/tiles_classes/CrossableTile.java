@@ -60,4 +60,8 @@ public class CrossableTile extends Tile {
     public boolean isSuperFood() {
         return isSuperFood;
     }
+
+    public boolean isIntersection() {
+        return isIntersection;
+    }
 }

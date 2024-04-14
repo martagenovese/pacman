@@ -62,4 +62,15 @@ public class Table extends JFrame {
     public void updatePosition() {
         tiles[character.getX()][character.getY()].setIcon(character);
     }
+
+    public void updateScore(int score) {
+        String scoreString = score+"";
+        int yTile = 18;
+        for (int i = scoreString.length()-1; i>=0; i--) {
+            tiles[1][yTile].setForeground(Color.WHITE);
+            tiles[1][yTile].setFont(new Font("Arial", Font.BOLD, 25));
+            tiles[1][yTile].setText(scoreString.charAt(i)+"");
+            yTile--;
+        }
+    }
 }

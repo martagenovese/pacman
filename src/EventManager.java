@@ -1,3 +1,5 @@
+import myclasses.My2DSyncArray;
+import myclasses.SVGIcon;
 import tiles_classes.CrossableTile;
 import tiles_classes.Tile;
 import tiles_classes.WallTile;
@@ -48,7 +50,32 @@ public class EventManager implements KeyListener {
             }
         }
 
+        String score = "SCORE";
+        int yTile = 9;
+        for (int i = 0; i < score.length(); i++) {
+            table.tiles[1][yTile].setForeground(Color.WHITE);
+            table.tiles[1][yTile].setFont(new Font("Arial", Font.BOLD, 25));
+            table.tiles[1][yTile].setText(score.charAt(i) + "");
+            yTile++;
+        }
+        table.tiles[1][18].setForeground(Color.WHITE);
+        table.tiles[1][18].setFont(new Font("Arial", Font.BOLD, 25));
+        table.tiles[1][18].setText("0");
+
+        SVGIcon pacman = new SVGIcon("src/images/pacman/right.svg");
+        table.tiles[35][2].setIcon(pacman);
+        table.tiles[35][2].repaint();
+        table.tiles[35][4].setIcon(pacman);
+        table.tiles[35][4].repaint();
+        table.tiles[35][6].setIcon(pacman);
+        table.tiles[35][6].repaint();
+        SVGIcon fruit = new SVGIcon("src/images/fruit.svg");
+        table.tiles[35][25].setIcon(fruit);
+        table.tiles[35][23].setIcon(fruit);
+
+
         table.tiles[17][12].setBackground(Color.RED);
+
         table.setCharacter(model.getPacman());
     }
 
@@ -86,6 +113,7 @@ public class EventManager implements KeyListener {
                 return;
             }
             if (lastDirection == null) lastDirection = s.toLowerCase();
+            nextDirection = s.toLowerCase();
 
             Method method;
             try {
@@ -96,16 +124,18 @@ public class EventManager implements KeyListener {
 
             try {
                 Tile nextTile = (Tile) method.invoke(model);
-                if (!(model.checkSameDirection(s.toLowerCase(), nextTile))) {
+                if (nextTile instanceof WallTile) {
+                    method = model.getClass().getMethod("get"+(lastDirection.charAt(0)+"").toUpperCase()+lastDirection.substring(1)+"Tile");
+                } else {
                     lastDirection = nextDirection;
                 }
-                nextDirection = s.toLowerCase();
-            } catch (IllegalAccessException | InvocationTargetException ex) {
+            } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException ex) {
                 throw new RuntimeException(ex);
             }
 
             try {
                 table.clearPacman(model.getPacman().getX(), model.getPacman().getY());
+                table.updateScore(model.getScore());
                 model.movePacman(lastDirection, (Tile) method.invoke(model), model.getMyTile());
             } catch (IllegalAccessException | InvocationTargetException ex) {
                 throw new RuntimeException(ex);

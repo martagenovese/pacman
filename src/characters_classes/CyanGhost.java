@@ -9,7 +9,7 @@ public class CyanGhost extends Ghost {
 
         public CyanGhost(){
             super();
-                imagePath = "src/images/ghosts/cyan.png";
+                imagePath = "src/images/ghosts/cyan.svg";
                 ImageIcon originalIcon = new ImageIcon(imagePath);
                 Image originalImage = originalIcon.getImage();
                 Image scaledImageDot = originalImage.getScaledInstance(25, 25, Image.SCALE_SMOOTH);

@@ -29,4 +29,9 @@ public class WallTile extends Tile {
     public boolean isSuperFood() {
         return false;
     }
+
+    @Override
+    public boolean isIntersection() {
+        return false;
+    }
 }

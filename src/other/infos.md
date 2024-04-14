@@ -13,6 +13,12 @@
 - piece of fruit after 170 more dots
 - tunnels connect left to right
 
+## scoring
+- dot: 10 points
+- energizer: 50 points
+- ghost: 200, 400, 800, 1600 points
+- cherry: 100 points, strawberry: 300 points, orange: 500 points, apple: 700 points, banana: 1000 points
+
 ## characters
 - pacman
 - shadow - "blinky" - red

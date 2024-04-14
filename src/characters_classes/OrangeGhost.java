@@ -9,7 +9,7 @@ public class OrangeGhost extends Ghost {
 
         public OrangeGhost(){
             super();
-                imagePath = "src/images/ghosts/orange.png";
+                imagePath = "src/images/ghosts/orange.svg";
                 ImageIcon originalIcon = new ImageIcon(imagePath);
                 Image originalImage = originalIcon.getImage();
                 Image scaledImageDot = originalImage.getScaledInstance(25, 25, Image.SCALE_SMOOTH);

@@ -3,14 +3,15 @@ package characters_classes;
 import tiles_classes.*;
 import javax.swing.*;
 
-public class Ghost extends ImageIcon {
+public abstract class Ghost extends ImageIcon {
 
     protected int x, y;
+    protected String direction;
 
     public Ghost(){
     }
 
-    public void frightened(Tile[][] tiles){
+    public void frightened(Tile[][] tiles)  {
         int xTarget, yTarget;
         do{
             xTarget=(int)(Math.random()*28+1);
@@ -37,37 +38,61 @@ public class Ghost extends ImageIcon {
 
     public void getToTheTarget(Tile[][] tiles, int xTarget, int yTarget){
 
-        while(x!=xTarget && y!=yTarget){
+        //{ Up, Left, Down, Right }
+        int[][] directions = {{y + 1, x}, {y, x - 1}, {y - 1, x}, {y, x + 1}};
+        double distance;
+        int chosenDirection;
 
-            //{ Up, Right, Down, Left }
-            int[][] bo = { {y+1,x} , {y,x+1} , {y-1,x} , {y,x-1} };
-            double distanceMin = Math.sqrt( Math.pow(yTarget-bo[0][0] , 2) + Math.pow(xTarget-bo[0][1] , 2) );
-            double distance;
-            int direction=0;
+        switch(direction){
+            case "up":
+                chosenDirection=0;
+            case "left":
+                chosenDirection=1;
+            case "down":
+                chosenDirection=2;
+            case "right":
+                chosenDirection=3;
+            default:
+                chosenDirection=2;
+        }
+
+
+        //if(tiles[yTarget][xTarget] instanceof CrossableTile) {
+        while (x != xTarget && y != yTarget) {
+            //TODO: gestire i tunnel
+            double distanceMin = Math.sqrt(Math.pow(yTarget - directions[0][0], 2) + Math.pow(xTarget - directions[0][1], 2));
 
             //parte da 1 perchè assumo che la prima distanceMin sia quella di 0
-            for (int i = 1; i < bo.length; i++) {
-                if(!(tiles[bo[i][0]][bo[i][1]] instanceof WallTile)){
-                    distance = Math.sqrt( Math.pow(yTarget-bo[i][0] , 2) + Math.pow(xTarget-bo[i][1] , 2) );
-                    if(distance < distanceMin){
-                        distanceMin = distance;
-                        direction  = i;
+
+            //solo se è un incrocio
+            if (tiles[y][x].isIntersection()) {
+                for (int i = 1; i < directions.length; i++) {
+                    if (!(tiles[directions[i][0]][directions[i][1]] instanceof WallTile) && i != chosenDirection) {
+                        distance = Math.sqrt(Math.pow(yTarget - directions[i][0], 2) + Math.pow(xTarget - directions[i][1], 2));
+                        if (distance < distanceMin) {
+                            distanceMin = distance;
+                            chosenDirection = i;
+                        }
                     }
                 }
             }
 
-            switch (direction) {
+            switch (chosenDirection) {
                 case 0:
                     move("up");
                 case 1:
-                    move("right");
+                    move("left");
                 case 2:
                     move("down");
                 case 3:
-                    move("left");
+                    move("right");
             }
+
         }
+
     }
 
+    public abstract void chase();
+    public abstract void scatter(Tile[][] tiles);
 
 }

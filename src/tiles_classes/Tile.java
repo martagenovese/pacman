@@ -12,4 +12,6 @@ public abstract class Tile {
     }
     public void setIntersection(boolean b) {
     }
+
+    public abstract boolean isIntersection();
 }

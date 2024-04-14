@@ -1,5 +1,7 @@
 package characters_classes;
 
+import myclasses.SVGIcon;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -8,20 +10,20 @@ import static java.lang.Thread.sleep;
 public class Pacman extends ImageIcon {
     int x, y;
     private String imagePath;
-    protected int att;
 
     public Pacman() {
-        imagePath = "src/images/pacman/right.png";
-        ImageIcon originalIcon = new ImageIcon(imagePath);
+        imagePath = "src/images/pacman/right.svg";
+        //ImageIcon originalIcon = new ImageIcon(imagePath);
+        SVGIcon originalIcon = new SVGIcon(imagePath);
         Image originalImage = originalIcon.getImage();
-        Image scaledImageDot = originalImage.getScaledInstance(25, 25, Image.SCALE_SMOOTH);
+        Image scaledImageDot = originalImage.getScaledInstance(20, 20, Image.SCALE_SMOOTH);
         setImage(new ImageIcon(scaledImageDot).getImage());
 
         x=26;
         y=13;
     }
     private void setDirection(String direction) {
-        imagePath = "src/images/pacman/" + direction + ".png";
+        imagePath = "src/images/pacman/" + direction + ".svg";
         ImageIcon originalIcon = new ImageIcon(imagePath);
         Image originalImage = originalIcon.getImage();
         Image scaledImageDot = originalImage.getScaledInstance(25, 25, Image.SCALE_SMOOTH);
