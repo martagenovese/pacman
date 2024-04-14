@@ -7,6 +7,8 @@ import tiles_classes.WallTile;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.Scanner;
 
 public class Model {
@@ -17,6 +19,7 @@ public class Model {
     // 0 - pacman, 1 - red ghost, 2 - pink ghost, 3 - blue ghost, 4 - orange ghost
     protected My2DSyncArray charactersPosition;
     protected Tile leftTile, rightTile, upTile, downTile, myTile;
+    protected String lastDirection, nextDirection;
 
     private void arrageWalls() {
         InputStream f;
@@ -150,6 +153,18 @@ public class Model {
             pacman.move(direction);
             tile.setPacman(false);
         }
+    }
+    public void keepDirection(String direction) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+        Method method = this.getClass().getMethod("get"+direction+"Tile");
+        Tile nextTile = (Tile) method.invoke(this);
+        if (lastDirection == null) lastDirection = direction.toLowerCase();
+        nextDirection = direction.toLowerCase();
+        if (nextTile instanceof WallTile) {
+            method = this.getClass().getMethod("get"+(lastDirection.charAt(0)+"").toUpperCase()+lastDirection.substring(1)+"Tile");
+        } else {
+            lastDirection = nextDirection;
+        }
+        movePacman(lastDirection, (Tile) method.invoke(this), getMyTile());
     }
 
     public int getScore() {

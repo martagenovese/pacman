@@ -112,34 +112,16 @@ public class EventManager implements KeyListener {
             } else {
                 return;
             }
-            if (lastDirection == null) lastDirection = s.toLowerCase();
-            nextDirection = s.toLowerCase();
 
-            Method method;
-            try {
-                method = model.getClass().getMethod("get"+s+"Tile");
-            } catch (NoSuchMethodException ex) {
-                throw new RuntimeException(ex);
-            }
 
             try {
-                Tile nextTile = (Tile) method.invoke(model);
-                if (nextTile instanceof WallTile) {
-                    method = model.getClass().getMethod("get"+(lastDirection.charAt(0)+"").toUpperCase()+lastDirection.substring(1)+"Tile");
-                } else {
-                    lastDirection = nextDirection;
-                }
-            } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException ex) {
+                model.keepDirection(s);
+            } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException ex) {
                 throw new RuntimeException(ex);
             }
-
-            try {
-                table.clearPacman(model.getPacman().getX(), model.getPacman().getY());
-                table.updateScore(model.getScore());
-                model.movePacman(lastDirection, (Tile) method.invoke(model), model.getMyTile());
-            } catch (IllegalAccessException | InvocationTargetException ex) {
-                throw new RuntimeException(ex);
-            }
+            table.clearPacman(model.getPacman().getX(), model.getPacman().getY());
+            table.updateScore(model.getScore());
+            //model.movePacman(lastDirection, (Tile) method.invoke(model), model.getMyTile());
 
 
             model.updatePosition();
