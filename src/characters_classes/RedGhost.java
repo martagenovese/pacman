@@ -1,5 +1,7 @@
 package characters_classes;
 
+import tiles_classes.*;
+
 import javax.swing.*;
 import java.awt.*;
 

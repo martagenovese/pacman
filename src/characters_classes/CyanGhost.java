@@ -1,5 +1,7 @@
 package characters_classes;
 
+import tiles_classes.Tile;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -18,4 +20,14 @@ public class CyanGhost extends Ghost {
                 x=17;
                 y=13;
         }
+
+    @Override
+    public void chase() {
+
+    }
+
+    @Override
+    public void scatter(Tile[][] tiles) {
+
+    }
 }

@@ -26,17 +26,25 @@ public abstract class Ghost extends ImageIcon {
             case "left" -> {
                 if (y == 0) y = 27;
                 else y--;
+                direction="left";
             }
             case "right" -> {
                 if (y == 27) y = 0;
                 else y++;
+                direction="right";
             }
-            case "up" -> x--;
-            case "down" -> x++;
+            case "up" -> {
+                x--;
+                direction="up";
+            }
+            case "down" -> {
+                x++;
+                direction="down";
+            }
         }
     }
 
-    public void getToTheTarget(Tile[][] tiles, int xTarget, int yTarget){
+    public void getToTheTarget(Tile[][] tiles, int xTarget, int yTarget) {
 
         //{ Up, Left, Down, Right }
         int[][] directions = {{y + 1, x}, {y, x - 1}, {y - 1, x}, {y, x + 1}};
