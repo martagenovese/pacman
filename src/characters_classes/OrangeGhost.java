@@ -31,8 +31,22 @@ public class OrangeGhost extends Ghost {
     }
 
     @Override
-    public void scatter(Tile[][] tiles) {
+    public void scatter() {
 
     }
+    @Override
+    public void startGame() {
+
+    }
+    @Override
+    public void run() {
+        startGame();
+        System.out.println("chase");
+        chase();
+        System.out.println("scatter");
+        scatter();
+    }
+
+
 
 }

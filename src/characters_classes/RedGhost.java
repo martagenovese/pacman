@@ -26,25 +26,43 @@ public class RedGhost extends Ghost {
         nGhost=1;
     }
 
+    protected void startGame() {
+        int xTarget=13;
+        int yTarget=14;
+        getToTheTarget(xTarget, yTarget);
+        status=0;
+    }
+
     @Override
-    public void scatter(Tile[][] tiles){
-        getToTheTarget(tiles, 25,0);
-
-        /*
-
-
-        21,4
-        26,4
-        26,8
-         */
-        if(x==21 && y==1){
-            move("right");
+    public void scatter(){
+        if(status!=1) {
+            turnAround();
+            status = 1;
         }
+        int xTarget=25;
+        int yTarget=0;
+        reachTarget(xTarget, yTarget);
 
     }
 
+    @Override
     public void chase() {
-        int i;
+        if(status!=0) {
+            turnAround();
+            status = 0;
+        }
+        int xTarget=charactersPosition.get(0,0);
+        int yTarget=charactersPosition.get(0,1);
+        reachTarget(xTarget, yTarget);
     }
 
+
+    @Override
+    public void run() {
+        startGame();
+        System.out.println("chase");
+        chase();
+        System.out.println("scatter");
+        scatter();
+    }
 }

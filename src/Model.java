@@ -20,6 +20,8 @@ public class Model {
     protected My2DSyncArray charactersPosition;
     protected Tile leftTile, rightTile, upTile, downTile, myTile;
     protected String lastDirection, nextDirection;
+    protected Thread rThread, pThread, cThread, oThread;
+    protected Ghost r, p, c, o;
 
     private void arrageWalls() {
         InputStream f;
@@ -76,8 +78,8 @@ public class Model {
     }
 
     public Model() {
-        pacman = new Pacman();
-        charactersPosition = new My2DSyncArray(5, 2);
+        charactersPosition = new My2DSyncArray(5, 3);
+        pacman = new Pacman(charactersPosition);
         tiles = new Tile[36][28];
 
         //tutte crossable all'inizio
@@ -96,6 +98,12 @@ public class Model {
         lives = 3;
         dotsCounter = 0;
         fruit = 2;
+        r = new RedGhost(charactersPosition, tiles);
+        p = new PinkGhost(charactersPosition, tiles);
+        c = new CyanGhost(charactersPosition, tiles);
+        o = new OrangeGhost(charactersPosition, tiles);
+
+        rThread = new Thread(r);
     }
 
     public Pacman getPacman() {
