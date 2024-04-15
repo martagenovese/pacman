@@ -132,4 +132,10 @@ public abstract class Ghost extends ImageIcon implements Runnable {
         }
     }
 
+    public int getX() {
+        return x;
+    }
+    public int getY() {
+        return y;
+    }
 }

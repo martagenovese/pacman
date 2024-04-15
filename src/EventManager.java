@@ -134,7 +134,7 @@ public class EventManager implements KeyListener {
             } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException ex) {
                 throw new RuntimeException(ex);
             }
-            table.clearPacman(model.getPacman().getX(), model.getPacman().getY());
+            //table.clearPacman(model.getPacman().getX(), model.getPacman().getY());
             table.updateScore(model.getScore());
             //model.movePacman(lastDirection, (Tile) method.invoke(model), model.getMyTile());
 
