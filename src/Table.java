@@ -66,6 +66,7 @@ public class Table extends JFrame {
     public void setRedGhost(RedGhost redGhost) {
         this.redGhost = redGhost;
         tiles[17][12].setIcon(redGhost);
+        System.out.println("Red ghost set");
     }
     public void setCyanGhost(CyanGhost cyanGhost) {
         this.cyanGhost = cyanGhost;

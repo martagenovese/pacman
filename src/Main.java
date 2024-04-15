@@ -10,7 +10,7 @@ public class Main {
         grafica.setEventManager(eventManager);
         System.out.println("EventManager set to Table");
         eventManager.setModel(model);
-        System.out.println("Model set to game.EventManedager");
+        System.out.println("Model set to EventManedager");
         eventManager.setTable(grafica);
         System.out.println("Table set to EventManager");
     }

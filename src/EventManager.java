@@ -26,13 +26,9 @@ public class EventManager implements KeyListener {
     public EventManager() {
         isListenerActive = true;
     }
-    public void setModelandTable(Model model, Table table) {
-        this.model = model;
-        this.table = table;
-        table.setCharacter(model.getPacman());
-    }
     public void setModel(Model model) {
         this.model = model;
+        model.rThread.start();
     }
 
     public void setTable(Table table) {
@@ -62,7 +58,6 @@ public class EventManager implements KeyListener {
 
         table.setCharacter(model.getPacman());
         table.setRedGhost(model.getRedGhost());
-        model.getRedGhost();
     }
     private void setScoreBar() {
         String score = "SCORE";
