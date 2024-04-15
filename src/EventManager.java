@@ -1,9 +1,11 @@
+import characters_classes.RedGhost;
 import myclasses.My2DSyncArray;
 import myclasses.SVGIcon;
 import tiles_classes.CrossableTile;
 import tiles_classes.Tile;
 import tiles_classes.WallTile;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -32,9 +34,11 @@ public class EventManager implements KeyListener {
     public void setModel(Model model) {
         this.model = model;
     }
+
     public void setTable(Table table) {
         this.table = table;
 
+        // build table
         for (int i = 0; i < 36; i++) {
             for (int j = 0; j < 28; j++) {
                 if (model.tiles[i][j] instanceof WallTile) {
@@ -50,6 +54,17 @@ public class EventManager implements KeyListener {
             }
         }
 
+        setScoreBar();
+        setLives();
+        setFruit();
+
+        //table.tiles[17][12].setBackground(Color.RED);
+
+        table.setCharacter(model.getPacman());
+        table.setRedGhost(model.getRedGhost());
+        model.getRedGhost();
+    }
+    private void setScoreBar() {
         String score = "SCORE";
         int yTile = 9;
         for (int i = 0; i < score.length(); i++) {
@@ -61,22 +76,26 @@ public class EventManager implements KeyListener {
         table.tiles[1][18].setForeground(Color.WHITE);
         table.tiles[1][18].setFont(new Font("Arial", Font.BOLD, 25));
         table.tiles[1][18].setText("0");
-
+    }
+    private void setLives(){
         SVGIcon pacman = new SVGIcon("src/images/pacman/right.svg");
+        Image originalImage = pacman.getImage();
+        Image scaledImageDot = originalImage.getScaledInstance(20, 20, Image.SCALE_SMOOTH);
+        pacman.setImage(new ImageIcon(scaledImageDot).getImage());
         table.tiles[35][2].setIcon(pacman);
         table.tiles[35][2].repaint();
         table.tiles[35][4].setIcon(pacman);
         table.tiles[35][4].repaint();
         table.tiles[35][6].setIcon(pacman);
         table.tiles[35][6].repaint();
+    }
+    private void  setFruit() {
         SVGIcon fruit = new SVGIcon("src/images/fruit.svg");
+        Image originalImage = fruit.getImage();
+        Image scaledImageDot = originalImage.getScaledInstance(20, 20, Image.SCALE_SMOOTH);
+        fruit.setImage(new ImageIcon(scaledImageDot).getImage());
         table.tiles[35][25].setIcon(fruit);
         table.tiles[35][23].setIcon(fruit);
-
-
-        table.tiles[17][12].setBackground(Color.RED);
-
-        table.setCharacter(model.getPacman());
     }
 
     @Override
@@ -114,6 +133,7 @@ public class EventManager implements KeyListener {
             }
 
 
+            table.clearPacman(model.getPacman().getX(), model.getPacman().getY());
             try {
                 model.keepDirection(s);
             } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException ex) {

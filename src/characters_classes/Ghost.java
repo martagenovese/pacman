@@ -3,7 +3,7 @@ package characters_classes;
 import tiles_classes.*;
 import javax.swing.*;
 
-public abstract class Ghost extends ImageIcon {
+public abstract class Ghost extends ImageIcon implements Runnable {
 
     protected int x, y;
     protected String direction;

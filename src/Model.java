@@ -1,4 +1,4 @@
-import characters_classes.Pacman;
+import characters_classes.*;
 import myclasses.My2DSyncArray;
 import tiles_classes.CrossableTile;
 import tiles_classes.Tile;
@@ -16,7 +16,7 @@ public class Model {
     protected Pacman pacman;
     protected int score, lives, dotsCounter, fruit;
 
-    // 0 - pacman, 1 - red ghost, 2 - pink ghost, 3 - blue ghost, 4 - orange ghost
+    // 0 - pacman, 1 - red ghost, 2 - pink ghost, 3 - cyan ghost, 4 - orange ghost
     protected My2DSyncArray charactersPosition;
     protected Tile leftTile, rightTile, upTile, downTile, myTile;
     protected String lastDirection, nextDirection;
@@ -165,6 +165,31 @@ public class Model {
             lastDirection = nextDirection;
         }
         movePacman(lastDirection, (Tile) method.invoke(this), getMyTile());
+    }
+
+    public RedGhost getRedGhost() {
+        return (RedGhost) r;
+    }
+    public PinkGhost getPinkGhost() {
+        return (PinkGhost) p;
+    }
+    public CyanGhost getCyanGhost() {
+        return (CyanGhost) c;
+    }
+    public OrangeGhost getOrangeGhost() {
+        return (OrangeGhost) o;
+    }
+    public Thread getRedGhostThread() {
+        return rThread;
+    }
+    public Thread getPinkGhostThread() {
+        return pThread;
+    }
+    public Thread getCyanGhostThread() {
+        return cThread;
+    }
+    public Thread getOrangeGhostThread() {
+        return oThread;
     }
 
     public int getScore() {

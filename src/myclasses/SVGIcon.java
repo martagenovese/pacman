@@ -15,17 +15,20 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
-public class SVGIcon implements Icon {
+public class SVGIcon extends ImageIcon {
     private GraphicsNode svgIcon;
 
     public SVGIcon(String svgURI) {
         try {
+            if (svgURI == null) {
+                svgIcon = null;
+                return;
+            }
             String parser = XMLResourceDescriptor.getXMLParserClassName();
             SAXSVGDocumentFactory factory = new SAXSVGDocumentFactory(parser);
             SVGDocument document = factory.createSVGDocument(svgURI);
 
-            // Print to check if the SVG document is created
-            System.out.println("SVG Document: " + document);
+            //System.out.println("SVG Document: " + document);
 
             UserAgent userAgent = new UserAgentAdapter();
             DocumentLoader loader = new DocumentLoader(userAgent);
@@ -35,8 +38,7 @@ public class SVGIcon implements Icon {
             GVTBuilder builder = new GVTBuilder();
             svgIcon = builder.build(bridgeContext, document);
 
-            // Print to check if the GraphicsNode is built
-            System.out.println("GraphicsNode: " + svgIcon);
+            //System.out.println("GraphicsNode: " + svgIcon);
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -47,7 +49,7 @@ public class SVGIcon implements Icon {
     public void paintIcon(Component c, Graphics g, int x, int y) {
         Graphics2D g2d = (Graphics2D) g;
         svgIcon.paint(g2d);
-        System.out.println("Painted");
+        //System.out.println("Painted");
     }
 
     public Image getImage() {
@@ -67,4 +69,8 @@ public class SVGIcon implements Icon {
     public int getIconHeight() {
         return (int) svgIcon.getBounds().getHeight();
     }
+    public void clearSVG() {
+        svgIcon = null;
+    }
+
 }

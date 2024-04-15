@@ -7,13 +7,11 @@ public class Main {
         Table grafica = new Table();
         System.out.println("Table created");
 
-
         grafica.setEventManager(eventManager);
         System.out.println("EventManager set to Table");
         eventManager.setModel(model);
         System.out.println("Model set to game.EventManedager");
         eventManager.setTable(grafica);
         System.out.println("Table set to EventManager");
-
     }
 }

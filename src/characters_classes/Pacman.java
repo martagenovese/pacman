@@ -11,10 +11,10 @@ public class Pacman extends ImageIcon {
     int x, y;
     private String imagePath;
 
-    public Pacman() {
-        imagePath = "src/images/pacman/right.svg";
-        //ImageIcon originalIcon = new ImageIcon(imagePath);
-        SVGIcon originalIcon = new SVGIcon(imagePath);
+    public Pacman(My2DSyncArray charactersPosition) {
+        imagePath = "src/images/pacman/right.png";
+        ImageIcon originalIcon = new ImageIcon(imagePath);
+        //SVGIcon originalIcon = new SVGIcon(imagePath);
         Image originalImage = originalIcon.getImage();
         Image scaledImageDot = originalImage.getScaledInstance(20, 20, Image.SCALE_SMOOTH);
         setImage(new ImageIcon(scaledImageDot).getImage());
@@ -23,10 +23,11 @@ public class Pacman extends ImageIcon {
         y=13;
     }
     private void setDirection(String direction) {
-        imagePath = "src/images/pacman/" + direction + ".svg";
+        imagePath = "src/images/pacman/" + direction + ".png";
         ImageIcon originalIcon = new ImageIcon(imagePath);
+        //SVGIcon originalIcon = new SVGIcon(imagePath);
         Image originalImage = originalIcon.getImage();
-        Image scaledImageDot = originalImage.getScaledInstance(25, 25, Image.SCALE_SMOOTH);
+        Image scaledImageDot = originalImage.getScaledInstance(20, 20, Image.SCALE_SMOOTH);
         setImage(new ImageIcon(scaledImageDot).getImage());
     }
     public void move(String direction) {

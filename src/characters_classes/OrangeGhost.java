@@ -1,5 +1,7 @@
 package characters_classes;
 
+import myclasses.My2DSyncArray;
+import myclasses.SVGIcon;
 import tiles_classes.Tile;
 
 import javax.swing.*;
@@ -9,16 +11,18 @@ public class OrangeGhost extends Ghost {
 
         private String imagePath;
 
-        public OrangeGhost(){
-            super();
-                imagePath = "src/images/ghosts/orange.svg";
-                ImageIcon originalIcon = new ImageIcon(imagePath);
-                Image originalImage = originalIcon.getImage();
-                Image scaledImageDot = originalImage.getScaledInstance(25, 25, Image.SCALE_SMOOTH);
-                setImage(new ImageIcon(scaledImageDot).getImage());
+        public OrangeGhost(My2DSyncArray charactersPosition, Tile[][] tiles){
+            super(charactersPosition, tiles);
+            imagePath = "src/images/ghosts/orange.png";
+            ImageIcon originalIcon = new ImageIcon(imagePath);
+            //SVGIcon originalIcon = new SVGIcon(imagePath);
+            Image originalImage = originalIcon.getImage();
+            Image scaledImageDot = originalImage.getScaledInstance(25, 25, Image.SCALE_SMOOTH);
+            setImage(new ImageIcon(scaledImageDot).getImage());
 
-                x=17;
-                y=15;
+            x=17;
+            y=15;
+            status=0;
         }
 
     @Override
