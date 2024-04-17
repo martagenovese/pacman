@@ -1,9 +1,11 @@
+package mcv;
+
 import javax.swing.*;
 import java.awt.*;
 
 // my packages
 import characters_classes.*;
-import myclasses.SVGIcon;
+import mcv.EventManager;
 
 
 public class Table extends JFrame {
@@ -79,12 +81,44 @@ public class Table extends JFrame {
         this.orangeGhost = orangeGhost;
         tiles[17][15].setIcon(orangeGhost);
     }
+    public void setScoreBar() {
+        String score = "SCORE";
+        int yTile = 9;
+        for (int i = 0; i < score.length(); i++) {
+            tiles[1][yTile].setForeground(Color.WHITE);
+            tiles[1][yTile].setFont(new Font("Arial", Font.BOLD, 25));
+            tiles[1][yTile].setText(score.charAt(i) + "");
+            yTile++;
+        }
+        tiles[1][18].setForeground(Color.WHITE);
+        tiles[1][18].setFont(new Font("Arial", Font.BOLD, 25));
+        tiles[1][18].setText("0");
+    }
+    public void setLives(){
+        ImageIcon pacman = new ImageIcon("src/images/pacman/right.png");
+        Image originalImage = pacman.getImage();
+        Image scaledImageDot = originalImage.getScaledInstance(20, 20, Image.SCALE_SMOOTH);
+        pacman.setImage(new ImageIcon(scaledImageDot).getImage());
+        tiles[35][2].setIcon(pacman);
+        tiles[35][2].repaint();
+        tiles[35][4].setIcon(pacman);
+        tiles[35][4].repaint();
+        tiles[35][6].setIcon(pacman);
+        tiles[35][6].repaint();
+    }
+    public void  setFruit() {
+        ImageIcon fruit = new ImageIcon("src/images/fruit.png");
+        Image originalImage = fruit.getImage();
+        Image scaledImageDot = originalImage.getScaledInstance(20, 20, Image.SCALE_SMOOTH);
+        fruit.setImage(new ImageIcon(scaledImageDot).getImage());
+        tiles[35][25].setIcon(fruit);
+        tiles[35][23].setIcon(fruit);
+    }
 
     public void updatePosition() {
         tiles[character.getX()][character.getY()].setIcon(character);
         tiles[redGhost.getX()][redGhost.getY()].setIcon(redGhost);
     }
-
     public void updateScore(int score) {
         String scoreString = score+"";
         int yTile = 18;

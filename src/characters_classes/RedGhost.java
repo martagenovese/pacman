@@ -1,11 +1,11 @@
 package characters_classes;
 
 import myclasses.My2DSyncArray;
-import myclasses.SVGIcon;
 import tiles_classes.*;
-
 import javax.swing.*;
 import java.awt.*;
+
+import static java.lang.Thread.sleep;
 
 public class RedGhost extends Ghost {
 
@@ -27,9 +27,6 @@ public class RedGhost extends Ghost {
     }
 
     protected void startGame() {
-        int xTarget=13;
-        int yTarget=14;
-        getToTheTarget(xTarget, yTarget);
         status=0;
     }
 
@@ -59,10 +56,16 @@ public class RedGhost extends Ghost {
 
     @Override
     public void run() {
-        startGame();
-        System.out.println("chase");
-        chase();
-        System.out.println("scatter");
-        scatter();
+        try {
+            startGame();
+            getToTheTarget(charactersPosition.get(0, 0), charactersPosition.get(0,1));
+            System.out.println("chase");
+            chase();
+            System.out.println("scatter");
+            scatter();
+            sleep(210);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

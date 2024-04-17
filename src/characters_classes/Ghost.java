@@ -3,6 +3,7 @@ package characters_classes;
 import myclasses.My2DSyncArray;
 import tiles_classes.*;
 import javax.swing.*;
+import mcv.*;
 
 public abstract class Ghost extends ImageIcon implements Runnable {
 
@@ -12,12 +13,17 @@ public abstract class Ghost extends ImageIcon implements Runnable {
     protected int status;
     protected My2DSyncArray charactersPosition;
     protected Tile[][] tiles;
-    int nGhost;
+    protected int nGhost;
+    protected Table table;
+
 
     public Ghost(My2DSyncArray charactersPosition, Tile[][] tiles){
         this.charactersPosition=charactersPosition;
         this.tiles=tiles;
         direction="up";
+    }
+    public void setTable(Table table){
+        this.table=table;
     }
 
     public void frightened()  {
@@ -60,9 +66,8 @@ public abstract class Ghost extends ImageIcon implements Runnable {
     }
 
     public void getToTheTarget(int xTarget, int yTarget) {
-        while (x != xTarget && y != yTarget){
-            reachTarget(xTarget, yTarget);
-        }
+        if (x == xTarget && y == yTarget) return;
+        reachTarget(xTarget, yTarget);
     }
 
     public void reachTarget(int xTarget, int yTarget){

@@ -1,26 +1,20 @@
-import characters_classes.RedGhost;
-import myclasses.My2DSyncArray;
-import myclasses.SVGIcon;
-import tiles_classes.CrossableTile;
-import tiles_classes.Tile;
-import tiles_classes.WallTile;
+package mcv;
 
-import javax.swing.*;
+import myclasses.My2DSyncArray;
+import tiles_classes.*;
+
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import static java.lang.Thread.sleep;
-
 public class EventManager implements KeyListener {
     My2DSyncArray charactersPosition;
-    private Table table;
-    private Model model;
-    private boolean isListenerActive;
+    protected Table table;
+    protected Model model;
+    protected boolean isListenerActive;
     protected String nextDirection, lastDirection;
 
     public EventManager() {
@@ -50,47 +44,15 @@ public class EventManager implements KeyListener {
             }
         }
 
-        setScoreBar();
-        setLives();
-        setFruit();
+        table.setScoreBar();
+        table.setLives();
+        table.setFruit();
 
         //table.tiles[17][12].setBackground(Color.RED);
 
         table.setCharacter(model.getPacman());
         table.setRedGhost(model.getRedGhost());
-    }
-    private void setScoreBar() {
-        String score = "SCORE";
-        int yTile = 9;
-        for (int i = 0; i < score.length(); i++) {
-            table.tiles[1][yTile].setForeground(Color.WHITE);
-            table.tiles[1][yTile].setFont(new Font("Arial", Font.BOLD, 25));
-            table.tiles[1][yTile].setText(score.charAt(i) + "");
-            yTile++;
-        }
-        table.tiles[1][18].setForeground(Color.WHITE);
-        table.tiles[1][18].setFont(new Font("Arial", Font.BOLD, 25));
-        table.tiles[1][18].setText("0");
-    }
-    private void setLives(){
-        SVGIcon pacman = new SVGIcon("src/images/pacman/right.svg");
-        Image originalImage = pacman.getImage();
-        Image scaledImageDot = originalImage.getScaledInstance(20, 20, Image.SCALE_SMOOTH);
-        pacman.setImage(new ImageIcon(scaledImageDot).getImage());
-        table.tiles[35][2].setIcon(pacman);
-        table.tiles[35][2].repaint();
-        table.tiles[35][4].setIcon(pacman);
-        table.tiles[35][4].repaint();
-        table.tiles[35][6].setIcon(pacman);
-        table.tiles[35][6].repaint();
-    }
-    private void  setFruit() {
-        SVGIcon fruit = new SVGIcon("src/images/fruit.svg");
-        Image originalImage = fruit.getImage();
-        Image scaledImageDot = originalImage.getScaledInstance(20, 20, Image.SCALE_SMOOTH);
-        fruit.setImage(new ImageIcon(scaledImageDot).getImage());
-        table.tiles[35][25].setIcon(fruit);
-        table.tiles[35][23].setIcon(fruit);
+        model.getRedGhost().setTable(table);
     }
 
     @Override

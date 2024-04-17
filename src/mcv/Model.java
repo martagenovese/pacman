@@ -1,3 +1,5 @@
+package mcv;
+
 import characters_classes.*;
 import myclasses.My2DSyncArray;
 import tiles_classes.CrossableTile;
