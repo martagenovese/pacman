@@ -119,6 +119,12 @@ public class Table extends JFrame {
         tiles[character.getX()][character.getY()].setIcon(character);
         tiles[redGhost.getX()][redGhost.getY()].setIcon(redGhost);
     }
+    public void clearGhost(int i, int j) {
+        tiles[i][j].setIcon(null);
+    }
+    public void updateGhost(Ghost ghost) {
+        tiles[ghost.getX()][ghost.getY()].setIcon(ghost);
+    }
     public void updateScore(int score) {
         String scoreString = score+"";
         int yTile = 18;

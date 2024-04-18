@@ -64,6 +64,8 @@ public class RedGhost extends Ghost {
             System.out.println("scatter");
             scatter();
             sleep(210);
+            eventManager.clearGhostPosition(this);
+            eventManager.updateGhostPosition(this);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }

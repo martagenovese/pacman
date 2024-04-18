@@ -1,5 +1,6 @@
 package mcv;
 
+import characters_classes.Ghost;
 import myclasses.My2DSyncArray;
 import tiles_classes.*;
 
@@ -22,6 +23,7 @@ public class EventManager implements KeyListener {
     }
     public void setModel(Model model) {
         this.model = model;
+        model.getRedGhost().setEventManager(this);
         model.rThread.start();
     }
 
@@ -53,7 +55,6 @@ public class EventManager implements KeyListener {
 
         table.setCharacter(model.getPacman());
         table.setRedGhost(model.getRedGhost());
-        model.getRedGhost().setTable(table);
     }
 
     @Override
@@ -70,6 +71,13 @@ public class EventManager implements KeyListener {
             }
         }, milliseconds);
     }
+    public void clearGhostPosition(Ghost ghost) {
+        table.clearGhost(ghost.getX(), ghost.getY());
+    }
+    public void updateGhostPosition(Ghost ghost) {
+        table.updateGhost(ghost);
+    }
+
     @Override
     public void keyPressed(KeyEvent e) {
         if (isListenerActive) {

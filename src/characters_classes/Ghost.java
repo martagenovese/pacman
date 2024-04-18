@@ -14,7 +14,7 @@ public abstract class Ghost extends ImageIcon implements Runnable {
     protected My2DSyncArray charactersPosition;
     protected Tile[][] tiles;
     protected int nGhost;
-    protected Table table;
+    protected EventManager eventManager;
 
 
     public Ghost(My2DSyncArray charactersPosition, Tile[][] tiles){
@@ -22,8 +22,8 @@ public abstract class Ghost extends ImageIcon implements Runnable {
         this.tiles=tiles;
         direction="up";
     }
-    public void setTable(Table table){
-        this.table=table;
+    public void setEventManager(EventManager eventManager) {
+        this.eventManager = eventManager;
     }
 
     public void frightened()  {
