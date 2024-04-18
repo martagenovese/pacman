@@ -42,21 +42,21 @@ public abstract class Ghost extends ImageIcon implements Runnable {
 
     public void move(String direction) {
         switch (direction) {
-            case "left" -> {
+            case "left" : {
                 if (y == 0) y = 27;
                 else y--;
                 direction="left";
             }
-            case "right" -> {
+            case "right" : {
                 if (y == 27) y = 0;
                 else y++;
                 direction="right";
             }
-            case "up" -> {
+            case "up" : {
                 x--;
                 direction="up";
             }
-            case "down" -> {
+            case "down" : {
                 x++;
                 direction="down";
             }

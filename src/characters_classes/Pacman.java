@@ -37,16 +37,16 @@ public class Pacman extends ImageIcon {
     public void move(String direction) {
         setDirection(direction);
         switch (direction) {
-            case "left" -> {
+            case "left" : {
                 if (y == 0) y = 27;
                 else y--;
             }
-            case "right" -> {
+            case "right" : {
                 if (y == 27) y = 0;
                 else y++;
             }
-            case "up" -> x--;
-            case "down" -> x++;
+            case "up" : x--;
+            case "down" : x++;
         }
     }
 
