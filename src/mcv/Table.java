@@ -42,23 +42,23 @@ public class Table extends JFrame {
     }
 
 
-    public void setDot(int i, int j) {
+    public void setDot(int y, int x) {
         ImageIcon originalIcon = new ImageIcon("src/images/dot.png");
         //SVGIcon originalIcon = new SVGIcon("src/images/dot.svg");
         Image originalImage = originalIcon.getImage();
         Image scaledImageDot = originalImage.getScaledInstance(10, 10, Image.SCALE_SMOOTH);
-        tiles[i][j].setIcon(new ImageIcon(scaledImageDot));
+        tiles[y][x].setIcon(new ImageIcon(scaledImageDot));
     }
-    public void setSuperFood(int i, int j) {
+    public void setSuperFood(int y, int x) {
         ImageIcon originalIcon = new ImageIcon("src/images/dot.png");
         //SVGIcon originalIcon = new SVGIcon("src/images/dot.svg");
         Image originalImage = originalIcon.getImage();
         Image scaledImageSFood = originalImage.getScaledInstance(25, 25, Image.SCALE_SMOOTH);
-        tiles[i][j].setIcon(new ImageIcon(scaledImageSFood));
+        tiles[y][x].setIcon(new ImageIcon(scaledImageSFood));
     }
-    public void clearPacman(int i, int j) {
-        tiles[i][j].setIcon(null);
-        tiles[i][j].repaint();
+    public void clearPacman(int x, int y) {
+        tiles[y][x].setIcon(null);
+        tiles[y][x].repaint();
     }
 
     public void setCharacter(Pacman character) {
@@ -116,23 +116,23 @@ public class Table extends JFrame {
     }
 
     public void updatePosition() {
-        tiles[character.getX()][character.getY()].setIcon(character);
-        tiles[redGhost.getX()][redGhost.getY()].setIcon(redGhost);
+        tiles[character.getY()][character.getX()].setIcon(character);
+        tiles[redGhost.getY()][redGhost.getX()].setIcon(redGhost);
     }
-    public void clearGhost(int i, int j) {
-        tiles[i][j].setIcon(null);
+    public void clearGhost(int x, int y) {
+        tiles[y][x].setIcon(null);
     }
     public void updateGhost(Ghost ghost) {
-        tiles[ghost.getX()][ghost.getY()].setIcon(ghost);
+        tiles[ghost.getY()][ghost.getX()].setIcon(ghost);
     }
     public void updateScore(int score) {
         String scoreString = score+"";
-        int yTile = 18;
+        int xTile = 18;
         for (int i = scoreString.length()-1; i>=0; i--) {
-            tiles[1][yTile].setForeground(Color.WHITE);
-            tiles[1][yTile].setFont(new Font("Arial", Font.BOLD, 25));
-            tiles[1][yTile].setText(scoreString.charAt(i)+"");
-            yTile--;
+            tiles[1][xTile].setForeground(Color.WHITE);
+            tiles[1][xTile].setFont(new Font("Arial", Font.BOLD, 25));
+            tiles[1][xTile].setText(scoreString.charAt(i)+"");
+            xTile--;
         }
     }
 }

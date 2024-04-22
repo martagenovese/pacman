@@ -1,4 +1,4 @@
-package characters_classes;
+ package characters_classes;
 
 import myclasses.My2DSyncArray;
 import tiles_classes.*;
@@ -21,7 +21,7 @@ public abstract class Ghost extends ImageIcon implements Runnable {
     public Ghost(My2DSyncArray charactersPosition, Tile[][] tiles, Pacman pacman){
         this.charactersPosition=charactersPosition;
         this.tiles=tiles;
-        direction="up";
+        this.pacman=pacman;
     }
     public void setEventManager(EventManager eventManager) {
         this.eventManager = eventManager;
@@ -34,41 +34,55 @@ public abstract class Ghost extends ImageIcon implements Runnable {
         }
         int xTarget, yTarget;
         do{
-            xTarget=(int)(Math.random()*28+1);
-            yTarget=(int)(Math.random()*36+1);
-        }while(tiles[xTarget][yTarget] instanceof WallTile);
+            //TODO: va nei tunnel modifica
+            xTarget=(int)(Math.random()*26+1);
+            yTarget=(int)(Math.random()*29+4);
+        }while(tiles[yTarget][xTarget] instanceof WallTile);
+        System.out.println("xTarget: "+xTarget+" yTarget: "+yTarget);
 
         getToTheTarget(xTarget, yTarget);
     }
 
     public void move(String direction) {
+        eventManager.clearGhostPosition(this);
         switch (direction) {
             case "left" : {
-                if (y == 0) y = 27;
-                else y--;
-                direction="left";
+                if (x == 0) x = 27;
+                else x--;
+                this.direction="left";
+                break;
             }
             case "right" : {
-                if (y == 27) y = 0;
-                else y++;
-                direction="right";
+                if (x == 27) x = 0;
+                else x++;
+                this.direction="right";
+                break;
             }
             case "up" : {
-                x--;
-                direction="up";
+                y--;
+                this.direction="up";
+                break;
             }
             case "down" : {
-                x++;
-                direction="down";
+                y++;
+                this.direction="down";
+                break;
             }
         }
-        charactersPosition.set(nGhost,0, y);
         charactersPosition.set(nGhost,0, x);
+        charactersPosition.set(nGhost,1, y);
+        eventManager.updateGhostPosition(this);
+        try {
+            Thread.currentThread().sleep(195);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void getToTheTarget(int xTarget, int yTarget) {
-        if (x == xTarget && y == yTarget) return;
-        reachTarget(xTarget, yTarget);
+        while(x != xTarget || y != yTarget) {
+            reachTarget(xTarget, yTarget);
+        }
     }
 
     public void reachTarget(int xTarget, int yTarget){
@@ -80,14 +94,19 @@ public abstract class Ghost extends ImageIcon implements Runnable {
         switch(direction){
             case "up":
                 chosenDirection=0;
+                break;
             case "left":
                 chosenDirection=1;
+                break;
             case "down":
                 chosenDirection=2;
+                break;
             case "right":
                 chosenDirection=3;
+                break;
             default:
                 chosenDirection=2;
+                break;
         }
 
         //TODO: gestire i tunnel
@@ -114,12 +133,16 @@ public abstract class Ghost extends ImageIcon implements Runnable {
         switch (chosenDirection) {
             case 0:
                 move("up");
+                break;
             case 1:
                 move("left");
+                break;
             case 2:
                 move("down");
+                break;
             case 3:
                 move("right");
+                break;
         }
 
     }

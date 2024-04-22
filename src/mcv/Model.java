@@ -120,30 +120,30 @@ public class Model {
     }
     public Tile getLeftTile() {
         try {
-            leftTile = tiles[pacman.getX()][pacman.getY() - 1];
+            leftTile = tiles[pacman.getY() - 1][pacman.getX()];
         } catch (ArrayIndexOutOfBoundsException ex) {
-            leftTile = tiles[pacman.getX()][27];
+            leftTile = tiles[27][pacman.getX()];
         }
         return leftTile;
     }
     public Tile getRightTile() {
         try {
-            rightTile = tiles[pacman.getX()][pacman.getY() + 1];
+            rightTile = tiles[pacman.getY() + 1][pacman.getX()];
         } catch (ArrayIndexOutOfBoundsException ex) {
-            rightTile = tiles[pacman.getX()][0];
+            rightTile = tiles[0][pacman.getX()];
         }
         return rightTile;
     }
     public Tile getUpTile() {
-        upTile = tiles[pacman.getX() - 1][pacman.getY()];
+        upTile = tiles[pacman.getY()][pacman.getX() - 1];
         return upTile;
     }
     public Tile getDownTile() {
-        downTile = tiles[pacman.getX() + 1][pacman.getY()];
+        downTile = tiles[pacman.getY()][pacman.getX() + 1];
         return downTile;
     }
     public Tile getMyTile() {
-        myTile = tiles[pacman.getX()][pacman.getY()];
+        myTile = tiles[pacman.getY()][pacman.getX()];
         return myTile;
     }
 
@@ -204,6 +204,7 @@ public class Model {
     public Thread getOrangeGhostThread() {
         return oThread;
     }
+    public void startRedGhost(){rThread.start();}
 
     public int getScore() {
         return score;

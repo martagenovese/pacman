@@ -17,14 +17,15 @@ public class EventManager implements KeyListener {
     protected Model model;
     protected boolean isListenerActive;
     protected String nextDirection, lastDirection;
+    protected boolean startGhost;
 
     public EventManager() {
         isListenerActive = true;
+        startGhost=false;
     }
     public void setModel(Model model) {
         this.model = model;
         model.getRedGhost().setEventManager(this);
-        model.rThread.start();
     }
 
     public void setTable(Table table) {
@@ -81,6 +82,10 @@ public class EventManager implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
+        if(startGhost==false){
+            startGhost=true;
+            model.startRedGhost();
+        }
         if (isListenerActive) {
             disableListenerFor(200);
 

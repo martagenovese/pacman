@@ -20,14 +20,18 @@ public class RedGhost extends Ghost {
         Image originalImage = originalIcon.getImage();
         Image scaledImageDot = originalImage.getScaledInstance(25, 25, Image.SCALE_SMOOTH);
         setImage(new ImageIcon(scaledImageDot).getImage());
-        x=17;
-        y=12;
+        x=12;
+        y=17;
         status=0;
         nGhost=1;
     }
 
     protected void startGame() {
         status=0;
+        move("right");
+        move("up");
+        move("up");
+        move("up");
     }
 
     @Override
@@ -56,18 +60,11 @@ public class RedGhost extends Ghost {
 
     @Override
     public void run() {
-        try {
             startGame();
-            getToTheTarget(charactersPosition.get(0, 0), charactersPosition.get(0,1));
-            System.out.println("chase");
-            chase();
-            System.out.println("scatter");
-            scatter();
-            sleep(210);
-            eventManager.clearGhostPosition(this);
-            eventManager.updateGhostPosition(this);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+            while (true) {
+                frightened();
+            }
+
+
     }
 }
