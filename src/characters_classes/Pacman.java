@@ -10,7 +10,7 @@ import static java.lang.Thread.sleep;
 
 public class Pacman extends ImageIcon {
     //TODO: controlla costruttore
-    int x, y;
+    protected int x, y;
     private String imagePath;
     private My2DSyncArray charactersPosition;
 
@@ -22,8 +22,8 @@ public class Pacman extends ImageIcon {
         Image scaledImageDot = originalImage.getScaledInstance(20, 20, Image.SCALE_SMOOTH);
         setImage(new ImageIcon(scaledImageDot).getImage());
         this.charactersPosition=charactersPosition;
-        x=26;
-        y=13;
+        x=13;
+        y=26;
     }
     private void setDirection(String direction) {
         imagePath = "src/images/pacman/" + direction + ".png";
@@ -38,15 +38,23 @@ public class Pacman extends ImageIcon {
         setDirection(direction);
         switch (direction) {
             case "left" : {
-                if (y == 0) y = 27;
-                else y--;
+                if (x == 0) x = 27;
+                else x-=1;
+                break;
             }
             case "right" : {
-                if (y == 27) y = 0;
-                else y++;
+                if (x == 27) x = 0;
+                else x++;
+                break;
             }
-            case "up" : x--;
-            case "down" : x++;
+            case "up" : {
+                y-=1;
+                break;
+            }
+            case "down" : {
+                y++;
+                break;
+            }
         }
     }
 

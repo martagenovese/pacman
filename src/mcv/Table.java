@@ -83,12 +83,12 @@ public class Table extends JFrame {
     }
     public void setScoreBar() {
         String score = "SCORE";
-        int yTile = 9;
+        int xTile = 9;
         for (int i = 0; i < score.length(); i++) {
-            tiles[1][yTile].setForeground(Color.WHITE);
-            tiles[1][yTile].setFont(new Font("Arial", Font.BOLD, 25));
-            tiles[1][yTile].setText(score.charAt(i) + "");
-            yTile++;
+            tiles[1][xTile].setForeground(Color.WHITE);
+            tiles[1][xTile].setFont(new Font("Arial", Font.BOLD, 25));
+            tiles[1][xTile].setText(score.charAt(i) + "");
+            xTile++;
         }
         tiles[1][18].setForeground(Color.WHITE);
         tiles[1][18].setFont(new Font("Arial", Font.BOLD, 25));
@@ -100,11 +100,11 @@ public class Table extends JFrame {
         Image scaledImageDot = originalImage.getScaledInstance(20, 20, Image.SCALE_SMOOTH);
         pacman.setImage(new ImageIcon(scaledImageDot).getImage());
         tiles[35][2].setIcon(pacman);
-        tiles[35][2].repaint();
+        //tiles[35][2].repaint();
         tiles[35][4].setIcon(pacman);
-        tiles[35][4].repaint();
+        //tiles[35][4].repaint();
         tiles[35][6].setIcon(pacman);
-        tiles[35][6].repaint();
+        //tiles[6][35].repaint();
     }
     public void  setFruit() {
         ImageIcon fruit = new ImageIcon("src/images/fruit.png");

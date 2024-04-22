@@ -11,8 +11,8 @@ public class OrangeGhost extends Ghost {
 
         private String imagePath;
 
-        public OrangeGhost(My2DSyncArray charactersPosition, Tile[][] tiles){
-            super(charactersPosition, tiles);
+        public OrangeGhost(My2DSyncArray charactersPosition, Tile[][] tiles, Pacman pacman){
+            super(charactersPosition, tiles, pacman);
             imagePath = "src/images/ghosts/orange.png";
             ImageIcon originalIcon = new ImageIcon(imagePath);
             //SVGIcon originalIcon = new SVGIcon(imagePath);

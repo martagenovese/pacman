@@ -12,8 +12,8 @@ public class RedGhost extends Ghost {
     private String imagePath;
 
 
-    public RedGhost(My2DSyncArray charactersPosition, Tile[][] tiles){
-        super(charactersPosition, tiles);
+    public RedGhost(My2DSyncArray charactersPosition, Tile[][] tiles, Pacman pacman){
+        super(charactersPosition, tiles, pacman);
         imagePath = "src/images/ghosts/red.png";
         ImageIcon originalIcon = new ImageIcon(imagePath);
         //SVGIcon originalIcon = new SVGIcon(imagePath);

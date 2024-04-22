@@ -11,8 +11,8 @@ public class PinkGhost extends Ghost {
 
         private String imagePath;
 
-        public PinkGhost(My2DSyncArray charactersPosition, Tile[][] tiles){
-            super(charactersPosition, tiles);
+        public PinkGhost(My2DSyncArray charactersPosition, Tile[][] tiles, Pacman pacman){
+            super(charactersPosition, tiles, pacman);
             imagePath = "src/images/ghosts/pink.png";
             ImageIcon originalIcon = new ImageIcon(imagePath);
             //SVGIcon originalIcon = new SVGIcon(imagePath);
@@ -27,7 +27,13 @@ public class PinkGhost extends Ghost {
 
     @Override
     public void chase() {
-
+        if(status!=0) {
+            turnAround();
+            status = 0;
+        }
+        int xTarget=charactersPosition.get(0,0);
+        int yTarget=charactersPosition.get(0,1);
+        reachTarget(xTarget, yTarget);
     }
 
     @Override

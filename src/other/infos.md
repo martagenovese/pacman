@@ -4,6 +4,7 @@
 - https://www.youtube.com/watch?v=dScq4P5gn4A
 ------------------
 ## basic settings
+
 ![img.png](../other/infosimages/img.png)
 - 28 x 36 tiles_classes (original: 8x8 pixel, resolution 224x288)
 - three lives

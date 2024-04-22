@@ -15,9 +15,10 @@ public abstract class Ghost extends ImageIcon implements Runnable {
     protected Tile[][] tiles;
     protected int nGhost;
     protected EventManager eventManager;
+    protected Pacman pacman;
 
 
-    public Ghost(My2DSyncArray charactersPosition, Tile[][] tiles){
+    public Ghost(My2DSyncArray charactersPosition, Tile[][] tiles, Pacman pacman){
         this.charactersPosition=charactersPosition;
         this.tiles=tiles;
         direction="up";
@@ -90,12 +91,15 @@ public abstract class Ghost extends ImageIcon implements Runnable {
         }
 
         //TODO: gestire i tunnel
-        double distanceMin = Math.sqrt(Math.pow(yTarget - directions[0][0], 2) + Math.pow(xTarget - directions[0][1], 2));
 
-        //parte da 1 perchè assumo che la prima distanceMin sia quella di 0
+        //tiles[directions[chosenDirection][0]][directions[chosenDirection][1]] instanceof WallTile
+        if(tiles[directions[chosenDirection][0]][directions[chosenDirection][1]] instanceof WallTile){
+            //TODO: TROVA NUOVA DIREZIONE
+        }
 
         //solo se è un incrocio
         if (tiles[y][x].isIntersection()) {
+            double distanceMin = Math.sqrt(Math.pow(yTarget - directions[0][0], 2) + Math.pow(xTarget - directions[0][1], 2));
             for (int i = 1; i < directions.length; i++) {
                 if (!(tiles[directions[i][0]][directions[i][1]] instanceof WallTile) && i != chosenDirection) {
                     distance = Math.sqrt(Math.pow(yTarget - directions[i][0], 2) + Math.pow(xTarget - directions[i][1], 2));
@@ -125,15 +129,21 @@ public abstract class Ghost extends ImageIcon implements Runnable {
 
 
     public void turnAround(){
+        int[][] directions = {{y + 1, x}, {y, x - 1}, {y - 1, x}, {y, x + 1}};
+        //TODO: CONTROLLA MURI
         switch (direction) {
             case "up":
-                move("down");
+                if(!(tiles[y-1][x] instanceof WallTile)){move("down");}
+                break;
             case "left":
-                move("right");
+                if(!(tiles[y][x-1] instanceof WallTile)){move("right");}
+                break;
             case "down":
-                move("up");
+                if(!(tiles[y+1][x] instanceof WallTile)){move("up");}
+                break;
             case "right":
-                move("left");
+                if(!(tiles[y][x+1] instanceof WallTile)){move("left");}
+                break;
         }
     }
 

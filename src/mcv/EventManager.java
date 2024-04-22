@@ -34,7 +34,8 @@ public class EventManager implements KeyListener {
         for (int i = 0; i < 36; i++) {
             for (int j = 0; j < 28; j++) {
                 if (model.tiles[i][j] instanceof WallTile) {
-                    table.tiles[i][j].setBackground(Color.BLUE);
+                    if (i == 15 && (j == 13 || j == 14)) table.tiles[i][j].setBackground(Color.BLACK);
+                    else table.tiles[i][j].setBackground(Color.BLUE);
                 } else if (model.tiles[i][j] instanceof CrossableTile) {
                     CrossableTile tile = (CrossableTile) model.tiles[i][j];
                     if (tile.isDot()) {

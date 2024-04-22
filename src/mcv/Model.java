@@ -40,6 +40,8 @@ public class Model {
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
+        tiles[15][13] = new WallTile();
+        tiles[15][14] = new WallTile();
     }
     private void arrangeIntersections() {
         InputStream f;
@@ -100,10 +102,10 @@ public class Model {
         lives = 3;
         dotsCounter = 0;
         fruit = 2;
-        r = new RedGhost(charactersPosition, tiles);
-        p = new PinkGhost(charactersPosition, tiles);
-        c = new CyanGhost(charactersPosition, tiles);
-        o = new OrangeGhost(charactersPosition, tiles);
+        r = new RedGhost(charactersPosition, tiles, pacman);
+        p = new PinkGhost(charactersPosition, tiles, pacman);
+        c = new CyanGhost(charactersPosition, tiles, pacman);
+        o = new OrangeGhost(charactersPosition, tiles, pacman);
 
         rThread = new Thread(r);
     }
@@ -161,10 +163,11 @@ public class Model {
             }
             myTile.setPacman(false);
             pacman.move(direction);
-            tile.setPacman(false);
+            tile.setPacman(true);
         }
     }
     public void keepDirection(String direction) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+        //non funziona questo secondo me
         Method method = this.getClass().getMethod("get"+direction+"Tile");
         Tile nextTile = (Tile) method.invoke(this);
         if (lastDirection == null) lastDirection = direction.toLowerCase();
