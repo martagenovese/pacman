@@ -60,11 +60,9 @@ public class RedGhost extends Ghost {
 
     @Override
     public void run() {
-            startGame();
-            while (true) {
-                frightened();
-            }
-
-
+        startGame();
+        while (true) {
+            frightened();
+        }
     }
 }

@@ -37,7 +37,7 @@ public abstract class Ghost extends ImageIcon implements Runnable {
             //TODO: va nei tunnel modifica
             xTarget=(int)(Math.random()*26+1);
             yTarget=(int)(Math.random()*29+4);
-        }while(tiles[yTarget][xTarget] instanceof WallTile);
+        } while(tiles[yTarget][xTarget] instanceof WallTile);
         System.out.println("xTarget: "+xTarget+" yTarget: "+yTarget);
 
         getToTheTarget(xTarget, yTarget);
@@ -87,7 +87,7 @@ public abstract class Ghost extends ImageIcon implements Runnable {
 
     public void reachTarget(int xTarget, int yTarget){
         //{ Up, Left, Down, Right }
-        int[][] directions = {{y + 1, x}, {y, x - 1}, {y - 1, x}, {y, x + 1}};
+        int[][] directions = {{y - 1, x}, {y, x - 1}, {y + 1, x}, {y, x + 1}};
         double distance;
         int chosenDirection;
 
@@ -114,6 +114,16 @@ public abstract class Ghost extends ImageIcon implements Runnable {
         //tiles[directions[chosenDirection][0]][directions[chosenDirection][1]] instanceof WallTile
         if(tiles[directions[chosenDirection][0]][directions[chosenDirection][1]] instanceof WallTile){
             //TODO: TROVA NUOVA DIREZIONE
+            double distanceMin = Math.sqrt(Math.pow(yTarget - directions[0][0], 2) + Math.pow(xTarget - directions[0][1], 2));
+            for (int i = 1; i < directions.length; i++) {
+                if (!(tiles[directions[i][0]][directions[i][1]] instanceof WallTile) && i != chosenDirection) {
+                    distance = Math.sqrt(Math.pow(yTarget - directions[i][0], 2) + Math.pow(xTarget - directions[i][1], 2));
+                    if (distance < distanceMin) {
+                        distanceMin = distance;
+                        chosenDirection = i;
+                    }
+                }
+            }
         }
 
         //solo se è un incrocio

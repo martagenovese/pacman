@@ -40,8 +40,6 @@ public class Model {
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
-        tiles[15][13] = new WallTile();
-        tiles[15][14] = new WallTile();
     }
     private void arrangeIntersections() {
         InputStream f;
@@ -120,7 +118,7 @@ public class Model {
     }
     public Tile getLeftTile() {
         try {
-            leftTile = tiles[pacman.getY() - 1][pacman.getX()];
+            leftTile = tiles[pacman.getY()][pacman.getX() - 1];
         } catch (ArrayIndexOutOfBoundsException ex) {
             leftTile = tiles[27][pacman.getX()];
         }
@@ -128,18 +126,18 @@ public class Model {
     }
     public Tile getRightTile() {
         try {
-            rightTile = tiles[pacman.getY() + 1][pacman.getX()];
+            rightTile = tiles[pacman.getY()][pacman.getX() + 1];
         } catch (ArrayIndexOutOfBoundsException ex) {
             rightTile = tiles[0][pacman.getX()];
         }
         return rightTile;
     }
     public Tile getUpTile() {
-        upTile = tiles[pacman.getY()][pacman.getX() - 1];
+        upTile = tiles[pacman.getY() - 1][pacman.getX()];
         return upTile;
     }
     public Tile getDownTile() {
-        downTile = tiles[pacman.getY()][pacman.getX() + 1];
+        downTile = tiles[pacman.getY() + 1][pacman.getX()];
         return downTile;
     }
     public Tile getMyTile() {
