@@ -126,10 +126,10 @@ public abstract class Ghost extends ImageIcon implements Runnable {
             }
         }
 
-        //solo se è un incrocio
-        if (tiles[y][x].isIntersection()) {
-            double distanceMin = Math.sqrt(Math.pow(yTarget - directions[0][0], 2) + Math.pow(xTarget - directions[0][1], 2));
-            for (int i = 1; i < directions.length; i++) {
+        //se è un incrocio o se continuando su quella direzione trova un muro
+        if ( (tiles[y][x].isIntersection()) || (tiles[directions[chosenDirection][0]][directions[chosenDirection][1]] instanceof WallTile) ) {
+            double distanceMin = 100;
+            for (int i = 0; i < directions.length; i++) {
                 if (!(tiles[directions[i][0]][directions[i][1]] instanceof WallTile) && i != chosenDirection) {
                     distance = Math.sqrt(Math.pow(yTarget - directions[i][0], 2) + Math.pow(xTarget - directions[i][1], 2));
                     if (distance < distanceMin) {

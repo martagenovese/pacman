@@ -35,7 +35,10 @@ public class EventManager implements KeyListener {
         for (int i = 0; i < 36; i++) {
             for (int j = 0; j < 28; j++) {
                 if (model.tiles[i][j] instanceof WallTile) {
-                    if (i == 15 && (j == 13 || j == 14)) table.tiles[i][j].setBackground(Color.BLACK);
+                    if (i<3) table.tiles[i][j].setBackground(Color.BLACK);
+                    else if (( (i>12 && i<16) || (i>18 && i<22) ) && (j<5 || j>22)) table.tiles[i][j].setBackground(Color.BLACK);
+                    else if (i>33) table.tiles[i][j].setBackground(Color.BLACK);
+                    else if (i == 15 && (j == 13 || j == 14)) table.tiles[i][j].setBackground(Color.BLACK);
                     else table.tiles[i][j].setBackground(Color.BLUE);
                 } else if (model.tiles[i][j] instanceof CrossableTile) {
                     CrossableTile tile = (CrossableTile) model.tiles[i][j];
@@ -43,8 +46,8 @@ public class EventManager implements KeyListener {
                         table.setDot(i, j);
                     } else if (tile.isSuperFood()) {
                         table.setSuperFood(i, j);
-                    }
-                    table.tiles[i][j].setBackground(Color.BLACK);
+                    } else if (tile.isIntersection()) table.tiles[i][j].setBackground(Color.WHITE);
+                    else table.tiles[i][j].setBackground(Color.BLACK);
                 }
             }
         }
