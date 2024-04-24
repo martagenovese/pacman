@@ -28,10 +28,11 @@ public class RedGhost extends Ghost {
 
     protected void startGame() {
         status=0;
+        move("up");
         move("right");
         move("up");
         move("up");
-        move("up");
+        started=true;
     }
 
     @Override
@@ -43,7 +44,6 @@ public class RedGhost extends Ghost {
         int xTarget=25;
         int yTarget=0;
         reachTarget(xTarget, yTarget);
-
     }
 
     @Override
@@ -61,8 +61,11 @@ public class RedGhost extends Ghost {
     @Override
     public void run() {
         startGame();
-        while (true) {
-            frightened();
+        /*getToTheTarget(0,17);
+        move("left");*/
+        while(true){
+            scatter();
         }
+
     }
 }

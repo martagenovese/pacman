@@ -26,6 +26,9 @@ public class EventManager implements KeyListener {
     public void setModel(Model model) {
         this.model = model;
         model.getRedGhost().setEventManager(this);
+        model.getCyanGhost().setEventManager(this);
+        model.getPinkGhost().setEventManager(this);
+        model.getOrangeGhost().setEventManager(this);
     }
 
     public void setTable(Table table) {
@@ -60,6 +63,9 @@ public class EventManager implements KeyListener {
 
         table.setCharacter(model.getPacman());
         table.setRedGhost(model.getRedGhost());
+        table.setCyanGhost(model.getCyanGhost());
+        table.setPinkGhost(model.getPinkGhost());
+        table.setOrangeGhost(model.getOrangeGhost());
     }
 
     @Override
@@ -88,6 +94,9 @@ public class EventManager implements KeyListener {
         if(startGhost==false){
             startGhost=true;
             model.startRedGhost();
+            model.startCyanGhost();
+            model.startPinkGhost();
+            model.startOrangeGhost();
         }
         if (isListenerActive) {
             disableListenerFor(200);

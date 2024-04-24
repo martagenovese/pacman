@@ -40,22 +40,28 @@ public class Pacman extends ImageIcon {
             case "left" : {
                 if (x == 0) x = 27;
                 else x-=1;
+                charactersPosition.set(0,0, 1);
                 break;
             }
             case "right" : {
                 if (x == 27) x = 0;
                 else x++;
+                charactersPosition.set(0,0, 3);
                 break;
             }
             case "up" : {
                 y-=1;
+                charactersPosition.set(0,0, 0);
                 break;
             }
             case "down" : {
                 y++;
+                charactersPosition.set(0,0, 2);
                 break;
             }
         }
+        charactersPosition.set(0,0, x);
+        charactersPosition.set(0,0, y);
     }
 
     public String getDirection() {

@@ -16,25 +16,27 @@ public abstract class Ghost extends ImageIcon implements Runnable {
     protected int nGhost;
     protected EventManager eventManager;
     protected Pacman pacman;
+    protected boolean started;
 
 
     public Ghost(My2DSyncArray charactersPosition, Tile[][] tiles, Pacman pacman){
         this.charactersPosition=charactersPosition;
         this.tiles=tiles;
         this.pacman=pacman;
+        this.started=false;
     }
     public void setEventManager(EventManager eventManager) {
         this.eventManager = eventManager;
     }
 
     public void frightened()  {
+        //TODO: se va nel tunnel da errore
         if(status!=2){
             turnAround();
             status=2;
         }
         int xTarget, yTarget;
         do{
-            //TODO: va nei tunnel modifica
             xTarget=(int)(Math.random()*26+1);
             yTarget=(int)(Math.random()*29+4);
         } while(tiles[yTarget][xTarget] instanceof WallTile);
@@ -50,22 +52,26 @@ public abstract class Ghost extends ImageIcon implements Runnable {
                 if (x == 0) x = 27;
                 else x--;
                 this.direction="left";
+                charactersPosition.set(nGhost,0, 1);
                 break;
             }
             case "right" : {
                 if (x == 27) x = 0;
                 else x++;
                 this.direction="right";
+                charactersPosition.set(nGhost,0, 3);
                 break;
             }
             case "up" : {
                 y--;
                 this.direction="up";
+                charactersPosition.set(nGhost,0, 0);
                 break;
             }
             case "down" : {
                 y++;
                 this.direction="down";
+                charactersPosition.set(nGhost,0, 2);
                 break;
             }
         }
@@ -90,47 +96,41 @@ public abstract class Ghost extends ImageIcon implements Runnable {
         int[][] directions = {{y - 1, x}, {y, x - 1}, {y + 1, x}, {y, x + 1}};
         double distance;
         int chosenDirection;
+        int back;
 
+        //se invece di usare direction uso charachter position non funziona
         switch(direction){
             case "up":
                 chosenDirection=0;
+                back=2;
                 break;
             case "left":
                 chosenDirection=1;
+                back=3;
                 break;
             case "down":
                 chosenDirection=2;
+                back=0;
                 break;
             case "right":
                 chosenDirection=3;
+                back=1;
                 break;
             default:
                 chosenDirection=2;
+                back=0;
                 break;
         }
 
         //TODO: gestire i tunnel
 
-        //tiles[directions[chosenDirection][0]][directions[chosenDirection][1]] instanceof WallTile
-        if(tiles[directions[chosenDirection][0]][directions[chosenDirection][1]] instanceof WallTile){
-            //TODO: TROVA NUOVA DIREZIONE
-            double distanceMin = Math.sqrt(Math.pow(yTarget - directions[0][0], 2) + Math.pow(xTarget - directions[0][1], 2));
-            for (int i = 1; i < directions.length; i++) {
-                if (!(tiles[directions[i][0]][directions[i][1]] instanceof WallTile) && i != chosenDirection) {
-                    distance = Math.sqrt(Math.pow(yTarget - directions[i][0], 2) + Math.pow(xTarget - directions[i][1], 2));
-                    if (distance < distanceMin) {
-                        distanceMin = distance;
-                        chosenDirection = i;
-                    }
-                }
-            }
-        }
+
 
         //se è un incrocio o se continuando su quella direzione trova un muro
         if ( (tiles[y][x].isIntersection()) || (tiles[directions[chosenDirection][0]][directions[chosenDirection][1]] instanceof WallTile) ) {
             double distanceMin = 100;
             for (int i = 0; i < directions.length; i++) {
-                if (!(tiles[directions[i][0]][directions[i][1]] instanceof WallTile) && i != chosenDirection) {
+                if (!(tiles[directions[i][0]][directions[i][1]] instanceof WallTile) && i != back) {
                     distance = Math.sqrt(Math.pow(yTarget - directions[i][0], 2) + Math.pow(xTarget - directions[i][1], 2));
                     if (distance < distanceMin) {
                         distanceMin = distance;
@@ -185,5 +185,9 @@ public abstract class Ghost extends ImageIcon implements Runnable {
     }
     public int getY() {
         return y;
+    }
+
+    public boolean isStarted() {
+        return started;
     }
 }

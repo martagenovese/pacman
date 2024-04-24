@@ -20,9 +20,10 @@ public class OrangeGhost extends Ghost {
             Image scaledImageDot = originalImage.getScaledInstance(25, 25, Image.SCALE_SMOOTH);
             setImage(new ImageIcon(scaledImageDot).getImage());
 
-            x=17;
-            y=15;
+            x=15;
+            y=17;
             status=0;
+            nGhost=4;
         }
 
     @Override
@@ -32,19 +33,34 @@ public class OrangeGhost extends Ghost {
 
     @Override
     public void scatter() {
-
+        if(status!=1) {
+            turnAround();
+            status = 1;
+        }
+        int xTarget=27;
+        int yTarget=35;
+        reachTarget(xTarget, yTarget);
     }
     @Override
     public void startGame() {
-
+        status=0;
+        move("up");
+        move("left");
+        move("up");
+        move("up");
     }
     @Override
     public void run() {
+        try {
+            Thread.currentThread().sleep(1755);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
         startGame();
-        System.out.println("chase");
-        chase();
-        System.out.println("scatter");
-        scatter();
+        while(true){
+            scatter();
+        }
+
     }
 
 

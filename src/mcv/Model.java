@@ -19,7 +19,8 @@ public class Model {
     protected Pacman pacman;
     protected int score, lives, dotsCounter, fruit;
 
-    // 0 - pacman, 1 - red ghost, 2 - pink ghost, 3 - cyan ghost, 4 - orange ghost
+    // 0 - pacman, 1 - red ghost, 2 - cyan ghost, 3 - pink ghost, 4 - orange ghost
+    // x, y, direction( 0-Up, 1-Left, 2-Down, 3-Right )
     protected My2DSyncArray charactersPosition;
     protected Tile leftTile, rightTile, upTile, downTile, myTile;
     protected String lastDirection, nextDirection;
@@ -51,11 +52,12 @@ public class Model {
                 else if (( (i>12 && i<16) || (i>18 && i<22) ) && (j<5 || j>22)) tiles[i][j] = new WallTile();
                 else if (i>33) tiles[i][j] = new WallTile();
                 else if (i == 15 && (j == 13 || j == 14)) tiles[i][j] = new WallTile();
+                else if ((i>=16 && i<=18) && (j>=11 && j<=16)) tiles[i][j] = new WallTile();
             }
         }
 
-        tiles[15][13] = new WallTile();
-        tiles[15][14] = new WallTile();
+        /*tiles[15][13] = new WallTile();
+        tiles[15][14] = new WallTile();*/
     }
     private void arrangeIntersections() {
         InputStream f;
@@ -117,11 +119,14 @@ public class Model {
         dotsCounter = 0;
         fruit = 2;
         r = new RedGhost(charactersPosition, tiles, pacman);
-        p = new PinkGhost(charactersPosition, tiles, pacman);
         c = new CyanGhost(charactersPosition, tiles, pacman);
+        p = new PinkGhost(charactersPosition, tiles, pacman);
         o = new OrangeGhost(charactersPosition, tiles, pacman);
 
         rThread = new Thread(r);
+        pThread = new Thread(p);
+        cThread = new Thread(c);
+        oThread = new Thread(o);
     }
 
     public Pacman getPacman() {
@@ -219,6 +224,9 @@ public class Model {
         return oThread;
     }
     public void startRedGhost(){rThread.start();}
+    public void startCyanGhost(){cThread.start();}
+    public void startPinkGhost(){pThread.start();}
+    public void startOrangeGhost(){oThread.start();}
 
     public int getScore() {
         return score;

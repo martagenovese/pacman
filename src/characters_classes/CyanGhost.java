@@ -20,9 +20,10 @@ public class CyanGhost extends Ghost {
             Image scaledImageDot = originalImage.getScaledInstance(25, 25, Image.SCALE_SMOOTH);
             setImage(new ImageIcon(scaledImageDot).getImage());
 
-            x=17;
-            y=13;
+            x=13;
+            y=17;
             status=0;
+            nGhost=2;
         }
 
     @Override
@@ -32,21 +33,34 @@ public class CyanGhost extends Ghost {
 
     @Override
     public void scatter() {
-
+        if(status!=1) {
+            turnAround();
+            status = 1;
+        }
+        int xTarget=0;
+        int yTarget=35;
+        reachTarget(xTarget, yTarget);
     }
 
     @Override
     public void startGame() {
-
+        status=0;
+        move("up");
+        move("up");
+        move("up");
     }
 
     @Override
     public void run() {
+        try {
+            Thread.currentThread().sleep(585);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
         startGame();
-        System.out.println("chase");
-        chase();
-        System.out.println("scatter");
-        scatter();
+        while(true){
+            scatter();
+        }
     }
 
 }
