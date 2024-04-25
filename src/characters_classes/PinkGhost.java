@@ -3,13 +3,16 @@ package characters_classes;
 import myclasses.My2DSyncArray;
 import myclasses.SVGIcon;
 import tiles_classes.Tile;
+import tiles_classes.WallTile;
 
 import javax.swing.*;
 import java.awt.*;
+import java.sql.SQLOutput;
 
 public class PinkGhost extends Ghost {
 
     private String imagePath;
+
 
     public PinkGhost(My2DSyncArray charactersPosition, Tile[][] tiles, Pacman pacman){
         super(charactersPosition, tiles, pacman);
@@ -24,23 +27,68 @@ public class PinkGhost extends Ghost {
         y=17;
         status=0;
         nGhost=3;
+
     }
 
     @Override
     public void chase() {
         if(status!=0) {
+            //quando cambia status si gira
             turnAround();
             status = 0;
         }
-        int xTarget=charactersPosition.get(0,0);
-        int yTarget=charactersPosition.get(0,1);
-        switch (charactersPosition.get(0,2)){
-            case 0: {
-                if(yTarget<=8){
-                    yTarget=4;
+
+        //controlla se il target è stato raqggiunto
+        if(x==xTarget&&y==yTarget) {
+            targetReached=true;
+        }
+
+        //se è stato raggiunto acquisice un nuovo target
+        if(targetReached){
+            targetReached=false;
+            xTarget=charactersPosition.get(0,0);
+            yTarget=charactersPosition.get(0,1);
+
+            switch (charactersPosition.get(0,2)){
+                case 0: {
+                    //up
+                    for(int i=4; i>=0; i--)  {
+                        if( !(tiles[yTarget-i][xTarget] instanceof WallTile) ){
+                            yTarget=yTarget-i;
+                            break;
+                        }
+                    }
+                }
+                case 1: {
+                    //left
+                    for(int i=4; i>=0; i--)  {
+                        if( !(tiles[yTarget][xTarget-i] instanceof WallTile) ){
+                            xTarget=xTarget-i;
+                            break;
+                        }
+                    }
+                }
+                case 2: {
+                    //down
+                    for(int i=4; i>=0; i--)  {
+                        if( !(tiles[yTarget+i][xTarget] instanceof WallTile) ){
+                            yTarget=yTarget+i;
+                            break;
+                        }
+                    }
+                }
+                case 3: {
+                    //right
+                    for(int i=4; i>=0; i--)  {
+                        if( !(tiles[yTarget][xTarget+i] instanceof WallTile) ){
+                            xTarget=xTarget+i;
+                            break;
+                        }
+                    }
                 }
             }
         }
+
         reachTarget(xTarget, yTarget);
     }
 
@@ -71,8 +119,8 @@ public class PinkGhost extends Ghost {
             throw new RuntimeException(e);
         }
         startGame();
-        while(true){
-            scatter();
+        while(true) {
+            chase();
         }
 
     }

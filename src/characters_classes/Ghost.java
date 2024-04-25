@@ -16,14 +16,18 @@ public abstract class Ghost extends ImageIcon implements Runnable {
     protected int nGhost;
     protected EventManager eventManager;
     protected Pacman pacman;
-    protected boolean started;
+    protected boolean targetReached;
+    protected int xTarget;
+    protected int yTarget;
 
 
     public Ghost(My2DSyncArray charactersPosition, Tile[][] tiles, Pacman pacman){
         this.charactersPosition=charactersPosition;
         this.tiles=tiles;
         this.pacman=pacman;
-        this.started=false;
+        targetReached=true;
+        xTarget=0;
+        yTarget=0;
     }
     public void setEventManager(EventManager eventManager) {
         this.eventManager = eventManager;
@@ -187,7 +191,4 @@ public abstract class Ghost extends ImageIcon implements Runnable {
         return y;
     }
 
-    public boolean isStarted() {
-        return started;
-    }
 }

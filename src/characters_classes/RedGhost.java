@@ -32,7 +32,6 @@ public class RedGhost extends Ghost {
         move("right");
         move("up");
         move("up");
-        started=true;
     }
 
     @Override
@@ -52,8 +51,18 @@ public class RedGhost extends Ghost {
             turnAround();
             status = 0;
         }
-        int xTarget=charactersPosition.get(0,0);
-        int yTarget=charactersPosition.get(0,1);
+        //controlla se il target è stato raqggiunto
+        if(x==xTarget&&y==yTarget) {
+            targetReached=true;
+        }
+
+        //se è stato raggiunto acquisice un nuovo target
+        if(targetReached){
+            targetReached=false;
+            xTarget=charactersPosition.get(0,0);
+            yTarget=charactersPosition.get(0,1);
+        }
+
         reachTarget(xTarget, yTarget);
     }
 
@@ -64,7 +73,7 @@ public class RedGhost extends Ghost {
         /*getToTheTarget(0,17);
         move("left");*/
         while(true){
-            scatter();
+            chase();
         }
 
     }
