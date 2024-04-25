@@ -13,6 +13,7 @@ public class Pacman extends ImageIcon {
     protected int x, y;
     private String imagePath;
     private My2DSyncArray charactersPosition;
+    protected boolean isSuper;
 
     public Pacman(My2DSyncArray charactersPosition) {
         imagePath = "src/images/pacman/right.png";
@@ -25,10 +26,12 @@ public class Pacman extends ImageIcon {
         x=13;
         y=26;
     }
+    public boolean isSuper() {
+        return isSuper;
+    }
     private void setDirection(String direction) {
         imagePath = "src/images/pacman/" + direction + ".png";
         ImageIcon originalIcon = new ImageIcon(imagePath);
-        //SVGIcon originalIcon = new SVGIcon(imagePath);
         Image originalImage = originalIcon.getImage();
         Image scaledImageDot = originalImage.getScaledInstance(20, 20, Image.SCALE_SMOOTH);
         setImage(new ImageIcon(scaledImageDot).getImage());
@@ -85,5 +88,25 @@ public class Pacman extends ImageIcon {
                 return 3;
         }
         return 0;
+    }
+
+    public void setSuper(boolean isSuper) {
+        this.isSuper = isSuper;
+        System.out.println("Pacman is super: "+isSuper);
+        if (isSuper) {
+            imagePath = "src/images/pacman/super/"+getDirection()+".png";
+            ImageIcon originalIcon = new ImageIcon(imagePath);
+            Image originalImage = originalIcon.getImage();
+            Image scaledImageDot = originalImage.getScaledInstance(20, 20, Image.SCALE_SMOOTH);
+            setImage(new ImageIcon(scaledImageDot).getImage());
+            new Thread(() -> {
+                try {
+                    sleep(7000);
+                    this.isSuper = false;
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }).start();
+        }
     }
 }

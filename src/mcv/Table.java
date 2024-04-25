@@ -58,7 +58,6 @@ public class Table extends JFrame {
     }
     public void clearPacman(int x, int y) {
         tiles[y][x].setIcon(null);
-        tiles[y][x].repaint();
     }
 
     public void setCharacter(Pacman character) {
@@ -119,8 +118,10 @@ public class Table extends JFrame {
         tiles[character.getY()][character.getX()].setIcon(character);
         tiles[redGhost.getY()][redGhost.getX()].setIcon(redGhost);
     }
-    public void clearGhost(int x, int y) {
-        tiles[y][x].setIcon(null);
+    public void clearGhost(int x, int y, boolean isDot, boolean isSuperFood) {
+        if (!isDot && !isSuperFood) tiles[y][x].setIcon(null);
+        else if (isSuperFood) setSuperFood(y, x);
+        else setDot(y, x);
     }
     public void updateGhost(Ghost ghost) {
         tiles[ghost.getY()][ghost.getX()].setIcon(ghost);

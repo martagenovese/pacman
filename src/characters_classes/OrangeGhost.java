@@ -17,7 +17,7 @@ public class OrangeGhost extends Ghost {
             ImageIcon originalIcon = new ImageIcon(imagePath);
             //SVGIcon originalIcon = new SVGIcon(imagePath);
             Image originalImage = originalIcon.getImage();
-            Image scaledImageDot = originalImage.getScaledInstance(25, 25, Image.SCALE_SMOOTH);
+            Image scaledImageDot = originalImage.getScaledInstance(25, 23, Image.SCALE_SMOOTH);
             setImage(new ImageIcon(scaledImageDot).getImage());
 
             x=15;

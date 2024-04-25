@@ -44,20 +44,19 @@ public class Model {
         }
         for (int i=0; i<36; i++) {
             for (int j=0; j<28; j++) {
-                if (i==3) i=12;
-                else if (i==16) i=33;
-                else if ( ((i>12 && i<16) || (i>18 && i<22)) && j==5 ) j=22;
+                if (i==3) i=13;
+                else if ( ((i>12 && i<16) || (i>18 && i<22)) && j==5 ) j=23;
+                else if (i==22) i=34;
 
                 if (i<3) tiles[i][j] = new WallTile();
                 else if (( (i>12 && i<16) || (i>18 && i<22) ) && (j<5 || j>22)) tiles[i][j] = new WallTile();
                 else if (i>33) tiles[i][j] = new WallTile();
-                else if (i == 15 && (j == 13 || j == 14)) tiles[i][j] = new WallTile();
                 else if ((i>=16 && i<=18) && (j>=11 && j<=16)) tiles[i][j] = new WallTile();
             }
         }
 
-        /*tiles[15][13] = new WallTile();
-        tiles[15][14] = new WallTile();*/
+        tiles[15][13] = new WallTile();
+        tiles[15][14] = new WallTile();
     }
     private void arrangeIntersections() {
         InputStream f;
@@ -171,13 +170,14 @@ public class Model {
         if (!(tile instanceof WallTile)) {
             if (tile.isSuperFood()) {
                 ((CrossableTile) tile).setSuperFood(false);
+                pacman.setSuper(true);
                 score += 50;
                 dotsCounter++;
                 if (dotsCounter == 70 || dotsCounter == 240) {
                     fruit--;
                 }
             } else if (tile.isDot()) {
-                ((CrossableTile) myTile).setDot(false);
+                ((CrossableTile) tile).setDot(false);
                 score += 10;
             }
             myTile.setPacman(false);
@@ -186,7 +186,6 @@ public class Model {
         }
     }
     public void keepDirection(String direction) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
-        //non funziona questo secondo me
         Method method = this.getClass().getMethod("get"+direction+"Tile");
         Tile nextTile = (Tile) method.invoke(this);
         if (lastDirection == null) lastDirection = direction.toLowerCase();

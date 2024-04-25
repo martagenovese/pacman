@@ -42,6 +42,7 @@ public class EventManager implements KeyListener {
                     else if (( (i>12 && i<16) || (i>18 && i<22) ) && (j<5 || j>22)) table.tiles[i][j].setBackground(Color.BLACK);
                     else if (i>33) table.tiles[i][j].setBackground(Color.BLACK);
                     else if (i == 15 && (j == 13 || j == 14)) table.tiles[i][j].setBackground(Color.BLACK);
+                    else if ((i>=16 && i<=18) && (j>=11 && j<=16)) table.tiles[i][j].setBackground(Color.BLACK);
                     else table.tiles[i][j].setBackground(Color.BLUE);
                 } else if (model.tiles[i][j] instanceof CrossableTile) {
                     CrossableTile tile = (CrossableTile) model.tiles[i][j];
@@ -49,8 +50,8 @@ public class EventManager implements KeyListener {
                         table.setDot(i, j);
                     } else if (tile.isSuperFood()) {
                         table.setSuperFood(i, j);
-                    } else if (tile.isIntersection()) table.tiles[i][j].setBackground(Color.WHITE);
-                    else table.tiles[i][j].setBackground(Color.BLACK);
+                    }
+                    table.tiles[i][j].setBackground(Color.BLACK);
                 }
             }
         }
@@ -68,11 +69,6 @@ public class EventManager implements KeyListener {
         table.setOrangeGhost(model.getOrangeGhost());
     }
 
-    @Override
-    public void keyTyped(KeyEvent e) {
-
-    }
-
     public void disableListenerFor(int milliseconds) {
         isListenerActive = false;
         new Timer().schedule(new TimerTask() {
@@ -83,15 +79,20 @@ public class EventManager implements KeyListener {
         }, milliseconds);
     }
     public void clearGhostPosition(Ghost ghost) {
-        table.clearGhost(ghost.getX(), ghost.getY());
+        boolean isDot = model.tiles[ghost.getY()][ghost.getX()].isDot();
+        boolean isSuperFood = model.tiles[ghost.getY()][ghost.getX()].isSuperFood();
+        table.clearGhost(ghost.getX(), ghost.getY(), isDot, isSuperFood);
     }
     public void updateGhostPosition(Ghost ghost) {
         table.updateGhost(ghost);
     }
 
     @Override
+    public void keyTyped(KeyEvent e) {}
+
+    @Override
     public void keyPressed(KeyEvent e) {
-        if(startGhost==false){
+        if(!startGhost){
             startGhost=true;
             model.startRedGhost();
             model.startCyanGhost();
@@ -116,21 +117,16 @@ public class EventManager implements KeyListener {
                 return;
             }
 
-
             table.clearPacman(model.getPacman().getX(), model.getPacman().getY());
             try {
                 model.keepDirection(s);
             } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException ex) {
                 throw new RuntimeException(ex);
             }
-            //table.clearPacman(model.getPacman().getX(), model.getPacman().getY());
+
             table.updateScore(model.getScore());
-            //model.movePacman(lastDirection, (Tile) method.invoke(model), model.getMyTile());
-
-
             model.updatePosition();
             table.updatePosition();
-            //table.repaint();
         }
     }
     @Override
