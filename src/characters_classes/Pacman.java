@@ -68,7 +68,7 @@ public class Pacman extends ImageIcon {
     }
 
     public String getDirection() {
-        return imagePath.substring(imagePath.length() - 9, imagePath.length() - 4);
+        return imagePath.substring(imagePath.lastIndexOf('/'), imagePath.lastIndexOf('.'));
     }
     public int getX() {
         return x;
