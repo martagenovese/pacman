@@ -59,13 +59,17 @@ public class RedGhost extends Ghost {
         reachTarget(xTarget, yTarget);
     }
 
-    @Override
-    public void eaten(){
+    protected void restorePosition(){
         x=12;
         y=17;
         charactersPosition.set(nGhost,0, x);
         charactersPosition.set(nGhost,1, y);
         eventManager.updateGhostPosition(this);
+    }
+
+    @Override
+    public void eaten(){
+        restorePosition();
         if(!pacman.isSuper()){
             startGame();
         }

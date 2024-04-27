@@ -126,14 +126,17 @@ public class CyanGhost extends Ghost {
         move("up");
         status=0;
     }
-
-    @Override
-    public void eaten(){
+    protected void restorePosition(){
         x=13;
         y=17;
         charactersPosition.set(nGhost,0, x);
         charactersPosition.set(nGhost,1, y);
         eventManager.updateGhostPosition(this);
+    }
+
+    @Override
+    public void eaten(){
+        restorePosition();
         if(!pacman.isSuper()){
             startGame();
         }

@@ -114,6 +114,39 @@ public class Table extends JFrame {
         tiles[35][23].setIcon(fruit);
     }
 
+    public void showVictory() {
+        JOptionPane optionPane = new JOptionPane("You have won!", JOptionPane.INFORMATION_MESSAGE, JOptionPane.DEFAULT_OPTION, null, new Object[]{}, null);
+        JDialog dialog = new JDialog();
+        dialog.setTitle("Victory!");
+        dialog.setModal(true);
+        dialog.setContentPane(optionPane);
+        dialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
+        dialog.pack();
+
+        Timer timer = new Timer(5000, e -> dialog.setVisible(false));
+        timer.setRepeats(false);
+        timer.start();
+
+        dialog.setVisible(true);
+        System.exit(0);
+    }
+    public void showDefeat() {
+        JOptionPane optionPane = new JOptionPane("You have lost!", JOptionPane.INFORMATION_MESSAGE, JOptionPane.DEFAULT_OPTION, null, new Object[]{}, null);
+        JDialog dialog = new JDialog();
+        dialog.setTitle("Game Over");
+        dialog.setModal(true);
+        dialog.setContentPane(optionPane);
+        dialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
+        dialog.pack();
+
+        Timer timer = new Timer(5000, e -> dialog.setVisible(false));
+        timer.setRepeats(false);
+        timer.start();
+
+        dialog.setVisible(true);
+        System.exit(0);
+    }
+
     public void updatePosition() {
         tiles[character.getY()][character.getX()].setIcon(character);
         //tiles[redGhost.getY()][redGhost.getX()].setIcon(redGhost);

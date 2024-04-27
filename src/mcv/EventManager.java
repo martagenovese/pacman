@@ -34,6 +34,8 @@ public class EventManager implements KeyListener {
 
         charactersPosition = model.charactersPosition;
         model.sThread.start();
+
+        model.supervisor.setEventManager(this);
     }
 
     public void setTable(Table table) {
@@ -100,6 +102,7 @@ public class EventManager implements KeyListener {
         model.getCyanGhost().setScared(true);
         model.getPinkGhost().setScared(true);
         model.getOrangeGhost().setScared(true);
+        model.ghostsEaten = 0;
         new Timer().schedule(new TimerTask() {
             @Override
             public void run() {
@@ -110,6 +113,14 @@ public class EventManager implements KeyListener {
                 model.getOrangeGhost().setScared(false);
             }
         }, 7000);
+    }
+
+    public void stopGame(boolean victory) {
+        if (victory) {
+            table.showVictory();
+        } else {
+            table.showDefeat();
+        }
     }
 
     @Override

@@ -127,6 +127,8 @@ import java.awt.*;
     public void reachTarget(int xTarget, int yTarget){
         //{ Up, Left, Down, Right }
         int[][] directions = {{y - 1, x}, {y, x - 1}, {y + 1, x}, {y, x + 1}};
+        if (directions[1][1] == -1) directions[1][1] = 27;
+        if (directions[3][1] == 28) directions[3][1] = 0;
         double distance;
         int chosenDirection;
         int back;
@@ -156,9 +158,6 @@ import java.awt.*;
         }
 
         //TODO: gestire i tunnel
-
-
-
         //se è un incrocio o se continuando su quella direzione trova un muro
         if ( (tiles[y][x].isIntersection()) || (tiles[directions[chosenDirection][0]][directions[chosenDirection][1]] instanceof WallTile) ) {
             double distanceMin = 100;
@@ -193,6 +192,7 @@ import java.awt.*;
     public abstract void chase();
     public abstract void scatter();
     public abstract void eaten();
+    protected abstract void restorePosition();
     public void turnAround(){
         int[][] directions = {{y + 1, x}, {y, x - 1}, {y - 1, x}, {y, x + 1}};
         //TODO: CONTROLLA MURI
@@ -227,6 +227,12 @@ import java.awt.*;
 
     public void setStatus(int n){
         status=n;
+    }
+
+    public void pacmanEaten(){
+        restorePosition();
+        eventManager.updateGhostPosition(this);
+        eventManager.clearGhostPosition(this);
     }
      @Override
      public void run() {

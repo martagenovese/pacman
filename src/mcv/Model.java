@@ -7,6 +7,7 @@ import tiles_classes.Tile;
 import tiles_classes.WallTile;
 import supervisor.Supervisor;
 
+import javax.swing.*;
 import java.awt.*;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -18,7 +19,7 @@ import java.util.Scanner;
 public class Model {
     protected Tile[][] tiles;
     protected Pacman pacman;
-    protected int score, lives, dotsCounter, fruit;
+    public int score, lives, dotsCounter, fruit, ghostsEaten;
 
     // 0 - pacman, 1 - red ghost, 2 - cyan ghost, 3 - pink ghost, 4 - orange ghost
     // x, y, direction( 0-Up, 1-Left, 2-Down, 3-Right )
@@ -104,6 +105,7 @@ public class Model {
         tiles = new Tile[36][28];
         supervisor = new Supervisor(charactersPosition, this);
         sThread = new Thread(supervisor);
+        ghostsEaten = 0;
 
         //tutte crossable all'inizio
         for (int i = 0; i < 36; i++) {
@@ -144,7 +146,7 @@ public class Model {
         try {
             leftTile = tiles[pacman.getY()][pacman.getX() - 1];
         } catch (ArrayIndexOutOfBoundsException ex) {
-            leftTile = tiles[27][pacman.getX()];
+            leftTile = tiles[pacman.getY()][27];
         }
         return leftTile;
     }
@@ -152,7 +154,7 @@ public class Model {
         try {
             rightTile = tiles[pacman.getY()][pacman.getX() + 1];
         } catch (ArrayIndexOutOfBoundsException ex) {
-            rightTile = tiles[0][pacman.getX()];
+            rightTile = tiles[pacman.getY()][0];
         }
         return rightTile;
     }
@@ -190,6 +192,13 @@ public class Model {
 
         }
     }
+    public void pacmanHasBeenEaten() {
+        //pacman.eaten();
+        r.pacmanEaten();
+        c.pacmanEaten();
+        p.pacmanEaten();
+        o.pacmanEaten();
+    }
     public int collision() {
         for (int i = 1; i < 5; i++) {
             if (charactersPosition.get(0, 0) == charactersPosition.get(i, 0) && charactersPosition.get(0, 1) == charactersPosition.get(i, 1)) {
@@ -198,7 +207,7 @@ public class Model {
         }
         return -1;
     }
-    public void collisionProcedure(int n) throws InterruptedException {
+    public boolean collisionProcedure(int n) throws InterruptedException {
         if (pacman.isSuper()) {
             switch (n) {
                 case 1: {
@@ -218,6 +227,13 @@ public class Model {
                     break;
                 }
             }
+            ghostsEaten++;
+            return true;
+        } else {
+            lives--;
+            tiles[23][14].setPacman(true);
+            pacmanHasBeenEaten();
+            return false;
         }
     }
     public void keepDirection(String direction) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {

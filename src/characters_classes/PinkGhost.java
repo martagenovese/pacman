@@ -115,14 +115,16 @@ public class PinkGhost extends Ghost {
         move("up");
         status=0;
     }
-
-    @Override
-    public void eaten(){
+    protected void restorePosition(){
         x=14;
         y=17;
         charactersPosition.set(nGhost,0, x);
         charactersPosition.set(nGhost,1, y);
-        eventManager.updateGhostPosition(this);
+    }
+
+    @Override
+    public void eaten(){
+        restorePosition();
         if(!pacman.isSuper()){
             startGame();
         }
