@@ -5,7 +5,9 @@ import tiles_classes.*;
 import javax.swing.*;
 import mcv.*;
 
-public abstract class Ghost extends ImageIcon implements Runnable {
+import java.awt.*;
+
+ public abstract class Ghost extends ImageIcon implements Runnable {
 
     protected int x, y;
     protected String direction;
@@ -19,12 +21,20 @@ public abstract class Ghost extends ImageIcon implements Runnable {
     protected boolean targetReached;
     protected int xTarget;
     protected int yTarget;
+    protected String colour;
 
 
-    public Ghost(My2DSyncArray charactersPosition, Tile[][] tiles, Pacman pacman){
+    public Ghost(My2DSyncArray charactersPosition, Tile[][] tiles, Pacman pacman, String colour){
         this.charactersPosition=charactersPosition;
         this.tiles=tiles;
         this.pacman=pacman;
+        this.colour=colour;
+        String imagePath = "src/images/ghosts/"+colour+".png";
+        ImageIcon originalIcon = new ImageIcon(imagePath);
+        Image originalImage = originalIcon.getImage();
+        Image scaledImageDot = originalImage.getScaledInstance(25, 23, Image.SCALE_SMOOTH);
+        setImage(new ImageIcon(scaledImageDot).getImage());
+
         targetReached=true;
         xTarget=0;
         yTarget=0;
@@ -47,6 +57,20 @@ public abstract class Ghost extends ImageIcon implements Runnable {
         System.out.println("xTarget: "+xTarget+" yTarget: "+yTarget);
 
         getToTheTarget(xTarget, yTarget);
+    }
+    public void setScared(boolean scared){
+        if(scared){
+            setImagePath("scared");
+        } else {
+            setImagePath(colour);
+        }
+    }
+    private void setImagePath(String colour){
+        String imagePath = "src/images/ghosts/"+colour+".png";
+        ImageIcon originalIcon = new ImageIcon(imagePath);
+        Image originalImage = originalIcon.getImage();
+        Image scaledImageDot = originalImage.getScaledInstance(25, 23, Image.SCALE_SMOOTH);
+        setImage(new ImageIcon(scaledImageDot).getImage());
     }
 
     public void move(String dir) {
@@ -83,10 +107,8 @@ public abstract class Ghost extends ImageIcon implements Runnable {
         charactersPosition.set(nGhost,1, y);
         eventManager.updateGhostPosition(this);
         try {
-            Thread.currentThread().sleep(195);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+            Thread.sleep(200);
+        } catch (InterruptedException ignored) {}
     }
 
     public void getToTheTarget(int xTarget, int yTarget) {
@@ -189,6 +211,12 @@ public abstract class Ghost extends ImageIcon implements Runnable {
     }
     public int getY() {
         return y;
+    }
+    public void setXY(int x, int y){
+        this.x=x;
+        this.y=y;
+        charactersPosition.set(nGhost,0, x);
+        charactersPosition.set(nGhost,1, y);
     }
 
 }

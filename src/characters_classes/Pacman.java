@@ -1,19 +1,19 @@
 package characters_classes;
 
+import mcv.EventManager;
 import myclasses.My2DSyncArray;
-import myclasses.SVGIcon;
-
 import javax.swing.*;
 import java.awt.*;
+import java.util.TimerTask;
 
-import static java.lang.Thread.sleep;
 
 public class Pacman extends ImageIcon {
-    //TODO: controlla costruttore
+    //TODO: (optimization) n Icons for each direction
     protected int x, y;
     private String imagePath;
     private My2DSyncArray charactersPosition;
     protected boolean isSuper;
+    protected EventManager eventManager;
 
     public Pacman(My2DSyncArray charactersPosition) {
         imagePath = "src/images/pacman/right.png";
@@ -37,8 +37,12 @@ public class Pacman extends ImageIcon {
         setImage(new ImageIcon(scaledImageDot).getImage());
 
     }
+    public void setEventManager(EventManager eventManager) {
+        this.eventManager = eventManager;
+    }
     public void move(String direction) {
-        setDirection(direction);
+        if (isSuper) setDirection("super/"+direction);
+        else setDirection(direction);
         switch (direction) {
             case "left" : {
                 if (x == 0) x = 27;
@@ -92,21 +96,13 @@ public class Pacman extends ImageIcon {
 
     public void setSuper(boolean isSuper) {
         this.isSuper = isSuper;
-        System.out.println("Pacman is super: "+isSuper);
         if (isSuper) {
-            imagePath = "src/images/pacman/super/"+getDirection()+".png";
+            eventManager.sevenSecondsInHeaven();
+            imagePath = "src/images/pacman/super/" + getDirection() + ".png";
             ImageIcon originalIcon = new ImageIcon(imagePath);
             Image originalImage = originalIcon.getImage();
             Image scaledImageDot = originalImage.getScaledInstance(20, 20, Image.SCALE_SMOOTH);
             setImage(new ImageIcon(scaledImageDot).getImage());
-            new Thread(() -> {
-                try {
-                    sleep(7000);
-                    this.isSuper = false;
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }).start();
         }
     }
 }

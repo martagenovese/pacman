@@ -1,6 +1,7 @@
 package mcv;
 
 import characters_classes.Ghost;
+import characters_classes.Pacman;
 import myclasses.My2DSyncArray;
 import tiles_classes.*;
 
@@ -18,10 +19,9 @@ public class EventManager implements KeyListener {
     protected boolean isListenerActive;
     protected String nextDirection, lastDirection;
     protected boolean startGhost;
-
     public EventManager() {
         isListenerActive = true;
-        startGhost=false;
+        startGhost = false;
     }
     public void setModel(Model model) {
         this.model = model;
@@ -29,6 +29,11 @@ public class EventManager implements KeyListener {
         model.getCyanGhost().setEventManager(this);
         model.getPinkGhost().setEventManager(this);
         model.getOrangeGhost().setEventManager(this);
+
+        model.pacman.setEventManager(this);
+
+        charactersPosition = model.charactersPosition;
+        model.sThread.start();
     }
 
     public void setTable(Table table) {
@@ -68,6 +73,9 @@ public class EventManager implements KeyListener {
         table.setPinkGhost(model.getPinkGhost());
         table.setOrangeGhost(model.getOrangeGhost());
     }
+    public Table getTable() {
+        return table;
+    }
 
     public void disableListenerFor(int milliseconds) {
         isListenerActive = false;
@@ -87,18 +95,36 @@ public class EventManager implements KeyListener {
         table.updateGhost(ghost);
     }
 
+    public void sevenSecondsInHeaven() {
+        model.getRedGhost().setScared(true);
+        model.getCyanGhost().setScared(true);
+        model.getPinkGhost().setScared(true);
+        model.getOrangeGhost().setScared(true);
+        new Timer().schedule(new TimerTask() {
+            @Override
+            public void run() {
+                model.pacman.setSuper(false);
+                model.getRedGhost().setScared(false);
+                model.getCyanGhost().setScared(false);
+                model.getPinkGhost().setScared(false);
+                model.getOrangeGhost().setScared(false);
+            }
+        }, 7000);
+    }
+
     @Override
     public void keyTyped(KeyEvent e) {}
 
     @Override
     public void keyPressed(KeyEvent e) {
-        if(!startGhost){
-            startGhost=true;
+        if (!startGhost) {
             model.startRedGhost();
             model.startCyanGhost();
             model.startPinkGhost();
             model.startOrangeGhost();
+            startGhost = true;
         }
+
         if (isListenerActive) {
             disableListenerFor(200);
 
@@ -127,6 +153,7 @@ public class EventManager implements KeyListener {
             table.updateScore(model.getScore());
             model.updatePosition();
             table.updatePosition();
+
         }
     }
     @Override

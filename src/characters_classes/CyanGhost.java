@@ -12,15 +12,8 @@ public class CyanGhost extends Ghost {
 
         private String imagePath;
 
-        public CyanGhost(My2DSyncArray charactersPosition, Tile[][] tiles, Pacman pacman){
-            super(charactersPosition, tiles, pacman);
-            imagePath = "src/images/ghosts/cyan.png";
-            ImageIcon originalIcon = new ImageIcon(imagePath);
-            //SVGIcon originalIcon = new SVGIcon(imagePath);
-            Image originalImage = originalIcon.getImage();
-            Image scaledImageDot = originalImage.getScaledInstance(25, 23, Image.SCALE_SMOOTH);
-            setImage(new ImageIcon(scaledImageDot).getImage());
-
+        public CyanGhost(My2DSyncArray charactersPosition, Tile[][] tiles, Pacman pacman, String colour){
+            super(charactersPosition, tiles, pacman, colour);
             x=13;
             y=17;
             status=0;

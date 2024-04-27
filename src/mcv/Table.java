@@ -116,7 +116,7 @@ public class Table extends JFrame {
 
     public void updatePosition() {
         tiles[character.getY()][character.getX()].setIcon(character);
-        tiles[redGhost.getY()][redGhost.getX()].setIcon(redGhost);
+        //tiles[redGhost.getY()][redGhost.getX()].setIcon(redGhost);
     }
     public void clearGhost(int x, int y, boolean isDot, boolean isSuperFood) {
         if (!isDot && !isSuperFood) tiles[y][x].setIcon(null);

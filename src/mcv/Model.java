@@ -5,6 +5,7 @@ import myclasses.My2DSyncArray;
 import tiles_classes.CrossableTile;
 import tiles_classes.Tile;
 import tiles_classes.WallTile;
+import supervisor.Supervisor;
 
 import java.awt.*;
 import java.io.FileInputStream;
@@ -24,8 +25,9 @@ public class Model {
     protected My2DSyncArray charactersPosition;
     protected Tile leftTile, rightTile, upTile, downTile, myTile;
     protected String lastDirection, nextDirection;
-    protected Thread rThread, pThread, cThread, oThread;
+    protected Thread rThread, pThread, cThread, oThread, sThread;
     protected Ghost r, p, c, o;
+    protected Supervisor supervisor;
 
     private void arrageWalls() {
         InputStream f;
@@ -100,6 +102,8 @@ public class Model {
         charactersPosition = new My2DSyncArray(5, 3);
         pacman = new Pacman(charactersPosition);
         tiles = new Tile[36][28];
+        supervisor = new Supervisor(charactersPosition, this);
+        sThread = new Thread(supervisor);
 
         //tutte crossable all'inizio
         for (int i = 0; i < 36; i++) {
@@ -117,10 +121,10 @@ public class Model {
         lives = 3;
         dotsCounter = 0;
         fruit = 2;
-        r = new RedGhost(charactersPosition, tiles, pacman);
-        c = new CyanGhost(charactersPosition, tiles, pacman);
-        p = new PinkGhost(charactersPosition, tiles, pacman);
-        o = new OrangeGhost(charactersPosition, tiles, pacman);
+        r = new RedGhost(charactersPosition, tiles, pacman, "red");
+        c = new CyanGhost(charactersPosition, tiles, pacman, "cyan");
+        p = new PinkGhost(charactersPosition, tiles, pacman, "pink");
+        o = new OrangeGhost(charactersPosition, tiles, pacman, "orange");
 
         rThread = new Thread(r);
         pThread = new Thread(p);
@@ -183,6 +187,41 @@ public class Model {
             myTile.setPacman(false);
             pacman.move(direction);
             tile.setPacman(true);
+
+        }
+    }
+    public int collision() {
+        for (int i = 1; i < 5; i++) {
+            if (charactersPosition.get(0, 0) == charactersPosition.get(i, 0) && charactersPosition.get(0, 1) == charactersPosition.get(i, 1)) {
+                return i;
+            }
+        }
+        return -1;
+    }
+    public void collisionProcedure(int n) throws InterruptedException {
+        if (pacman.isSuper()) {
+            switch (n) {
+                case 1: {
+                    r.setXY(12, 17);
+                    rThread.wait(7000);
+                    break;
+                }
+                case 2: {
+                    c.setXY(13, 17);
+                    cThread.wait(7000);
+                    break;
+                }
+                case 3: {
+                    p.setXY(14, 17);
+                    pThread.wait(7000);
+                    break;
+                }
+                case 4: {
+                    o.setXY(15, 17);
+                    oThread.wait(7000);
+                    break;
+                }
+            }
         }
     }
     public void keepDirection(String direction) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {

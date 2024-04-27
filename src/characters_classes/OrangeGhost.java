@@ -11,15 +11,8 @@ public class OrangeGhost extends Ghost {
 
         private String imagePath;
 
-        public OrangeGhost(My2DSyncArray charactersPosition, Tile[][] tiles, Pacman pacman){
-            super(charactersPosition, tiles, pacman);
-            imagePath = "src/images/ghosts/orange.png";
-            ImageIcon originalIcon = new ImageIcon(imagePath);
-            //SVGIcon originalIcon = new SVGIcon(imagePath);
-            Image originalImage = originalIcon.getImage();
-            Image scaledImageDot = originalImage.getScaledInstance(25, 23, Image.SCALE_SMOOTH);
-            setImage(new ImageIcon(scaledImageDot).getImage());
-
+        public OrangeGhost(My2DSyncArray charactersPosition, Tile[][] tiles, Pacman pacman, String colour){
+            super(charactersPosition, tiles, pacman, colour);
             x=15;
             y=17;
             status=0;
@@ -52,7 +45,7 @@ public class OrangeGhost extends Ghost {
     @Override
     public void run() {
         try {
-            Thread.currentThread().sleep(1755);
+            Thread.sleep(1755);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
