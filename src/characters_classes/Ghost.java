@@ -11,7 +11,7 @@ import java.awt.*;
 
     protected int x, y;
     protected String direction;
-    //0-> chase, 1->scatter, 2->frightened
+    //0-> chase, 1->scatter, 2->frightened, 3->eaten
     protected int status;
     protected My2DSyncArray charactersPosition;
     protected Tile[][] tiles;
@@ -46,21 +46,28 @@ import java.awt.*;
     public void frightened()  {
         //TODO: se va nel tunnel da errore
         if(status!=2){
+            targetReached=true;
             turnAround();
             status=2;
         }
-        int xTarget, yTarget;
-        do{
-            xTarget=(int)(Math.random()*26+1);
-            yTarget=(int)(Math.random()*29+4);
-        } while(tiles[yTarget][xTarget] instanceof WallTile);
-        System.out.println("xTarget: "+xTarget+" yTarget: "+yTarget);
 
-        getToTheTarget(xTarget, yTarget);
+        if(x==xTarget&&y==yTarget) {
+            targetReached=true;
+        }
+
+        //se è stato raggiunto acquisice un nuovo target
+        if(targetReached){
+            do{
+                xTarget=(int)(Math.random()*26+1);
+                yTarget=(int)(Math.random()*29+4);
+            } while(tiles[yTarget][xTarget] instanceof WallTile);
+        }
+        reachTarget(xTarget, yTarget);
     }
     public void setScared(boolean scared){
         if(scared){
             setImagePath("scared");
+            status=2;
         } else {
             setImagePath(colour);
         }
@@ -111,11 +118,11 @@ import java.awt.*;
         } catch (InterruptedException ignored) {}
     }
 
-    public void getToTheTarget(int xTarget, int yTarget) {
-        while(x != xTarget || y != yTarget) {
-            reachTarget(xTarget, yTarget);
-        }
-    }
+//    public void getToTheTarget(int xTarget, int yTarget) {
+//        while(x != xTarget || y != yTarget) {
+//            reachTarget(xTarget, yTarget);
+//        }
+//    }
 
     public void reachTarget(int xTarget, int yTarget){
         //{ Up, Left, Down, Right }
@@ -185,8 +192,7 @@ import java.awt.*;
     protected abstract void startGame();
     public abstract void chase();
     public abstract void scatter();
-
-
+    public abstract void eaten();
     public void turnAround(){
         int[][] directions = {{y + 1, x}, {y, x - 1}, {y - 1, x}, {y, x + 1}};
         //TODO: CONTROLLA MURI
@@ -218,5 +224,35 @@ import java.awt.*;
         charactersPosition.set(nGhost,0, x);
         charactersPosition.set(nGhost,1, y);
     }
+
+    public void setStatus(int n){
+        status=n;
+    }
+     @Override
+     public void run() {
+         startGame();
+         while(true){
+             //0-> chase, 1->scatter, 2->frightened, 3->eaten
+             switch(status){
+                 case 0: {
+                     chase();
+                     break;
+                 }
+                 case 1: {
+                     scatter();
+                     break;
+                 }
+                 case 2: {
+                     frightened();
+                     break;
+                 }
+                 case 3: {
+                     eaten();
+                     break;
+                 }
+             }
+         }
+     }
+
 
 }

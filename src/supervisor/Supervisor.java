@@ -26,11 +26,6 @@ public class Supervisor implements Runnable{
                     throw new RuntimeException(ex);
                 }
             }
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
         }
     }
 }

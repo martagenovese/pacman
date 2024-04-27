@@ -23,6 +23,7 @@ public class PinkGhost extends Ghost {
     public void chase() {
         if(status!=0) {
             //quando cambia status si gira
+            targetReached=true;
             turnAround();
             status = 0;
         }
@@ -106,25 +107,25 @@ public class PinkGhost extends Ghost {
     }
     @Override
     public void startGame() {
+        try {
+            Thread.sleep(1400);
+        } catch (InterruptedException ignored) {}
+        move("up");
+        move("up");
+        move("up");
         status=0;
-        move("up");
-        move("up");
-        move("up");
     }
 
-
     @Override
-    public void run() {
-        try {
-            Thread.currentThread().sleep(1170);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
+    public void eaten(){
+        x=14;
+        y=17;
+        charactersPosition.set(nGhost,0, x);
+        charactersPosition.set(nGhost,1, y);
+        eventManager.updateGhostPosition(this);
+        if(!pacman.isSuper()){
+            startGame();
         }
-        startGame();
-        while(true) {
-            chase();
-        }
-
     }
 }
 

@@ -19,11 +19,11 @@ public class RedGhost extends Ghost {
     }
 
     protected void startGame() {
-        status=0;
         move("up");
         move("right");
         move("up");
         move("up");
+        status=0;
     }
 
     @Override
@@ -40,6 +40,7 @@ public class RedGhost extends Ghost {
     @Override
     public void chase() {
         if(status!=0) {
+            targetReached=true;
             turnAround();
             status = 0;
         }
@@ -58,15 +59,19 @@ public class RedGhost extends Ghost {
         reachTarget(xTarget, yTarget);
     }
 
-
     @Override
-    public void run() {
-        startGame();
-        /*getToTheTarget(0,17);
-        move("left");*/
-        while(true){
-            chase();
+    public void eaten(){
+        x=12;
+        y=17;
+        charactersPosition.set(nGhost,0, x);
+        charactersPosition.set(nGhost,1, y);
+        eventManager.updateGhostPosition(this);
+        if(!pacman.isSuper()){
+            startGame();
         }
-
     }
+
+
+
+
 }

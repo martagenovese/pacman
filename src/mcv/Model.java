@@ -202,23 +202,19 @@ public class Model {
         if (pacman.isSuper()) {
             switch (n) {
                 case 1: {
-                    r.setXY(12, 17);
-                    rThread.wait(7000);
+                    r.setStatus(3);
                     break;
                 }
                 case 2: {
-                    c.setXY(13, 17);
-                    cThread.wait(7000);
+                    c.setStatus(3);
                     break;
                 }
                 case 3: {
-                    p.setXY(14, 17);
-                    pThread.wait(7000);
+                    p.setStatus(3);
                     break;
                 }
                 case 4: {
-                    o.setXY(15, 17);
-                    oThread.wait(7000);
+                    o.setStatus(3);
                     break;
                 }
             }

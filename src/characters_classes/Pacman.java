@@ -80,19 +80,19 @@ public class Pacman extends ImageIcon {
     public int getY() {
         return y;
     }
-    private int directionStrToInt(String direction){
-        switch (direction) {
-            case "up":
-                return 0;
-            case "left":
-                return 1;
-            case "down":
-                return 2;
-            case "right":
-                return 3;
-        }
-        return 0;
-    }
+//    private int directionStrToInt(String direction){
+//        switch (direction) {
+//            case "up":
+//                return 0;
+//            case "left":
+//                return 1;
+//            case "down":
+//                return 2;
+//            case "right":
+//                return 3;
+//        }
+//        return 0;
+//    }
 
     public void setSuper(boolean isSuper) {
         this.isSuper = isSuper;

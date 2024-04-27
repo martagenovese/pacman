@@ -24,6 +24,7 @@ public class CyanGhost extends Ghost {
     public void chase() {
         if(status!=0) {
             //quando cambia status si gira
+            targetReached=true;
             turnAround();
             status = 0;
         }
@@ -39,8 +40,8 @@ public class CyanGhost extends Ghost {
             xTarget=charactersPosition.get(0,0);
             yTarget=charactersPosition.get(0,1);
 
-            switch (charactersPosition.get(0,2)){
-                case 0: {
+            switch (pacman.getDirection()){
+                case "up": {
                     //up
                     for(int i=2; i>=0; i--)  {
                         if( yTarget-i>=0){
@@ -49,7 +50,7 @@ public class CyanGhost extends Ghost {
                         }
                     }
                 }
-                case 1: {
+                case "left": {
                     //left
                     for(int i=2; i>=0; i--)  {
                         if( xTarget-i>=0){
@@ -58,7 +59,7 @@ public class CyanGhost extends Ghost {
                         }
                     }
                 }
-                case 2: {
+                case "down": {
                     //down
                     for(int i=2; i>=0; i--)  {
                         if( yTarget+i<=35){
@@ -67,7 +68,7 @@ public class CyanGhost extends Ghost {
                         }
                     }
                 }
-                case 3: {
+                case "right": {
                     //right
                     for(int i=2; i>=0; i--)  {
                         if( xTarget+i<=27 ){
@@ -90,23 +91,16 @@ public class CyanGhost extends Ghost {
                     break;
                 }
             }
-
-            for (int i = 0; i <  xTarget-charactersPosition.get(0,0); i--) {
-                for (int j = 0; j < yTarget-charactersPosition.get(0,1); j--) {
+            OuterLoop:
+            for (int i = 0; i <  yTarget-charactersPosition.get(0,1); i++) {
+                for (int j = 0; j < xTarget-charactersPosition.get(0,0); j++) {
                     if(!(tiles[yTarget-i][xTarget-j] instanceof WallTile)){
                         xTarget=xTarget-i;
                         yTarget=yTarget-j;
-                        break;
-                        //USCIRE DA TUTTI E DUE I CICLI
+                        break OuterLoop;
                     }
                 }
-                
             }
-            
-            xTarget=xTarget+(xTarget-charactersPosition.get(1,0));
-            yTarget=yTarget+(yTarget-charactersPosition.get(1,1));
-            
-            
         }
         reachTarget(xTarget, yTarget);
     }
@@ -124,23 +118,26 @@ public class CyanGhost extends Ghost {
 
     @Override
     public void startGame() {
+        try {
+            Thread.sleep(800);
+        } catch (InterruptedException ignored) {}
+        move("up");
+        move("up");
+        move("up");
         status=0;
-        move("up");
-        move("up");
-        move("up");
     }
 
     @Override
-    public void run() {
-//        try {
-//            Thread.currentThread().sleep(585);
-//        } catch (InterruptedException e) {
-//            throw new RuntimeException(e);
-//        }
-//        startGame();
-//        while(true){
-//            chase();
-//        }
+    public void eaten(){
+        x=13;
+        y=17;
+        charactersPosition.set(nGhost,0, x);
+        charactersPosition.set(nGhost,1, y);
+        eventManager.updateGhostPosition(this);
+        if(!pacman.isSuper()){
+            startGame();
+        }
     }
+
 
 }
