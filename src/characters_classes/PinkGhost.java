@@ -15,7 +15,7 @@ public class PinkGhost extends Ghost {
         super(charactersPosition, tiles, pacman, colour);
         x=14;
         y=17;
-        status=0;
+        status=1;
         nGhost=3;
     }
 
@@ -113,21 +113,15 @@ public class PinkGhost extends Ghost {
         move("up");
         move("up");
         move("up");
-        status=0;
+        status=1;
     }
     protected void restorePosition(){
         x=14;
         y=17;
         charactersPosition.set(nGhost,0, x);
         charactersPosition.set(nGhost,1, y);
+        eventManager.updateGhostPosition(this);
     }
 
-    @Override
-    public void eaten(){
-        restorePosition();
-        if(!pacman.isSuper()){
-            startGame();
-        }
-    }
 }
 

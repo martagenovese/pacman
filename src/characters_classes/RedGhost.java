@@ -14,7 +14,7 @@ public class RedGhost extends Ghost {
         super(charactersPosition, tiles, pacman, colour);
         x=12;
         y=17;
-        status=0;
+        status=1;
         nGhost=1;
     }
 
@@ -23,7 +23,7 @@ public class RedGhost extends Ghost {
         move("right");
         move("up");
         move("up");
-        status=0;
+        status=1;
     }
 
     @Override
@@ -67,13 +67,6 @@ public class RedGhost extends Ghost {
         eventManager.updateGhostPosition(this);
     }
 
-    @Override
-    public void eaten(){
-        restorePosition();
-        if(!pacman.isSuper()){
-            startGame();
-        }
-    }
 
 
 

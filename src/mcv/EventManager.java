@@ -133,6 +133,7 @@ public class EventManager implements KeyListener {
             model.startCyanGhost();
             model.startPinkGhost();
             model.startOrangeGhost();
+            model.startGhostSupervisor();
             startGhost = true;
         }
 

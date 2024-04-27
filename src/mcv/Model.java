@@ -5,7 +5,7 @@ import myclasses.My2DSyncArray;
 import tiles_classes.CrossableTile;
 import tiles_classes.Tile;
 import tiles_classes.WallTile;
-import supervisor.Supervisor;
+import supervisor.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -26,9 +26,13 @@ public class Model {
     protected My2DSyncArray charactersPosition;
     protected Tile leftTile, rightTile, upTile, downTile, myTile;
     protected String lastDirection, nextDirection;
-    protected Thread rThread, pThread, cThread, oThread, sThread;
-    protected Ghost r, p, c, o;
+    protected Thread rThread, pThread, cThread, oThread, sThread, gThread;
+    protected RedGhost r;
+    protected PinkGhost p;
+    protected CyanGhost c;
+    protected OrangeGhost o;
     protected Supervisor supervisor;
+    protected GhostSupervisor ghostSupervisor;
 
     private void arrageWalls() {
         InputStream f;
@@ -132,6 +136,9 @@ public class Model {
         pThread = new Thread(p);
         cThread = new Thread(c);
         oThread = new Thread(o);
+
+        ghostSupervisor = new GhostSupervisor(r,c,p,o);
+        gThread = new Thread(ghostSupervisor);
     }
 
     public Pacman getPacman() {
@@ -277,6 +284,7 @@ public class Model {
     public void startCyanGhost(){cThread.start();}
     public void startPinkGhost(){pThread.start();}
     public void startOrangeGhost(){oThread.start();}
+    public void startGhostSupervisor(){gThread.start();}
 
     public int getScore() {
         return score;
