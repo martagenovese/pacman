@@ -51,9 +51,9 @@ public class PinkGhost extends Ghost {
             System.out.println("Inizio: xtarget "+xTarget+", ytarget "+yTarget);
             System.out.println(charactersPosition.get(0,2));
 
-
+            System.out.println(pacman.getDirection());
             switch (pacman.getDirection()){
-                case "Up": {
+                case "up": {
                     System.out.println("Up");
                     //up
                     for(int i=4; i>=0; i--)  {
@@ -64,7 +64,7 @@ public class PinkGhost extends Ghost {
                     }
                     break;
                 }
-                case "Left": {
+                case "left": {
                     System.out.println("Left");
                     //left
                     for(int i=4; i>=0; i--)  {
@@ -76,22 +76,22 @@ public class PinkGhost extends Ghost {
                     }
                     break;
                 }
-                case "Down": {
+                case "down": {
                     System.out.println("Down");
                     //down
                     for(int i=4; i>=0; i--)  {
-                        if( yTarget+i>=0 && !(tiles[yTarget+i][xTarget] instanceof WallTile) ){
+                        if( yTarget+i<=35 && !(tiles[yTarget+i][xTarget] instanceof WallTile) ){
                             yTarget=yTarget+i;
                             break;
                         }
                     }
                     break;
                 }
-                case "Right": {
+                case "right": {
                     System.out.println("Right");
                     //right
                     for(int i=4; i>=0; i--)  {
-                        if( xTarget+i>=0 && !(tiles[yTarget][xTarget+i] instanceof WallTile) ){
+                        if( xTarget+i<=27 && !(tiles[yTarget][xTarget+i] instanceof WallTile) ){
                             xTarget=xTarget+i;
                             break;
                         }

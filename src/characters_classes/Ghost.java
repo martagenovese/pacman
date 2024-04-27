@@ -49,9 +49,9 @@ public abstract class Ghost extends ImageIcon implements Runnable {
         getToTheTarget(xTarget, yTarget);
     }
 
-    public void move(String direction) {
+    public void move(String dir) {
         eventManager.clearGhostPosition(this);
-        switch (direction) {
+        switch (dir) {
             case "left" : {
                 if (x == 0) x = 27;
                 else x--;
