@@ -13,7 +13,7 @@ public class Supervisor implements Runnable{
 
     public Supervisor(My2DSyncArray charactersPosition, Model model){
         this.charactersPosition = charactersPosition;
-        lives = 3;
+        lives = 1; // 3
         this.model = model;
     }
     public void setEventManager(EventManager eventManager) {

@@ -7,7 +7,7 @@ import java.awt.*;
 
 public class CrossableTile extends Tile {
     public int x, y;
-    boolean isPacman, isGhost, isDot, isSuperFood, isIntersection;
+    boolean isPacman, isGhost, isDot, isSuperFood, isIntersection, isFruit;
     Icon dotIcon, superFoodIcon;
 
     public CrossableTile(int x, int y) {
@@ -18,6 +18,7 @@ public class CrossableTile extends Tile {
         this.isDot = false;
         this.isSuperFood = false;
         this.isIntersection = false;
+        this.isFruit = false;
     }
 
     public void setPacman(boolean isPacman) {
@@ -63,5 +64,14 @@ public class CrossableTile extends Tile {
 
     public boolean isIntersection() {
         return isIntersection;
+    }
+
+    @Override
+    public boolean isFruit() {
+        return isFruit;
+    }
+    @Override
+    public void setFruit(boolean isFruit) {
+        this.isFruit = isFruit;
     }
 }

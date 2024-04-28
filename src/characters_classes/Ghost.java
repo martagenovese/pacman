@@ -128,8 +128,8 @@ import java.awt.*;
     public void reachTarget(int xTarget, int yTarget){
         //{ Up, Left, Down, Right }
         int[][] directions = {{y - 1, x}, {y, x - 1}, {y + 1, x}, {y, x + 1}};
-//        if (directions[1][1] == -1) directions[1][1] = 27;
-//        if (directions[3][1] == 28) directions[3][1] = 0;
+        if (directions[1][1] == -1) directions[1][1] = 27;
+        if (directions[3][1] == 28) directions[3][1] = 0;
         double distance;
         int chosenDirection;
         int back;

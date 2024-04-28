@@ -113,27 +113,37 @@ public class Table extends JFrame {
         tiles[35][25].setIcon(fruit);
         tiles[35][23].setIcon(fruit);
     }
-
-    public void showVictory() {
-        JOptionPane optionPane = new JOptionPane("You have won!", JOptionPane.INFORMATION_MESSAGE, JOptionPane.DEFAULT_OPTION, null, new Object[]{}, null);
-        JDialog dialog = new JDialog();
-        dialog.setTitle("Victory!");
-        dialog.setModal(true);
-        dialog.setContentPane(optionPane);
-        dialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
-        dialog.pack();
-
-        Timer timer = new Timer(5000, e -> dialog.setVisible(false));
-        timer.setRepeats(false);
-        timer.start();
-
-        dialog.setVisible(true);
-        System.exit(0);
+    public void setFruitInTable(int x, int y) {
+        if (x==9) tiles[35][23].setIcon(null);
+        else tiles[35][25].setIcon(null);
+        ImageIcon fruit = new ImageIcon("src/images/fruit.png");
+        Image originalImage = fruit.getImage();
+        Image scaledImageDot = originalImage.getScaledInstance(20, 20, Image.SCALE_SMOOTH);
+        fruit.setImage(new ImageIcon(scaledImageDot).getImage());
+        tiles[y][x].setIcon(fruit);
     }
-    public void showDefeat() {
-        JOptionPane optionPane = new JOptionPane("You have lost!", JOptionPane.INFORMATION_MESSAGE, JOptionPane.DEFAULT_OPTION, null, new Object[]{}, null);
+
+    public void endGame(String message, String text, String imagePath) {
+        ImageIcon originalIcon = new ImageIcon(imagePath);
+        Image originalImage = originalIcon.getImage();
+        Image resizedImage = originalImage.getScaledInstance(500, 500, Image.SCALE_SMOOTH);
+        ImageIcon resizedIcon = new ImageIcon(resizedImage);
+        JLabel label = new JLabel(resizedIcon);
+
+        JLabel textLabel = new JLabel(text, SwingConstants.CENTER);
+        textLabel.setFont(new Font("Arial", Font.BOLD, 30));
+        textLabel.setForeground(Color.WHITE);
+        textLabel.setBackground(new Color(0, 0, 0, 0));
+        textLabel.setOpaque(true);
+
+        label.setLayout(new GridBagLayout());
+        label.add(textLabel);
+
+        JOptionPane optionPane = new JOptionPane(label, JOptionPane.INFORMATION_MESSAGE, JOptionPane.DEFAULT_OPTION, null, new Object[]{}, null);
+        optionPane.setBackground(Color.BLACK);
+
         JDialog dialog = new JDialog();
-        dialog.setTitle("Game Over");
+        dialog.setTitle(message);
         dialog.setModal(true);
         dialog.setContentPane(optionPane);
         dialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
@@ -151,9 +161,10 @@ public class Table extends JFrame {
         tiles[character.getY()][character.getX()].setIcon(character);
         //tiles[redGhost.getY()][redGhost.getX()].setIcon(redGhost);
     }
-    public void clearGhost(int x, int y, boolean isDot, boolean isSuperFood) {
-        if (!isDot && !isSuperFood) tiles[y][x].setIcon(null);
+    public void clearGhost(int x, int y, boolean isDot, boolean isSuperFood, boolean isFruit) {
+        if (!isDot && !isSuperFood && !isFruit) tiles[y][x].setIcon(null);
         else if (isSuperFood) setSuperFood(y, x);
+        else if (isFruit) setFruitInTable(x, y);
         else setDot(y, x);
     }
     public void updateGhost(Ghost ghost) {

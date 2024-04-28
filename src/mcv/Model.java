@@ -178,20 +178,29 @@ public class Model {
         return myTile;
     }
 
+    public void setFruit(int x, int y) {
+        tiles[y][x].setFruit(true);
+    }
+
     public void movePacman(String direction, Tile tile, Tile myTile) {
         if (tile==null) { return; }
         if (!(tile instanceof WallTile)) {
+            if (dotsCounter == 70 || dotsCounter == 240) {
+                fruit--;
+            }
+            System.out.println(dotsCounter);
             if (tile.isSuperFood()) {
                 ((CrossableTile) tile).setSuperFood(false);
                 pacman.setSuper(true);
                 score += 50;
-                dotsCounter++;
-                if (dotsCounter == 70 || dotsCounter == 240) {
-                    fruit--;
-                }
             } else if (tile.isDot()) {
                 ((CrossableTile) tile).setDot(false);
                 score += 10;
+                dotsCounter++;
+            } else if (tile.isFruit()) {
+                tile.setFruit(false);
+                score += 100;
+                if (fruit == 0) dotsCounter=-1;
             }
             myTile.setPacman(false);
             pacman.move(direction);

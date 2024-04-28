@@ -14,4 +14,11 @@ public abstract class Tile {
     }
 
     public abstract boolean isIntersection();
+
+    public void setFruit(boolean b) {
+    }
+
+    public boolean isFruit() {
+        return false;
+    }
 }

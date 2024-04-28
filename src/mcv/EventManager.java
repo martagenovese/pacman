@@ -91,7 +91,8 @@ public class EventManager implements KeyListener {
     public void clearGhostPosition(Ghost ghost) {
         boolean isDot = model.tiles[ghost.getY()][ghost.getX()].isDot();
         boolean isSuperFood = model.tiles[ghost.getY()][ghost.getX()].isSuperFood();
-        table.clearGhost(ghost.getX(), ghost.getY(), isDot, isSuperFood);
+        boolean isFruit = model.tiles[ghost.getY()][ghost.getX()].isFruit();
+        table.clearGhost(ghost.getX(), ghost.getY(), isDot, isSuperFood, isFruit);
     }
     public void updateGhostPosition(Ghost ghost) {
         table.updateGhost(ghost);
@@ -122,9 +123,9 @@ public class EventManager implements KeyListener {
 
     public void stopGame(boolean victory) {
         if (victory) {
-            table.showVictory();
+            table.endGame("Victory!", "You have won!", "src/images/pacman/right.png");
         } else {
-            table.showDefeat();
+            table.endGame("Defeat!", "You have lost", "src/images/ghosts/scared.png");
         }
     }
 
@@ -165,13 +166,24 @@ public class EventManager implements KeyListener {
                 return;
             }
 
+            int fruit = model.getFruit();
             table.clearPacman(model.getPacman().getX(), model.getPacman().getY());
             try {
                 model.keepDirection(s);
             } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException ex) {
                 throw new RuntimeException(ex);
             }
-
+            int fruitafter = model.getFruit();
+            if (fruit != fruitafter) {
+                if (fruitafter == 0) {
+                    model.setFruit(9, 17);
+                    table.setFruitInTable(9, 17);
+                } else {
+                    model.setFruit(18, 17);
+                    table.setFruitInTable(18, 17);
+                }
+            }
+            if (model.dotsCounter<=-1) stopGame(true);
             table.updateScore(model.getScore());
             model.updatePosition();
             table.updatePosition();
