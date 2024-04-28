@@ -17,6 +17,8 @@ public class OrangeGhost extends Ghost {
             y=17;
             status=1;
             nGhost=4;
+            charactersPosition.set(nGhost,0,x);
+            charactersPosition.set(nGhost,1,y);
         }
 
     @Override
@@ -70,11 +72,15 @@ public class OrangeGhost extends Ghost {
         status=1;
     }
 
-    protected void restorePosition(){
+    public void restorePosition(){
+        if(x!=15 || y!=17) {
+            eventManager.clearGhostPosition(this);
+        }
         x=15;
         y=17;
         charactersPosition.set(nGhost,0, x);
         charactersPosition.set(nGhost,1, y);
+        eventManager.updateGhostPosition(this);
     }
 
 

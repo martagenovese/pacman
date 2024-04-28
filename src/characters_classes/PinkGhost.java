@@ -17,6 +17,8 @@ public class PinkGhost extends Ghost {
         y=17;
         status=1;
         nGhost=3;
+        charactersPosition.set(nGhost,0,x);
+        charactersPosition.set(nGhost,1,y);
     }
 
     @Override
@@ -115,7 +117,10 @@ public class PinkGhost extends Ghost {
         move("up");
         status=1;
     }
-    protected void restorePosition(){
+    public void restorePosition(){
+        if(x!=14 || y!=17) {
+            eventManager.clearGhostPosition(this);
+        }
         x=14;
         y=17;
         charactersPosition.set(nGhost,0, x);

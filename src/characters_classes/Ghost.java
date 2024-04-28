@@ -11,7 +11,7 @@ import java.awt.*;
 
     protected int x, y;
     protected String direction;
-    //0-> chase, 1->scatter, 2->frightened, 3->eaten, 4->gameLost
+    //0-> chase, 1->scatter, 2->frightened, 3->eaten, 4->pacmanEaten
     protected int status;
     protected My2DSyncArray charactersPosition;
     protected Tile[][] tiles;
@@ -128,8 +128,8 @@ import java.awt.*;
     public void reachTarget(int xTarget, int yTarget){
         //{ Up, Left, Down, Right }
         int[][] directions = {{y - 1, x}, {y, x - 1}, {y + 1, x}, {y, x + 1}};
-        if (directions[1][1] == -1) directions[1][1] = 27;
-        if (directions[3][1] == 28) directions[3][1] = 0;
+//        if (directions[1][1] == -1) directions[1][1] = 27;
+//        if (directions[3][1] == 28) directions[3][1] = 0;
         double distance;
         int chosenDirection;
         int back;
@@ -189,15 +189,16 @@ import java.awt.*;
         }
 
     }
-    protected abstract void startGame();
+    public abstract void startGame();
     public abstract void chase();
     public abstract void scatter();
-     public void eaten(){
+    public void eaten(){
          restorePosition();
          if(!pacman.isSuper()){
              startGame();
          }
-     }
+    }
+
     protected abstract void restorePosition();
     public void turnAround(){
         int[][] directions = {{y + 1, x}, {y, x - 1}, {y - 1, x}, {y, x + 1}};
@@ -240,10 +241,12 @@ import java.awt.*;
      }
 
      public void pacmanEaten(){
+        status=4;
         restorePosition();
         eventManager.updateGhostPosition(this);
         eventManager.clearGhostPosition(this);
     }
+
      @Override
      public void run() {
          startGame();
@@ -268,6 +271,10 @@ import java.awt.*;
                  }
                  case 4:{
                      restorePosition();
+                     break;
+                 }
+                 case 5:{
+                     startGame();
                      break;
                  }
              }

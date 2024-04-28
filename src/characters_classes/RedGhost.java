@@ -16,9 +16,11 @@ public class RedGhost extends Ghost {
         y=17;
         status=1;
         nGhost=1;
+        charactersPosition.set(nGhost,0,x);
+        charactersPosition.set(nGhost,1,y);
     }
 
-    protected void startGame() {
+    public void startGame() {
         move("up");
         move("right");
         move("up");
@@ -59,7 +61,10 @@ public class RedGhost extends Ghost {
         reachTarget(xTarget, yTarget);
     }
 
-    protected void restorePosition(){
+    public void restorePosition(){
+        if(x!=12 || y!=17) {
+            eventManager.clearGhostPosition(this);
+        }
         x=12;
         y=17;
         charactersPosition.set(nGhost,0, x);

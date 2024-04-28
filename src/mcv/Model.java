@@ -200,7 +200,7 @@ public class Model {
         }
     }
     public void pacmanHasBeenEaten() {
-        //pacman.eaten();
+        pacman.eaten();
         r.pacmanEaten();
         c.pacmanEaten();
         p.pacmanEaten();
@@ -284,7 +284,10 @@ public class Model {
     public void startCyanGhost(){cThread.start();}
     public void startPinkGhost(){pThread.start();}
     public void startOrangeGhost(){oThread.start();}
-    public void startGhostSupervisor(){gThread.start();}
+    public void startSupervisors(){
+        gThread.start();
+        sThread.start();
+    }
 
     public int getScore() {
         return score;

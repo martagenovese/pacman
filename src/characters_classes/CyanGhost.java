@@ -18,6 +18,8 @@ public class CyanGhost extends Ghost {
             y=17;
             status=1;
             nGhost=2;
+            charactersPosition.set(nGhost,0,x);
+            charactersPosition.set(nGhost,1,y);
         }
 
     @Override
@@ -126,7 +128,10 @@ public class CyanGhost extends Ghost {
         move("up");
         status=1;
     }
-    protected void restorePosition(){
+    public void restorePosition(){
+        if(x!=13 || y!=17) {
+            eventManager.clearGhostPosition(this);
+        }
         x=13;
         y=17;
         charactersPosition.set(nGhost,0, x);

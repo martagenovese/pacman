@@ -106,10 +106,12 @@ public class Pacman extends ImageIcon {
         }
     }
     public void eaten() {
+        eventManager.getTable().clearPacman(x,y);
         x=13;
         y=26;
         charactersPosition.set(0, 0, 14);
         charactersPosition.set(0, 1, 23);
+
         eventManager.getTable().updatePosition();
     }
 }

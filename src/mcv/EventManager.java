@@ -18,10 +18,10 @@ public class EventManager implements KeyListener {
     protected Model model;
     protected boolean isListenerActive;
     protected String nextDirection, lastDirection;
-    protected boolean startGhost;
+    protected int startGhost;
     public EventManager() {
         isListenerActive = true;
-        startGhost = false;
+        startGhost = 0;
     }
     public void setModel(Model model) {
         this.model = model;
@@ -33,7 +33,7 @@ public class EventManager implements KeyListener {
         model.pacman.setEventManager(this);
 
         charactersPosition = model.charactersPosition;
-        model.sThread.start();
+
 
         model.supervisor.setEventManager(this);
     }
@@ -96,6 +96,9 @@ public class EventManager implements KeyListener {
     public void updateGhostPosition(Ghost ghost) {
         table.updateGhost(ghost);
     }
+    public void setStartGhost(int n){
+        startGhost=n;
+    }
 
     public void sevenSecondsInHeaven() {
         model.getRedGhost().setScared(true);
@@ -128,13 +131,18 @@ public class EventManager implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-        if (!startGhost) {
+        if (startGhost==0) {
             model.startRedGhost();
             model.startCyanGhost();
             model.startPinkGhost();
             model.startOrangeGhost();
-            model.startGhostSupervisor();
-            startGhost = true;
+            model.startSupervisors();
+            startGhost = 1;
+        }else if(startGhost==2){
+            model.r.setStatus(5);
+            model.c.setStatus(5);
+            model.p.setStatus(5);
+            model.o.setStatus(5);
         }
 
         if (isListenerActive) {
