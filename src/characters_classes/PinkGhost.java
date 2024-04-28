@@ -110,7 +110,7 @@ public class PinkGhost extends Ghost {
     @Override
     public void startGame() {
         try {
-            Thread.sleep(1400);
+            Thread.sleep(waitingTime*7);
         } catch (InterruptedException ignored) {}
         move("up");
         move("up");

@@ -12,15 +12,13 @@ import java.awt.*;
     protected int x, y;
     protected String direction;
     //0-> chase, 1->scatter, 2->frightened, 3->eaten, 4->pacmanEaten
-    protected int status;
+    protected int status, nGhost, waitingTime;
     protected My2DSyncArray charactersPosition;
     protected Tile[][] tiles;
-    protected int nGhost;
     protected EventManager eventManager;
     protected Pacman pacman;
     protected boolean targetReached;
-    protected int xTarget;
-    protected int yTarget;
+    protected int xTarget, yTarget;
     protected String colour;
 
 
@@ -38,6 +36,7 @@ import java.awt.*;
         targetReached=true;
         xTarget=0;
         yTarget=0;
+        waitingTime=400;
     }
     public void setEventManager(EventManager eventManager) {
         this.eventManager = eventManager;
@@ -115,7 +114,7 @@ import java.awt.*;
         charactersPosition.set(nGhost,1, y);
         eventManager.updateGhostPosition(this);
         try {
-            Thread.sleep(200);
+            Thread.sleep(waitingTime);//195
         } catch (InterruptedException ignored) {}
     }
 

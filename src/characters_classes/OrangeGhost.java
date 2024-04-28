@@ -38,7 +38,7 @@ public class OrangeGhost extends Ghost {
             targetReached = false;
             distanceFromPacman =  Math.sqrt(Math.pow(y - charactersPosition.get(0,1), 2) + Math.pow(x - charactersPosition.get(0,0), 2));
 
-            if (distanceFromPacman<8) {
+            if (distanceFromPacman>8) {
                 xTarget = charactersPosition.get(0, 0);
                 yTarget = charactersPosition.get(0, 1);
             }else{
@@ -63,7 +63,7 @@ public class OrangeGhost extends Ghost {
     @Override
     public void startGame() {
         try {
-            Thread.sleep(2000);
+            Thread.sleep(waitingTime*10);
         } catch (InterruptedException ignored) {}
         move("up");
         move("left");

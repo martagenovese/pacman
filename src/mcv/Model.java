@@ -7,6 +7,7 @@ import tiles_classes.Tile;
 import tiles_classes.WallTile;
 import supervisor.*;
 
+
 import javax.swing.*;
 import java.awt.*;
 import java.io.FileInputStream;
@@ -15,6 +16,7 @@ import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Scanner;
+
 
 public class Model {
     protected Tile[][] tiles;
@@ -218,10 +220,10 @@ public class Model {
     public int collision() {
         for (int i = 1; i < 5; i++) {
             // lo stronzo ha deciso di non andare
-            if (charactersPosition.get(i, 0) == charactersPosition.get(0, 0) && charactersPosition.get(i, 1) == charactersPosition.get(0, 1)) {
+            if ((charactersPosition.get(i, 0) == charactersPosition.get(0, 0)) && (charactersPosition.get(i, 1) == charactersPosition.get(0, 1))) {
                 System.out.println("Collision with ghost " + i);
                 System.out.println("Pacman: " + charactersPosition.get(0, 0) + " " + charactersPosition.get(0, 1));
-                System.out.println("Ghost: " + charactersPosition.get(i, 0) + " " + charactersPosition.get(i, 1));
+                System.out.println("Ghost "+ i +":"+ charactersPosition.get(i, 0) + " " + charactersPosition.get(i, 1));
                 return i;
             }
         }
@@ -249,12 +251,31 @@ public class Model {
             }
             return true;
         } else {
-            lives--;
+            //lostALive();
+
             tiles[23][14].setPacman(true);
             pacmanHasBeenEaten();
             return false;
         }
     }
+
+//    public void lostALive(){
+//        switch (lives){
+//            case 0: {
+//                //dire che hai perso
+//            }
+//            case 1: {
+//                Table.clearTile(2, 35);
+//            }
+//            case 2: {
+//                Table.clearTile(4, 35);
+//            }
+//            case 3: {
+//                Table.clearTile(6, 35);
+//            }
+//        }
+//        lives--;
+//    }
     public void keepDirection(String direction) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
         Method method = this.getClass().getMethod("get"+direction+"Tile");
         Tile nextTile = (Tile) method.invoke(this);

@@ -121,7 +121,7 @@ public class CyanGhost extends Ghost {
     @Override
     public void startGame() {
         try {
-            Thread.sleep(800);
+            Thread.sleep(waitingTime*4);
         } catch (InterruptedException ignored) {}
         move("up");
         move("up");

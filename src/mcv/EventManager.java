@@ -173,9 +173,9 @@ public class EventManager implements KeyListener {
             } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException ex) {
                 throw new RuntimeException(ex);
             }
-            int fruitafter = model.getFruit();
-            if (fruit != fruitafter) {
-                if (fruitafter == 0) {
+            int fruitAfter = model.getFruit();
+            if (fruit != fruitAfter) {
+                if (fruitAfter == 0) {
                     model.setFruit(9, 17);
                     table.setFruitInTable(9, 17);
                 } else {
@@ -188,6 +188,7 @@ public class EventManager implements KeyListener {
             model.updatePosition();
             table.updatePosition();
 
+            System.out.println("Pos Pacman: y="+charactersPosition.get(0,1)+"x="+charactersPosition.get(0,0));
         }
     }
     @Override

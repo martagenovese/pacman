@@ -175,4 +175,7 @@ public class Table extends JFrame {
             xTile--;
         }
     }
+    public void clearTile(int x, int y){
+        tiles[y][x].setIcon(null);
+    }
 }
