@@ -241,10 +241,10 @@ import java.awt.*;
      }
 
      public void pacmanEaten(){
-        status=4;
-        restorePosition();
-        eventManager.updateGhostPosition(this);
-        eventManager.clearGhostPosition(this);
+         restorePosition();
+         status=4;
+         eventManager.updateGhostPosition(this);
+         eventManager.clearGhostPosition(this);
     }
 
      @Override

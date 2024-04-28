@@ -111,7 +111,7 @@ public class Pacman extends ImageIcon {
         y=26;
         charactersPosition.set(0, 0, 14);
         charactersPosition.set(0, 1, 23);
-
+        setDirection("right");
         eventManager.getTable().updatePosition();
     }
 }

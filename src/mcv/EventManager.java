@@ -101,6 +101,8 @@ public class EventManager implements KeyListener {
     }
 
     public void sevenSecondsInHeaven() {
+        table.updatePosition();
+        table.clearPacman(model.getPacman().getX(), model.getPacman().getY());
         model.getRedGhost().setScared(true);
         model.getCyanGhost().setScared(true);
         model.getPinkGhost().setScared(true);
