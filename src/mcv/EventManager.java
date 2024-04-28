@@ -123,9 +123,9 @@ public class EventManager implements KeyListener {
 
     public void stopGame(boolean victory) {
         if (victory) {
-            table.endGame("Victory!", "You have won!", "src/images/pacman/right.png");
+            table.endGame("Victory!", "<html>Hai vinto!<br>Adesso puoi rubare questo gatto</html>", "src/images/meme/vittoria.jpg");
         } else {
-            table.endGame("Defeat!", "You have lost", "src/images/ghosts/scared.png");
+            table.endGame("Defeat!", "<html>Hai perso.<br>Ora il tipo del quadro di vienna è sotto al tuo letto</html>", "src/images/meme/sconfitta.jpg");
         }
     }
 

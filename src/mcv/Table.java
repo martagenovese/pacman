@@ -128,19 +128,14 @@ public class Table extends JFrame {
         Image originalImage = originalIcon.getImage();
         Image resizedImage = originalImage.getScaledInstance(500, 500, Image.SCALE_SMOOTH);
         ImageIcon resizedIcon = new ImageIcon(resizedImage);
-        JLabel label = new JLabel(resizedIcon);
 
-        JLabel textLabel = new JLabel(text, SwingConstants.CENTER);
-        textLabel.setFont(new Font("Arial", Font.BOLD, 30));
-        textLabel.setForeground(Color.WHITE);
-        textLabel.setBackground(new Color(0, 0, 0, 0));
-        textLabel.setOpaque(true);
-
-        label.setLayout(new GridBagLayout());
-        label.add(textLabel);
+        JLabel label = new JLabel(text, resizedIcon, SwingConstants.CENTER);
+        label.setFont(new Font("Arial", Font.BOLD, 20));
+        label.setForeground(Color.BLACK);
+        label.setHorizontalTextPosition(JLabel.CENTER);
+        label.setVerticalTextPosition(JLabel.BOTTOM);
 
         JOptionPane optionPane = new JOptionPane(label, JOptionPane.INFORMATION_MESSAGE, JOptionPane.DEFAULT_OPTION, null, new Object[]{}, null);
-        optionPane.setBackground(Color.BLACK);
 
         JDialog dialog = new JDialog();
         dialog.setTitle(message);
@@ -149,7 +144,7 @@ public class Table extends JFrame {
         dialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
         dialog.pack();
 
-        Timer timer = new Timer(5000, e -> dialog.setVisible(false));
+        Timer timer = new Timer(7000, e -> dialog.setVisible(false));
         timer.setRepeats(false);
         timer.start();
 
