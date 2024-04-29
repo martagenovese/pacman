@@ -150,7 +150,7 @@ public class EventManager implements KeyListener {
         }
 
         if (isListenerActive) {
-            disableListenerFor(200);
+            disableListenerFor(180);
 
             int key = e.getKeyCode();
             String s;
@@ -167,13 +167,36 @@ public class EventManager implements KeyListener {
                 return;
             }
 
+            //la prima volta che viene mosso pacman partono anche i fantasmi
+            if (startGhost==0) {
+                table.playSound("meme/audio/musichetta.wav");
+                model.startRedGhost();
+                model.startCyanGhost();
+                model.startPinkGhost();
+                model.startOrangeGhost();
+                model.startSupervisors();
+                startGhost = 1;
+            }else if(startGhost==2){
+                //fa partire i fantasmi dopo che hanno mangiato pacman
+                table.playSound("meme/audio/musichetta.wav");
+                model.r.setStatus(5);
+                model.c.setStatus(5);
+                model.p.setStatus(5);
+                model.o.setStatus(5);
+                startGhost=1;
+            }
+
             int fruit = model.getFruit();
+            boolean pacmanStatus1 = model.getPacman().isSuper();
+            int dotEaten = model.dotsCounter;
             table.clearPacman(model.getPacman().getX(), model.getPacman().getY());
             try {
                 model.keepDirection(s);
             } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException ex) {
                 throw new RuntimeException(ex);
             }
+            boolean pacmanStatus2 = model.getPacman().isSuper();
+            if (!pacmanStatus1 && pacmanStatus2) table.playSound("meme/audio/cibo.wav");
             int fruitAfter = model.getFruit();
             if (fruit != fruitAfter) {
                 if (fruitAfter == 0) {
@@ -184,6 +207,9 @@ public class EventManager implements KeyListener {
                     table.setFruitInTable(18, 17);
                 }
             }
+            //if (model.isFruitEaten) table.playVideo("src/meme/video/crocchi.mp4");
+            if (model.isFruitEaten) table.playSound("meme/audio/crocchi.wav");
+            if (dotEaten != model.dotsCounter && Math.random()>0.95) table.playSound("meme/audio/bubii/"+(int) (Math.random()*7+1) + ".wav");
             if (model.dotsCounter<0) stopGame(true);
             table.updateScore(model.getScore());
             model.updatePosition();

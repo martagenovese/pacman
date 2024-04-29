@@ -51,11 +51,10 @@ public class Supervisor implements Runnable{
                         }
                         isPacmanAlive = true;
                     } else {
+                        eventManager.getTable().playSound("meme/audio/urlo.wav");
                         eventManager.getTable().clearPacman(model.getPacman().getX(), model.getPacman().getY());
                         eventManager.getTable().updatePosition();
                         ghostsEaten = nGhostsEaten();
-                        //System.out.println(Math.pow(2, ghostsEaten));
-                        // da numeri assurdi
                         if (ghostsEaten!=0 && ghostsEaten!=nGhostsBefore) {
                             model.score += 100 * (int) Math.pow(2, ghostsEaten);
                             nGhostsBefore = ghostsEaten;

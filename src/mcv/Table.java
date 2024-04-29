@@ -13,6 +13,15 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import java.io.IOException;
 import java.net.URL;
+import javafx.application.Platform;
+import javafx.embed.swing.JFXPanel;
+import javafx.scene.Scene;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaView;
+
+import javax.swing.*;
+import java.io.File;
 
 
 public class Table extends JFrame {
@@ -195,5 +204,38 @@ public class Table extends JFrame {
     }
     public void clearTile(int x, int y){
         tiles[y][x].setIcon(null);
+    } 
+
+    public void playVideo(String videoFileName) {
+        int videoWidth = 500;
+        int videoHeight = 700;
+        JFXPanel jfxPanel = new JFXPanel();
+        JFrame videoFrame = new JFrame();
+        videoFrame.add(jfxPanel);
+        videoFrame.setSize(videoWidth, videoHeight);
+
+        Point mainFrameLocation = this.getLocation();
+        videoFrame.setLocation(mainFrameLocation.x - videoFrame.getWidth(), mainFrameLocation.y);
+        videoFrame.setVisible(true);
+
+        // Create a new Thread for video playback
+        new Thread(() -> {
+            Platform.runLater(() -> {
+                File videoFile = new File(videoFileName);
+                Media media = new Media(videoFile.toURI().toString());
+                MediaPlayer mediaPlayer = new MediaPlayer(media);
+                MediaView mediaView = new MediaView(mediaPlayer);
+
+                // Set the width and height of the MediaView
+                mediaView.setFitWidth(videoWidth);
+                mediaView.setFitHeight(videoHeight);
+
+                Scene scene = new Scene(new javafx.scene.Group(mediaView));
+                jfxPanel.setScene(scene);
+
+                // Start the video
+                mediaPlayer.play();
+            });
+        }).start();
     }
 }

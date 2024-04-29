@@ -36,6 +36,45 @@ public class Model {
     protected OrangeGhost o;
     protected Supervisor supervisor;
     protected GhostSupervisor ghostSupervisor;
+    protected boolean isFruitEaten;
+
+
+    public Model() {
+        charactersPosition = new My2DSyncArray(5);
+        pacman = new Pacman(charactersPosition);
+        tiles = new Tile[36][28];
+        supervisor = new Supervisor(charactersPosition, this);
+        sThread = new Thread(supervisor);
+        ghostsEaten = 0;
+
+        //tutte crossable all'inizio
+        for (int i = 0; i < 36; i++) {
+            for (int j = 0; j < 28; j++) {
+                tiles[i][j] = new CrossableTile(i, j);
+            }
+        }
+        arrageWalls();
+        arrangeIntersections();
+        arrangeDots();
+        tiles[26][13].setPacman(true);
+
+        score = 0;
+        lives = 3; //3
+        dotsCounter = 0;
+        fruit = 2;
+        r = new RedGhost(charactersPosition, tiles, pacman, "red");
+        c = new CyanGhost(charactersPosition, tiles, pacman, "cyan");
+        p = new PinkGhost(charactersPosition, tiles, pacman, "pink");
+        o = new OrangeGhost(charactersPosition, tiles, pacman, "orange");
+
+        rThread = new Thread(r);
+        pThread = new Thread(p);
+        cThread = new Thread(c);
+        oThread = new Thread(o);
+
+        ghostSupervisor = new GhostSupervisor(r,c,p,o);
+        gThread = new Thread(ghostSupervisor);
+    }
 
     private void arrageWalls() {
         InputStream f;
@@ -188,6 +227,7 @@ public class Model {
     }
 
     public void movePacman(String direction, Tile tile, Tile myTile) {
+        isFruitEaten = false;
         if (tile==null) { return; }
         if (!(tile instanceof WallTile)) {
             if (dotsCounter == 70 || dotsCounter == 240) {
@@ -204,10 +244,9 @@ public class Model {
                 dotsCounter++;
             } else if (tile.isFruit()) {
                 tile.setFruit(false);
+                isFruitEaten = true;
                 score += 100;
             }
-            fruit = 0;
-            dotsCounter = 240;
             if (fruit==0 && dotsCounter==240) dotsCounter=-1;
             myTile.setPacman(false);
             pacman.move(direction);
