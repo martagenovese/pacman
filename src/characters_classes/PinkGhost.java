@@ -44,12 +44,12 @@ public class PinkGhost extends Ghost {
             //yTarget=charactersPosition.get(0,1);
             xTarget=charactersPosition.getX(0);
             yTarget=charactersPosition.getY(0);
-            System.out.println("Inizio: xtarget "+xTarget+", ytarget "+yTarget);
+            //System.out.println("Inizio: xtarget "+xTarget+", ytarget "+yTarget);
 
-            System.out.println(pacman.getDirection());
+            //System.out.println(pacman.getDirection());
             switch (pacman.getDirection()){
                 case "up": {
-                    System.out.println("Up");
+                    //System.out.println("Up");
                     //up
                     for(int i=4; i>=0; i--)  {
                         if( yTarget-i>=0 && !(tiles[yTarget-i][xTarget] instanceof WallTile) ) {
@@ -60,11 +60,11 @@ public class PinkGhost extends Ghost {
                     break;
                 }
                 case "left": {
-                    System.out.println("Left");
+                    //System.out.println("Left");
                     //left
                     for(int i=4; i>=0; i--)  {
                         if( xTarget-i>=0 && !(tiles[yTarget][xTarget-i] instanceof WallTile) ){
-                            System.out.println("entra con i="+i);
+                            //System.out.println("entra con i="+i);
                             xTarget=xTarget-i;
                             break;
                         }
@@ -72,7 +72,7 @@ public class PinkGhost extends Ghost {
                     break;
                 }
                 case "down": {
-                    System.out.println("Down");
+                    //System.out.println("Down");
                     //down
                     for(int i=4; i>=0; i--)  {
                         if( yTarget+i<=35 && !(tiles[yTarget+i][xTarget] instanceof WallTile) ){
@@ -83,7 +83,7 @@ public class PinkGhost extends Ghost {
                     break;
                 }
                 case "right": {
-                    System.out.println("Right");
+                    //System.out.println("Right");
                     //right
                     for(int i=4; i>=0; i--)  {
                         if( xTarget+i<=27 && !(tiles[yTarget][xTarget+i] instanceof WallTile) ){
@@ -94,7 +94,7 @@ public class PinkGhost extends Ghost {
                     break;
                 }
             }
-            System.out.println("Fine: xtarget "+xTarget+", ytarget "+yTarget);
+            //System.out.println("Fine: xtarget "+xTarget+", ytarget "+yTarget);
 
         }
         reachTarget(xTarget, yTarget);

@@ -127,7 +127,7 @@ public class Model {
 
         // aggiungere punteggio, vite e frutti
         score = 0;
-        lives = 3;
+        lives = 0; //3
         dotsCounter = 0;
         fruit = 2;
         r = new RedGhost(charactersPosition, tiles, pacman, "red");
@@ -193,7 +193,7 @@ public class Model {
             if (dotsCounter == 70 || dotsCounter == 240) {
                 if (fruit>0) fruit--;
             }
-            System.out.println(dotsCounter);
+            //System.out.println(dotsCounter);
             if (tile.isSuperFood()) {
                 ((CrossableTile) tile).setSuperFood(false);
                 pacman.setSuper(true);
@@ -206,6 +206,8 @@ public class Model {
                 tile.setFruit(false);
                 score += 100;
             }
+            fruit = 0;
+            dotsCounter = 240;
             if (fruit==0 && dotsCounter==240) dotsCounter=-1;
             myTile.setPacman(false);
             pacman.move(direction);

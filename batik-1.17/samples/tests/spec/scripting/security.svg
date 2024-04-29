@@ -26,7 +26,7 @@
 <!--                                                                           -->
 <!-- - access to local files is denied.                                        -->
 <!-- - access to the network via sockets is denied.                            -->
-<!-- - access to audio is denied.                                              -->
+<!-- - access to meme.audio is denied.                                              -->
 <!-- - access to logging is denied.                                            -->
 <!-- - access to network features is denied.                                   -->
 <!-- - access to system properties is denied.                                  -->

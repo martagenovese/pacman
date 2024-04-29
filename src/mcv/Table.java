@@ -5,7 +5,14 @@ import java.awt.*;
 
 // my packages
 import characters_classes.*;
-import mcv.EventManager;
+
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
+import java.io.IOException;
+import java.net.URL;
 
 
 public class Table extends JFrame {
@@ -123,6 +130,17 @@ public class Table extends JFrame {
         tiles[y][x].setIcon(fruit);
     }
 
+    public void playSound(String soundFileName) {
+        try {
+            URL url = this.getClass().getClassLoader().getResource(soundFileName);
+            AudioInputStream audioIn = AudioSystem.getAudioInputStream(url);
+            Clip clip = AudioSystem.getClip();
+            clip.open(audioIn);
+            clip.start();
+        } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
+            e.printStackTrace();
+        }
+    }
     public void endGame(String message, String text, String imagePath) {
         ImageIcon originalIcon = new ImageIcon(imagePath);
         Image originalImage = originalIcon.getImage();
@@ -144,10 +162,10 @@ public class Table extends JFrame {
         dialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
         dialog.pack();
 
-        Timer timer = new Timer(7000, e -> dialog.setVisible(false));
+        Timer timer = new Timer((message.equals("Victory"))?3500:8100, e -> dialog.setVisible(false));
         timer.setRepeats(false);
         timer.start();
-
+        playSound("meme/audio/"+message+".wav");
         dialog.setVisible(true);
         System.exit(0);
     }

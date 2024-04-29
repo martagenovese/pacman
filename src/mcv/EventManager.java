@@ -123,9 +123,9 @@ public class EventManager implements KeyListener {
 
     public void stopGame(boolean victory) {
         if (victory) {
-            table.endGame("Victory!", "<html>Hai vinto!<br>Adesso puoi rubare questo gatto</html>", "src/images/meme/vittoria.jpg");
+            table.endGame("Victory!", "<html>Hai vinto!<br>Adesso puoi rubare questo gatto</html>", "src/meme/vittoria.jpg");
         } else {
-            table.endGame("Defeat!", "<html>Hai perso.<br>Ora il tipo del quadro di vienna è sotto al tuo letto</html>", "src/images/meme/sconfitta.jpg");
+            table.endGame("Defeat!", "<html>Hai perso.<br>Ora il tipo del quadro di vienna è sotto al tuo letto</html>", "src/meme/sconfitta.jpg");
         }
     }
 
@@ -189,7 +189,7 @@ public class EventManager implements KeyListener {
             model.updatePosition();
             table.updatePosition();
 
-            System.out.println("Pos Pacman: y="+charactersPosition.getY(0)+"x="+charactersPosition.getY(0));
+            //System.out.println("Pos Pacman: y="+charactersPosition.getY(0)+"x="+charactersPosition.getY(0));
         }
     }
     @Override
