@@ -16,8 +16,10 @@ public class RedGhost extends Ghost {
         y=17;
         status=1;
         nGhost=1;
-        charactersPosition.set(nGhost,0,x);
-        charactersPosition.set(nGhost,1,y);
+        //charactersPosition.set(nGhost,0,x);
+        //charactersPosition.set(nGhost,1,y);
+        charactersPosition.setX(nGhost, x);
+        charactersPosition.setY(nGhost, y);
     }
 
     public void startGame() {
@@ -54,8 +56,10 @@ public class RedGhost extends Ghost {
         //se è stato raggiunto acquisice un nuovo target
         if(targetReached){
             targetReached=false;
-            xTarget=charactersPosition.get(0,0);
-            yTarget=charactersPosition.get(0,1);
+            //xTarget=charactersPosition.get(0,0);
+            //yTarget=charactersPosition.get(0,1);
+            xTarget=charactersPosition.getX(0);
+            yTarget=charactersPosition.getY(0);
         }
 
         reachTarget(xTarget, yTarget);
@@ -67,8 +71,10 @@ public class RedGhost extends Ghost {
         }
         x=12;
         y=17;
-        charactersPosition.set(nGhost,0, x);
-        charactersPosition.set(nGhost,1, y);
+        //charactersPosition.set(nGhost,0, x);
+        //charactersPosition.set(nGhost,1, y);
+        charactersPosition.setX(nGhost, x);
+        charactersPosition.setY(nGhost, y);
         eventManager.updateGhostPosition(this);
     }
 

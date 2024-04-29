@@ -184,12 +184,12 @@ public class EventManager implements KeyListener {
                     table.setFruitInTable(18, 17);
                 }
             }
-            if (model.dotsCounter<=-1) stopGame(true);
+            if (model.dotsCounter<0) stopGame(true);
             table.updateScore(model.getScore());
             model.updatePosition();
             table.updatePosition();
 
-            System.out.println("Pos Pacman: y="+charactersPosition.get(0,1)+"x="+charactersPosition.get(0,0));
+            System.out.println("Pos Pacman: y="+charactersPosition.getY(0)+"x="+charactersPosition.getY(0));
         }
     }
     @Override

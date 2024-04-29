@@ -22,7 +22,7 @@ public class Supervisor implements Runnable{
     private int nGhostsEaten(){
         int g = 1, n = 0;
         for (int i = 12; i < 16; i++) {
-            if (charactersPosition.get(g, 1) == 17 && charactersPosition.get(g, 0) == i) {
+            if (charactersPosition.getY(g) == 17 && charactersPosition.getX(g) == i) {
                 n++;
             }
             g++;
@@ -51,6 +51,7 @@ public class Supervisor implements Runnable{
                         }
                         isPacmanAlive = true;
                     } else {
+                        eventManager.getTable().updatePosition();
                         ghostsEaten = nGhostsEaten();
                         System.out.println(Math.pow(2, ghostsEaten));
                         // da numeri assurdi

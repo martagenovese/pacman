@@ -47,37 +47,35 @@ public class Pacman extends ImageIcon {
             case "left" : {
                 if (x == 0) x = 27;
                 else x-=1;
-                charactersPosition.set(0,0, 1);
                 break;
             }
             case "right" : {
                 if (x == 27) x = 0;
                 else x++;
-                charactersPosition.set(0,0, 3);
                 break;
             }
             case "up" : {
                 y-=1;
-                charactersPosition.set(0,0, 0);
                 break;
             }
             case "down" : {
                 y++;
-                charactersPosition.set(0,0, 2);
                 break;
             }
         }
-        charactersPosition.set(0,0, x);
-        charactersPosition.set(0,0, y);
+        //charactersPosition.set(0,0, x);
+        //charactersPosition.set(0,0, y);
+        charactersPosition.setX(0, x);
+        charactersPosition.setY(0, y);
     }
 
     public String getDirection() {
         return imagePath.substring(imagePath.lastIndexOf('/')+1, imagePath.lastIndexOf('.'));
     }
-    public int getX() {
+    public synchronized int getX() {
         return x;
     }
-    public int getY() {
+    public synchronized int getY() {
         return y;
     }
 //    private int directionStrToInt(String direction){
@@ -109,8 +107,10 @@ public class Pacman extends ImageIcon {
         eventManager.getTable().clearPacman(x,y);
         x=13;
         y=26;
-        charactersPosition.set(0, 0, 14);
-        charactersPosition.set(0, 1, 23);
+        //charactersPosition.set(0, 0, 14);
+        //charactersPosition.set(0, 1, 23);
+        charactersPosition.setX(0, x);
+        charactersPosition.setY(0, y);
         setDirection("right");
         eventManager.getTable().updatePosition();
     }

@@ -17,8 +17,10 @@ public class OrangeGhost extends Ghost {
             y=17;
             status=1;
             nGhost=4;
-            charactersPosition.set(nGhost,0,x);
-            charactersPosition.set(nGhost,1,y);
+            //charactersPosition.set(nGhost,0,x);
+            //charactersPosition.set(nGhost,1,y);
+            charactersPosition.setX(nGhost, x);
+            charactersPosition.setY(nGhost, y);
         }
 
     @Override
@@ -36,11 +38,11 @@ public class OrangeGhost extends Ghost {
         //se è stato raggiunto acquisice un nuovo target
         if(targetReached){
             targetReached = false;
-            distanceFromPacman =  Math.sqrt(Math.pow(y - charactersPosition.get(0,1), 2) + Math.pow(x - charactersPosition.get(0,0), 2));
+            distanceFromPacman =  Math.sqrt(Math.pow(y - charactersPosition.getY(0), 2) + Math.pow(x - charactersPosition.getX(0), 2));
 
             if (distanceFromPacman>8) {
-                xTarget = charactersPosition.get(0, 0);
-                yTarget = charactersPosition.get(0, 1);
+                xTarget=charactersPosition.getX(0);
+                yTarget=charactersPosition.getY(0);
             }else{
                 xTarget=27;
                 yTarget=35;
@@ -78,8 +80,10 @@ public class OrangeGhost extends Ghost {
         }
         x=15;
         y=17;
-        charactersPosition.set(nGhost,0, x);
-        charactersPosition.set(nGhost,1, y);
+        //charactersPosition.set(nGhost,0, x);
+        //charactersPosition.set(nGhost,1, y);
+        charactersPosition.setX(nGhost, x);
+        charactersPosition.setY(nGhost, y);
         eventManager.updateGhostPosition(this);
     }
 

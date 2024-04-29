@@ -18,8 +18,10 @@ public class CyanGhost extends Ghost {
             y=17;
             status=1;
             nGhost=2;
-            charactersPosition.set(nGhost,0,x);
-            charactersPosition.set(nGhost,1,y);
+            //charactersPosition.set(nGhost,0,x);
+            charactersPosition.setX(nGhost, x);
+            //charactersPosition.set(nGhost,1,y);
+            charactersPosition.setY(nGhost, y);
         }
 
     @Override
@@ -39,8 +41,10 @@ public class CyanGhost extends Ghost {
         //se è stato raggiunto acquisice un nuovo target
         if(targetReached){
             targetReached=false;
-            xTarget=charactersPosition.get(0,0);
-            yTarget=charactersPosition.get(0,1);
+            //xTarget=charactersPosition.get(0,0);
+            //yTarget=charactersPosition.get(0,1);
+            xTarget=charactersPosition.getX(0);
+            yTarget=charactersPosition.getY(0);
 
             switch (pacman.getDirection()){
                 case "up": {
@@ -81,21 +85,21 @@ public class CyanGhost extends Ghost {
                 }
             }
             //Conntrollo che le coordinate non escano dai margini dell'array
-            for(int i=xTarget-charactersPosition.get(1,0);i>=0;i--){
-                if( (xTarget+(xTarget-charactersPosition.get(1,0))>=0) && (xTarget+(xTarget-charactersPosition.get(1,0))<=27) ){
-                    xTarget=xTarget+(xTarget-charactersPosition.get(1,0));
+            for(int i=xTarget-charactersPosition.getX(1);i>=0;i--){
+                if( (xTarget+(xTarget-charactersPosition.getX(1))>=0) && (xTarget+(xTarget-charactersPosition.getX(1))<=27) ){
+                    xTarget=xTarget+(xTarget-charactersPosition.getX(1));
                     break;
                 }
             }
-            for(int i=yTarget-charactersPosition.get(1,1);i>=0;i--){
-                if( (yTarget+(yTarget-charactersPosition.get(1,1))>=0) && (yTarget+(yTarget-charactersPosition.get(1,1))<=35) ){
-                    yTarget=yTarget+(yTarget-charactersPosition.get(1,1));
+            for(int i=yTarget-charactersPosition.getY(1);i>=0;i--){
+                if( (yTarget+(yTarget-charactersPosition.getY(1))>=0) && (yTarget+(yTarget-charactersPosition.getY(1))<=35) ){
+                    yTarget=yTarget+(yTarget-charactersPosition.getY(1));
                     break;
                 }
             }
             OuterLoop:
-            for (int i = 0; i <  yTarget-charactersPosition.get(0,1); i++) {
-                for (int j = 0; j < xTarget-charactersPosition.get(0,0); j++) {
+            for (int i = 0; i <  yTarget-charactersPosition.getY(0); i++) {
+                for (int j = 0; j < xTarget-charactersPosition.getX(0); j++) {
                     if(!(tiles[yTarget-i][xTarget-j] instanceof WallTile)){
                         xTarget=xTarget-i;
                         yTarget=yTarget-j;
@@ -134,8 +138,10 @@ public class CyanGhost extends Ghost {
         }
         x=13;
         y=17;
-        charactersPosition.set(nGhost,0, x);
-        charactersPosition.set(nGhost,1, y);
+        //charactersPosition.set(nGhost,0, x);
+        //charactersPosition.set(nGhost,1, y);
+        charactersPosition.setX(nGhost, x);
+        charactersPosition.setY(nGhost, y);
         eventManager.updateGhostPosition(this);
     }
 

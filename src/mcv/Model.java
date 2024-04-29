@@ -26,6 +26,7 @@ public class Model {
     // 0 - pacman, 1 - red ghost, 2 - cyan ghost, 3 - pink ghost, 4 - orange ghost
     // x, y, direction( 0-Up, 1-Left, 2-Down, 3-Right )
     protected My2DSyncArray charactersPosition;
+
     protected Tile leftTile, rightTile, upTile, downTile, myTile;
     protected String lastDirection, nextDirection;
     protected Thread rThread, pThread, cThread, oThread, sThread, gThread;
@@ -106,7 +107,7 @@ public class Model {
     }
 
     public Model() {
-        charactersPosition = new My2DSyncArray(5, 3);
+        charactersPosition = new My2DSyncArray(5);
         pacman = new Pacman(charactersPosition);
         tiles = new Tile[36][28];
         supervisor = new Supervisor(charactersPosition, this);
@@ -148,8 +149,10 @@ public class Model {
     }
 
     protected void updatePosition() {
-        charactersPosition.set(0, 0, pacman.getX());
-        charactersPosition.set(0, 1, pacman.getY());
+        //charactersPosition.set(0, 0, pacman.getX());
+        //charactersPosition.set(0, 1, pacman.getY());
+        charactersPosition.setX(0, pacman.getX());
+        charactersPosition.setY(0, pacman.getY());
     }
     public Tile getLeftTile() {
         try {
@@ -188,7 +191,7 @@ public class Model {
         if (tile==null) { return; }
         if (!(tile instanceof WallTile)) {
             if (dotsCounter == 70 || dotsCounter == 240) {
-                fruit--;
+                if (fruit>0) fruit--;
             }
             System.out.println(dotsCounter);
             if (tile.isSuperFood()) {
@@ -202,8 +205,8 @@ public class Model {
             } else if (tile.isFruit()) {
                 tile.setFruit(false);
                 score += 100;
-                if (fruit == 0) dotsCounter=-1;
             }
+            if (fruit==0 && dotsCounter==240) dotsCounter=-1;
             myTile.setPacman(false);
             pacman.move(direction);
             tile.setPacman(true);
@@ -219,10 +222,10 @@ public class Model {
     }
     public int collision() {
         for (int i = 1; i < 5; i++) {
-            if ((charactersPosition.get(i, 0) == charactersPosition.get(0, 0)) && (charactersPosition.get(i, 1) == charactersPosition.get(0, 1))) {
+            if ((charactersPosition.getX(i) == charactersPosition.getX(0)) && (charactersPosition.getY(i) == charactersPosition.getY(0))) {
                 System.out.println("Collision with ghost " + i);
-                System.out.println("Pacman: " + charactersPosition.get(0, 0) + " " + charactersPosition.get(0, 1));
-                System.out.println("Ghost "+ i +":"+ charactersPosition.get(i, 0) + " " + charactersPosition.get(i, 1));
+                System.out.println("Pacman: " + charactersPosition.getX(0) + " " + charactersPosition.getY(0));
+                System.out.println("Ghost "+ i +":"+ charactersPosition.getX(i) + " " + charactersPosition.getY(i));
                 return i;
             }
         }

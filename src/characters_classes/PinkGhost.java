@@ -17,8 +17,10 @@ public class PinkGhost extends Ghost {
         y=17;
         status=1;
         nGhost=3;
-        charactersPosition.set(nGhost,0,x);
-        charactersPosition.set(nGhost,1,y);
+        //charactersPosition.set(nGhost,0,x);
+        //charactersPosition.set(nGhost,1,y);
+        charactersPosition.setX(nGhost, x);
+        charactersPosition.setY(nGhost, y);
     }
 
     @Override
@@ -38,10 +40,11 @@ public class PinkGhost extends Ghost {
         //se è stato raggiunto acquisice un nuovo target
         if(targetReached){
             targetReached=false;
-            xTarget=charactersPosition.get(0,0);
-            yTarget=charactersPosition.get(0,1);
+            //xTarget=charactersPosition.get(0,0);
+            //yTarget=charactersPosition.get(0,1);
+            xTarget=charactersPosition.getX(0);
+            yTarget=charactersPosition.getY(0);
             System.out.println("Inizio: xtarget "+xTarget+", ytarget "+yTarget);
-            System.out.println(charactersPosition.get(0,2));
 
             System.out.println(pacman.getDirection());
             switch (pacman.getDirection()){
@@ -123,8 +126,10 @@ public class PinkGhost extends Ghost {
         }
         x=14;
         y=17;
-        charactersPosition.set(nGhost,0, x);
-        charactersPosition.set(nGhost,1, y);
+        //charactersPosition.set(nGhost,0, x);
+        //charactersPosition.set(nGhost,1, y);
+        charactersPosition.setX(nGhost, x);
+        charactersPosition.setY(nGhost, y);
         eventManager.updateGhostPosition(this);
     }
 

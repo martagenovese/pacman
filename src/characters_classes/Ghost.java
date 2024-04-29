@@ -87,31 +87,33 @@ import java.awt.*;
                 if (x == 0) x = 27;
                 else x--;
                 this.direction="left";
-                charactersPosition.set(nGhost,0, 1);
+                //charactersPosition.set(nGhost,0, 1);
                 break;
             }
             case "right" : {
                 if (x == 27) x = 0;
                 else x++;
                 this.direction="right";
-                charactersPosition.set(nGhost,0, 3);
+                //charactersPosition.set(nGhost,0, 3);
                 break;
             }
             case "up" : {
                 y--;
                 this.direction="up";
-                charactersPosition.set(nGhost,0, 0);
+                //charactersPosition.set(nGhost,0, 0);
                 break;
             }
             case "down" : {
                 y++;
                 this.direction="down";
-                charactersPosition.set(nGhost,0, 2);
+                //charactersPosition.set(nGhost,0, 2);
                 break;
             }
         }
-        charactersPosition.set(nGhost,0, x);
-        charactersPosition.set(nGhost,1, y);
+        //charactersPosition.set(nGhost,0, x);
+        //charactersPosition.set(nGhost,1, y);
+        charactersPosition.setX(nGhost, x);
+        charactersPosition.setY(nGhost, y);
         eventManager.updateGhostPosition(this);
         try {
             Thread.sleep(waitingTime);//195
@@ -223,12 +225,6 @@ import java.awt.*;
     }
     public int getY() {
         return y;
-    }
-    public void setXY(int x, int y){
-        this.x=x;
-        this.y=y;
-        charactersPosition.set(nGhost,0, x);
-        charactersPosition.set(nGhost,1, y);
     }
 
     public void setStatus(int n){
