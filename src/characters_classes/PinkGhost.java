@@ -17,8 +17,6 @@ public class PinkGhost extends Ghost {
         y=17;
         status=1;
         nGhost=3;
-        //charactersPosition.set(nGhost,0,x);
-        //charactersPosition.set(nGhost,1,y);
         charactersPosition.setX(nGhost, x);
         charactersPosition.setY(nGhost, y);
     }
@@ -26,7 +24,7 @@ public class PinkGhost extends Ghost {
     @Override
     public void chase() {
         if(status!=0) {
-            //quando cambia status si gira
+            //quando cambia status inverte la direzione
             targetReached=true;
             turnAround();
             status = 0;
@@ -40,17 +38,15 @@ public class PinkGhost extends Ghost {
         //se è stato raggiunto acquisice un nuovo target
         if(targetReached){
             targetReached=false;
-            //xTarget=charactersPosition.get(0,0);
-            //yTarget=charactersPosition.get(0,1);
+
+            //prende come obbiettivo la casella di pacman
             xTarget=charactersPosition.getX(0);
             yTarget=charactersPosition.getY(0);
-            //System.out.println("Inizio: xtarget "+xTarget+", ytarget "+yTarget);
 
-            //System.out.println(pacman.getDirection());
+            //a seconda della direzione di pacman, targhetta la quarta casella in avanti
+            //prova a puntare alla quarta in avanti, se è un muro o fuori dalla griglia prova con quella prima
             switch (pacman.getDirection()){
                 case "up": {
-                    //System.out.println("Up");
-                    //up
                     for(int i=4; i>=0; i--)  {
                         if( yTarget-i>=0 && !(tiles[yTarget-i][xTarget] instanceof WallTile) ) {
                                 yTarget = yTarget - i;
@@ -60,11 +56,8 @@ public class PinkGhost extends Ghost {
                     break;
                 }
                 case "left": {
-                    //System.out.println("Left");
-                    //left
                     for(int i=4; i>=0; i--)  {
                         if( xTarget-i>=0 && !(tiles[yTarget][xTarget-i] instanceof WallTile) ){
-                            //System.out.println("entra con i="+i);
                             xTarget=xTarget-i;
                             break;
                         }
@@ -72,8 +65,6 @@ public class PinkGhost extends Ghost {
                     break;
                 }
                 case "down": {
-                    //System.out.println("Down");
-                    //down
                     for(int i=4; i>=0; i--)  {
                         if( yTarget+i<=35 && !(tiles[yTarget+i][xTarget] instanceof WallTile) ){
                             yTarget=yTarget+i;
@@ -83,8 +74,6 @@ public class PinkGhost extends Ghost {
                     break;
                 }
                 case "right": {
-                    //System.out.println("Right");
-                    //right
                     for(int i=4; i>=0; i--)  {
                         if( xTarget+i<=27 && !(tiles[yTarget][xTarget+i] instanceof WallTile) ){
                             xTarget=xTarget+i;
@@ -94,12 +83,10 @@ public class PinkGhost extends Ghost {
                     break;
                 }
             }
-            //System.out.println("Fine: xtarget "+xTarget+", ytarget "+yTarget);
-
         }
+        //si muove in quella direzione
         reachTarget(xTarget, yTarget);
     }
-
     @Override
     public void scatter() {
         if(status!=1) {
@@ -120,14 +107,14 @@ public class PinkGhost extends Ghost {
         move("up");
         status=1;
     }
+    @Override
     public void restorePosition(){
+        //riporta pacman nella casetta
         if(x!=14 || y!=17) {
             eventManager.clearGhostPosition(this);
         }
         x=14;
         y=17;
-        //charactersPosition.set(nGhost,0, x);
-        //charactersPosition.set(nGhost,1, y);
         charactersPosition.setX(nGhost, x);
         charactersPosition.setY(nGhost, y);
         eventManager.updateGhostPosition(this);

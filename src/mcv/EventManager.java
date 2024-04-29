@@ -1,7 +1,6 @@
 package mcv;
 
 import characters_classes.Ghost;
-import characters_classes.Pacman;
 import myclasses.My2DSyncArray;
 import tiles_classes.*;
 
@@ -19,9 +18,14 @@ public class EventManager implements KeyListener {
     protected boolean isListenerActive;
     protected String nextDirection, lastDirection;
     protected int startGhost;
+
     public EventManager() {
         isListenerActive = true;
         startGhost = 0;
+    }
+
+    public void setStartGhost(int n){
+        startGhost=n;
     }
     public void setModel(Model model) {
         this.model = model;
@@ -29,19 +33,14 @@ public class EventManager implements KeyListener {
         model.getCyanGhost().setEventManager(this);
         model.getPinkGhost().setEventManager(this);
         model.getOrangeGhost().setEventManager(this);
-
         model.pacman.setEventManager(this);
-
         charactersPosition = model.charactersPosition;
-
-
         model.supervisor.setEventManager(this);
     }
-
     public void setTable(Table table) {
         this.table = table;
-
-        // build table
+        //settiamo lo fondo a blu delle caselle che sono muri, tranne quelle al di fuori del campo di gioco
+        //nelle caselle che possono essere attraversate da pacman mette i dot
         for (int i = 0; i < 36; i++) {
             for (int j = 0; j < 28; j++) {
                 if (model.tiles[i][j] instanceof WallTile) {
@@ -66,9 +65,6 @@ public class EventManager implements KeyListener {
         table.setScoreBar();
         table.setLives();
         table.setFruit();
-
-        //table.tiles[17][12].setBackground(Color.RED);
-
         table.setCharacter(model.getPacman());
         table.setRedGhost(model.getRedGhost());
         table.setCyanGhost(model.getCyanGhost());
@@ -97,11 +93,8 @@ public class EventManager implements KeyListener {
     public void updateGhostPosition(Ghost ghost) {
         table.updateGhost(ghost);
     }
-    public void setStartGhost(int n){
-        startGhost=n;
-    }
-
-    public void sevenSecondsInHeaven() {
+    public void muchoMachoPacman() {
+        //quando pacman mangia il super food
         table.updatePosition();
         table.clearPacman(model.getPacman().getX(), model.getPacman().getY());
         model.getRedGhost().setScared(true);
@@ -120,7 +113,6 @@ public class EventManager implements KeyListener {
             }
         }, 7000);
     }
-
     public void stopGame(boolean victory) {
         if (victory) {
             table.endGame("Victory!", "<html>Hai vinto!<br>Adesso puoi rubare questo gatto</html>", "src/meme/vittoria.jpg");
@@ -131,30 +123,14 @@ public class EventManager implements KeyListener {
 
     @Override
     public void keyTyped(KeyEvent e) {}
-
     @Override
     public void keyPressed(KeyEvent e) {
-        if (startGhost==0) {
-            model.startRedGhost();
-            model.startCyanGhost();
-            model.startPinkGhost();
-            model.startOrangeGhost();
-            model.startSupervisors();
-            startGhost = 1;
-        }else if(startGhost==2){
-            model.r.setStatus(5);
-            model.c.setStatus(5);
-            model.p.setStatus(5);
-            model.o.setStatus(5);
-            startGhost=1;
-        }
-
         if (isListenerActive) {
             disableListenerFor(180);
 
             int key = e.getKeyCode();
             String s;
-
+            
             if (key == KeyEvent.VK_LEFT) {
                 s = "Left";
             } else if (key == KeyEvent.VK_RIGHT) {
@@ -214,8 +190,6 @@ public class EventManager implements KeyListener {
             table.updateScore(model.getScore());
             model.updatePosition();
             table.updatePosition();
-
-            //System.out.println("Pos Pacman: y="+charactersPosition.getY(0)+"x="+charactersPosition.getY(0));
         }
     }
     @Override

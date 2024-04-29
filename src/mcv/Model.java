@@ -24,7 +24,7 @@ public class Model {
     public int score, lives, dotsCounter, fruit, ghostsEaten;
 
     // 0 - pacman, 1 - red ghost, 2 - cyan ghost, 3 - pink ghost, 4 - orange ghost
-    // x, y, direction( 0-Up, 1-Left, 2-Down, 3-Right )
+    // x, y
     protected My2DSyncArray charactersPosition;
 
     protected Tile leftTile, rightTile, upTile, downTile, myTile;
@@ -144,54 +144,12 @@ public class Model {
             throw new RuntimeException(e);
         }
     }
-
-    public Model() {
-        charactersPosition = new My2DSyncArray(5);
-        pacman = new Pacman(charactersPosition);
-        tiles = new Tile[36][28];
-        supervisor = new Supervisor(charactersPosition, this);
-        sThread = new Thread(supervisor);
-        ghostsEaten = 0;
-
-        //tutte crossable all'inizio
-        for (int i = 0; i < 36; i++) {
-            for (int j = 0; j < 28; j++) {
-                tiles[i][j] = new CrossableTile(i, j);
-            }
-        }
-        arrageWalls();
-        arrangeIntersections();
-        arrangeDots();
-        tiles[26][13].setPacman(true);
-
-        // aggiungere punteggio, vite e frutti
-        score = 0;
-        lives = 0; //3
-        dotsCounter = 0;
-        fruit = 2;
-        r = new RedGhost(charactersPosition, tiles, pacman, "red");
-        c = new CyanGhost(charactersPosition, tiles, pacman, "cyan");
-        p = new PinkGhost(charactersPosition, tiles, pacman, "pink");
-        o = new OrangeGhost(charactersPosition, tiles, pacman, "orange");
-
-        rThread = new Thread(r);
-        pThread = new Thread(p);
-        cThread = new Thread(c);
-        oThread = new Thread(o);
-
-        ghostSupervisor = new GhostSupervisor(r,c,p,o);
-        gThread = new Thread(ghostSupervisor);
+    public void setFruit(int x, int y) {
+        tiles[y][x].setFruit(true);
     }
 
     public Pacman getPacman() {
         return pacman;
-    }
-
-    protected void updatePosition() {
-        //charactersPosition.set(0, 0, pacman.getX());
-        //charactersPosition.set(0, 1, pacman.getY());
-        charactersPosition.setX(0, pacman.getX());
-        charactersPosition.setY(0, pacman.getY());
     }
     public Tile getLeftTile() {
         try {
@@ -221,11 +179,29 @@ public class Model {
         myTile = tiles[pacman.getY()][pacman.getX()];
         return myTile;
     }
-
-    public void setFruit(int x, int y) {
-        tiles[y][x].setFruit(true);
+    public RedGhost getRedGhost() {
+        return (RedGhost) r;
+    }
+    public PinkGhost getPinkGhost() {
+        return (PinkGhost) p;
+    }
+    public CyanGhost getCyanGhost() {
+        return (CyanGhost) c;
+    }
+    public OrangeGhost getOrangeGhost() {
+        return (OrangeGhost) o;
+    }
+    public int getScore() {
+        return score;
+    }
+    public int getFruit() {
+        return fruit;
     }
 
+    protected void updatePosition() {
+        charactersPosition.setX(0, pacman.getX());
+        charactersPosition.setY(0, pacman.getY());
+    }
     public void movePacman(String direction, Tile tile, Tile myTile) {
         isFruitEaten = false;
         if (tile==null) { return; }
@@ -233,7 +209,6 @@ public class Model {
             if (dotsCounter == 70 || dotsCounter == 240) {
                 if (fruit>0) fruit--;
             }
-            //System.out.println(dotsCounter);
             if (tile.isSuperFood()) {
                 ((CrossableTile) tile).setSuperFood(false);
                 pacman.setSuper(true);
@@ -251,7 +226,6 @@ public class Model {
             myTile.setPacman(false);
             pacman.move(direction);
             tile.setPacman(true);
-
         }
     }
     public void pacmanHasBeenEaten() {
@@ -264,15 +238,16 @@ public class Model {
     public int collision() {
         for (int i = 1; i < 5; i++) {
             if ((charactersPosition.getX(i) == charactersPosition.getX(0)) && (charactersPosition.getY(i) == charactersPosition.getY(0))) {
-                System.out.println("Collision with ghost " + i);
-                System.out.println("Pacman: " + charactersPosition.getX(0) + " " + charactersPosition.getY(0));
-                System.out.println("Ghost "+ i +":"+ charactersPosition.getX(i) + " " + charactersPosition.getY(i));
+//                System.out.println("Collision with ghost " + i);
+//                System.out.println("Pacman: " + charactersPosition.getX(0) + " " + charactersPosition.getY(0));
+//                System.out.println("Ghost "+ i +":"+ charactersPosition.getX(i) + " " + charactersPosition.getY(i));
                 return i;
             }
         }
         return -1;
     }
     public boolean collisionProcedure(int n) throws InterruptedException {
+        //se pacman è super -> i fantasmi sono stati mangiati
         if (pacman.isSuper()) {
             switch (n) {
                 case 1: {
@@ -294,31 +269,12 @@ public class Model {
             }
             return true;
         } else {
-            //lostALive();
-
+            //altrimenti pacman è stato mangiato
             tiles[23][14].setPacman(true);
             pacmanHasBeenEaten();
             return false;
         }
     }
-
-//    public void lostALive(){
-//        switch (lives){
-//            case 0: {
-//                //dire che hai perso
-//            }
-//            case 1: {
-//                Table.clearTile(2, 35);
-//            }
-//            case 2: {
-//                Table.clearTile(4, 35);
-//            }
-//            case 3: {
-//                Table.clearTile(6, 35);
-//            }
-//        }
-//        lives--;
-//    }
     public void keepDirection(String direction) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
         Method method = this.getClass().getMethod("get"+direction+"Tile");
         Tile nextTile = (Tile) method.invoke(this);
@@ -332,17 +288,21 @@ public class Model {
         movePacman(lastDirection, (Tile) method.invoke(this), getMyTile());
     }
 
-    public RedGhost getRedGhost() {
-        return (RedGhost) r;
+    public void startRedGhost(){rThread.start();}
+    public void startCyanGhost(){cThread.start();}
+    public void startPinkGhost(){pThread.start();}
+    public void startOrangeGhost(){oThread.start();}
+    public void startSupervisors(){
+        gThread.start();
+        sThread.start();
     }
-    public PinkGhost getPinkGhost() {
-        return (PinkGhost) p;
+
+    /*
+    public boolean getDotsCounter() {
+        return (dotsCounter==70 || dotsCounter==240);
     }
-    public CyanGhost getCyanGhost() {
-        return (CyanGhost) c;
-    }
-    public OrangeGhost getOrangeGhost() {
-        return (OrangeGhost) o;
+    public boolean isGameOver() {
+        return lives == 0;
     }
     public Thread getRedGhostThread() {
         return rThread;
@@ -356,28 +316,8 @@ public class Model {
     public Thread getOrangeGhostThread() {
         return oThread;
     }
-    public void startRedGhost(){rThread.start();}
-    public void startCyanGhost(){cThread.start();}
-    public void startPinkGhost(){pThread.start();}
-    public void startOrangeGhost(){oThread.start();}
-    public void startSupervisors(){
-        gThread.start();
-        sThread.start();
-    }
-
-    public int getScore() {
-        return score;
-    }
     public int getLives() {
         return lives;
     }
-    public int getFruit() {
-        return fruit;
-    }
-    public boolean getDotsCounter() {
-        return (dotsCounter==70 || dotsCounter==240);
-    }
-    public boolean isGameOver() {
-        return lives == 0;
-    }
+     */
 }

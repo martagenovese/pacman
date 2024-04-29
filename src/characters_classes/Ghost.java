@@ -21,7 +21,6 @@ import java.awt.*;
     protected int xTarget, yTarget;
     protected String colour;
 
-
     public Ghost(My2DSyncArray charactersPosition, Tile[][] tiles, Pacman pacman, String colour){
         this.charactersPosition=charactersPosition;
         this.tiles=tiles;
@@ -38,39 +37,9 @@ import java.awt.*;
         yTarget=0;
         waitingTime=200;
     }
+
     public void setEventManager(EventManager eventManager) {
         this.eventManager = eventManager;
-    }
-
-    public void frightened()  {
-        //TODO: se va nel tunnel da errore
-        if(status!=2){
-            targetReached=true;
-            turnAround();
-            status=2;
-        }
-
-        if(x==xTarget&&y==yTarget) {
-            targetReached=true;
-        }
-
-        //se è stato raggiunto acquisice un nuovo target
-        if(targetReached){
-            do{
-                xTarget=(int)(Math.random()*26+1);
-                yTarget=(int)(Math.random()*29+4);
-            } while(tiles[yTarget][xTarget] instanceof WallTile);
-        }
-        reachTarget(xTarget, yTarget);
-    }
-    public void setScared(boolean scared){
-        if(scared){
-            setImagePath("scared");
-            status=2;
-        } else {
-            setImagePath(colour);
-            status=0;
-        }
     }
     private void setImagePath(String colour){
         String imagePath = "src/images/ghosts/"+colour+".png";
@@ -78,6 +47,27 @@ import java.awt.*;
         Image originalImage = originalIcon.getImage();
         Image scaledImageDot = originalImage.getScaledInstance(25, 23, Image.SCALE_SMOOTH);
         setImage(new ImageIcon(scaledImageDot).getImage());
+    }
+    public void setScared(boolean scared){
+         if(scared){
+             setImagePath("scared");
+             status=2;
+         } else {
+             setImagePath(colour);
+             status=0;
+         }
+    }
+    public void setStatus(int n){
+         status=n;
+    }
+    public int getStatus() {
+         return status;
+    }
+    public int getX() {
+         return x;
+    }
+    public int getY() {
+         return y;
     }
 
     public void move(String dir) {
@@ -119,13 +109,6 @@ import java.awt.*;
             Thread.sleep(waitingTime);//195
         } catch (InterruptedException ignored) {}
     }
-
-//    public void getToTheTarget(int xTarget, int yTarget) {
-//        while(x != xTarget || y != yTarget) {
-//            reachTarget(xTarget, yTarget);
-//        }
-//    }
-
     public void reachTarget(int xTarget, int yTarget){
         //{ Up, Left, Down, Right }
         int[][] directions = {{y - 1, x}, {y, x - 1}, {y + 1, x}, {y, x + 1}};
@@ -135,7 +118,7 @@ import java.awt.*;
         int chosenDirection;
         int back;
 
-        //se invece di usare direction uso charachter position non funziona
+        //salvo la direzione in cui sta andando pacman e la direzione opposta
         switch(direction){
             case "up":
                 chosenDirection=0;
@@ -159,8 +142,7 @@ import java.awt.*;
                 break;
         }
 
-        //TODO: gestire i tunnel
-        //se è un incrocio o se continuando su quella direzione trova un muro
+        //se è un incrocio o se continuando su quella direzione trova un muro allora cambio choosenDirection
         if ( (tiles[y][x].isIntersection()) || (tiles[directions[chosenDirection][0]][directions[chosenDirection][1]] instanceof WallTile) ) {
             double distanceMin = 100;
             for (int i = 0; i < directions.length; i++) {
@@ -174,6 +156,7 @@ import java.awt.*;
             }
         }
 
+        //converto la direzione da int in stringa
         switch (chosenDirection) {
             case 0:
                 move("up");
@@ -188,18 +171,38 @@ import java.awt.*;
                 move("right");
                 break;
         }
-
     }
     public abstract void startGame();
     public abstract void chase();
     public abstract void scatter();
+    public void frightened()  {
+         //quando cambia modalità inverte la direzione
+         if(status!=2){
+             targetReached=true;
+             turnAround();
+             status=2;
+         }
+
+         //controllo se il target è stato raggiunto
+         if(x==xTarget&&y==yTarget) {
+             targetReached=true;
+         }
+
+         //se è stato raggiunto acquisice randomicamente un nuovo target
+         if(targetReached){
+             do{
+                 xTarget=(int)(Math.random()*26+1);
+                 yTarget=(int)(Math.random()*29+4);
+             } while(tiles[yTarget][xTarget] instanceof WallTile);
+         }
+         reachTarget(xTarget, yTarget);
+    }
     public void eaten(){
          restorePosition();
          if(!pacman.isSuper()){
              startGame();
          }
     }
-
     protected abstract void restorePosition();
     public void turnAround(){
         int[][] directions = {{y + 1, x}, {y, x - 1}, {y - 1, x}, {y, x + 1}};
@@ -219,22 +222,6 @@ import java.awt.*;
                 break;
         }
     }
-
-    public int getX() {
-        return x;
-    }
-    public int getY() {
-        return y;
-    }
-
-    public void setStatus(int n){
-        status=n;
-    }
-
-     public int getStatus() {
-         return status;
-     }
-
      public void pacmanEaten(){
          restorePosition();
          status=4;
@@ -275,6 +262,5 @@ import java.awt.*;
              }
          }
      }
-
 
 }

@@ -10,20 +10,15 @@ import java.awt.*;
 
 public class CyanGhost extends Ghost {
 
-        private String imagePath;
-
-        public CyanGhost(My2DSyncArray charactersPosition, Tile[][] tiles, Pacman pacman, String colour){
+    public CyanGhost(My2DSyncArray charactersPosition, Tile[][] tiles, Pacman pacman, String colour){
             super(charactersPosition, tiles, pacman, colour);
             x=13;
             y=17;
             status=1;
             nGhost=2;
-            //charactersPosition.set(nGhost,0,x);
             charactersPosition.setX(nGhost, x);
-            //charactersPosition.set(nGhost,1,y);
             charactersPosition.setY(nGhost, y);
         }
-
     @Override
     public void chase() {
         if(status!=0) {
@@ -41,14 +36,13 @@ public class CyanGhost extends Ghost {
         //se è stato raggiunto acquisice un nuovo target
         if(targetReached){
             targetReached=false;
-            //xTarget=charactersPosition.get(0,0);
-            //yTarget=charactersPosition.get(0,1);
             xTarget=charactersPosition.getX(0);
             yTarget=charactersPosition.getY(0);
 
+
+            //a seconda della direzione di pacman, targhetta la seconda casella in avanti
             switch (pacman.getDirection()){
                 case "up": {
-                    //up
                     for(int i=2; i>=0; i--)  {
                         if( yTarget-i>=0){
                             yTarget=yTarget-i;
@@ -57,7 +51,6 @@ public class CyanGhost extends Ghost {
                     }
                 }
                 case "left": {
-                    //left
                     for(int i=2; i>=0; i--)  {
                         if( xTarget-i>=0){
                             xTarget=xTarget-i;
@@ -66,7 +59,6 @@ public class CyanGhost extends Ghost {
                     }
                 }
                 case "down": {
-                    //down
                     for(int i=2; i>=0; i--)  {
                         if( yTarget+i<=35){
                             yTarget=yTarget+i;
@@ -75,7 +67,6 @@ public class CyanGhost extends Ghost {
                     }
                 }
                 case "right": {
-                    //right
                     for(int i=2; i>=0; i--)  {
                         if( xTarget+i<=27 ){
                             xTarget=xTarget+i;
@@ -84,6 +75,7 @@ public class CyanGhost extends Ghost {
                     }
                 }
             }
+
             //Conntrollo che le coordinate non escano dai margini dell'array
             for(int i=xTarget-charactersPosition.getX(1);i>=0;i--){
                 if( (xTarget+(xTarget-charactersPosition.getX(1))>=0) && (xTarget+(xTarget-charactersPosition.getX(1))<=27) ){
@@ -97,6 +89,8 @@ public class CyanGhost extends Ghost {
                     break;
                 }
             }
+
+            //Cerco una casella in prossimità che non sia un muro
             OuterLoop:
             for (int i = 0; i <  yTarget-charactersPosition.getY(0); i++) {
                 for (int j = 0; j < xTarget-charactersPosition.getX(0); j++) {
@@ -110,7 +104,6 @@ public class CyanGhost extends Ghost {
         }
         reachTarget(xTarget, yTarget);
     }
-
     @Override
     public void scatter() {
         if(status!=1) {
@@ -121,7 +114,6 @@ public class CyanGhost extends Ghost {
         int yTarget=35;
         reachTarget(xTarget, yTarget);
     }
-
     @Override
     public void startGame() {
         try {
@@ -132,14 +124,13 @@ public class CyanGhost extends Ghost {
         move("up");
         status=1;
     }
+    @Override
     public void restorePosition(){
         if(x!=13 || y!=17) {
             eventManager.clearGhostPosition(this);
         }
         x=13;
         y=17;
-        //charactersPosition.set(nGhost,0, x);
-        //charactersPosition.set(nGhost,1, y);
         charactersPosition.setX(nGhost, x);
         charactersPosition.setY(nGhost, y);
         eventManager.updateGhostPosition(this);

@@ -21,7 +21,6 @@ public class RedGhost extends Ghost {
         charactersPosition.setX(nGhost, x);
         charactersPosition.setY(nGhost, y);
     }
-
     public void startGame() {
         move("up");
         move("right");
@@ -29,7 +28,6 @@ public class RedGhost extends Ghost {
         move("up");
         status=1;
     }
-
     @Override
     public void scatter(){
         if(status!=1) {
@@ -40,7 +38,6 @@ public class RedGhost extends Ghost {
         int yTarget=0;
         reachTarget(xTarget, yTarget);
     }
-
     @Override
     public void chase() {
         if(status!=0) {
@@ -64,22 +61,15 @@ public class RedGhost extends Ghost {
 
         reachTarget(xTarget, yTarget);
     }
-
+    @Override
     public void restorePosition(){
         if(x!=12 || y!=17) {
             eventManager.clearGhostPosition(this);
         }
         x=12;
         y=17;
-        //charactersPosition.set(nGhost,0, x);
-        //charactersPosition.set(nGhost,1, y);
         charactersPosition.setX(nGhost, x);
         charactersPosition.setY(nGhost, y);
         eventManager.updateGhostPosition(this);
     }
-
-
-
-
-
 }

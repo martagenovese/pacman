@@ -8,9 +8,11 @@ import java.io.*;
 import java.util.Scanner;
 
 public class BuildDots extends JFrame implements ActionListener {
-    MyButton[][] tiles = new MyButton[36][28];
-    public BuildDots() {
 
+    MyButton[][] tiles = new MyButton[36][28];
+
+    public BuildDots() {
+        //legge da file le posizioni dei dot e li inserisce nella schermata
         setTitle("Building dots");
         setLayout(new GridLayout(36, 28));
         InputStream f;
@@ -57,7 +59,6 @@ public class BuildDots extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         MyButton source = (MyButton) e.getSource();
         source.setBackground(Color.RED);
-
         try {
             FileWriter fileWriter = new FileWriter("src/construction/dots.csv", true);
             PrintWriter printWriter = new PrintWriter(fileWriter);

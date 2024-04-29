@@ -4,7 +4,6 @@ import mcv.EventManager;
 import myclasses.My2DSyncArray;
 import javax.swing.*;
 import java.awt.*;
-import java.util.TimerTask;
 
 
 public class Pacman extends ImageIcon {
@@ -18,7 +17,6 @@ public class Pacman extends ImageIcon {
     public Pacman(My2DSyncArray charactersPosition) {
         imagePath = "src/images/pacman/right.png";
         ImageIcon originalIcon = new ImageIcon(imagePath);
-        //SVGIcon originalIcon = new SVGIcon(imagePath);
         Image originalImage = originalIcon.getImage();
         Image scaledImageDot = originalImage.getScaledInstance(20, 20, Image.SCALE_SMOOTH);
         setImage(new ImageIcon(scaledImageDot).getImage());
@@ -26,8 +24,9 @@ public class Pacman extends ImageIcon {
         x=13;
         y=26;
     }
-    public boolean isSuper() {
-        return isSuper;
+
+    public void setEventManager(EventManager eventManager) {
+        this.eventManager = eventManager;
     }
     private void setDirection(String direction) {
         imagePath = "src/images/pacman/" + direction + ".png";
@@ -37,9 +36,31 @@ public class Pacman extends ImageIcon {
         setImage(new ImageIcon(scaledImageDot).getImage());
 
     }
-    public void setEventManager(EventManager eventManager) {
-        this.eventManager = eventManager;
+    public void setSuper(boolean isSuper) {
+        this.isSuper = isSuper;
+        if (isSuper) {
+            eventManager.muchoMachoPacman();
+            imagePath = "src/images/pacman/super/" + getDirection() + ".png";
+            ImageIcon originalIcon = new ImageIcon(imagePath);
+            Image originalImage = originalIcon.getImage();
+            Image scaledImageDot = originalImage.getScaledInstance(20, 20, Image.SCALE_SMOOTH);
+            setImage(new ImageIcon(scaledImageDot).getImage());
+        }
     }
+
+    public boolean isSuper() {
+        return isSuper;
+    }
+    public String getDirection() {
+        return imagePath.substring(imagePath.lastIndexOf('/')+1, imagePath.lastIndexOf('.'));
+    }
+    public synchronized int getX() {
+        return x;
+    }
+    public synchronized int getY() {
+        return y;
+    }
+
     public void move(String direction) {
         if (isSuper) setDirection("super/"+direction);
         else setDirection(direction);
@@ -63,52 +84,14 @@ public class Pacman extends ImageIcon {
                 break;
             }
         }
-        //charactersPosition.set(0,0, x);
-        //charactersPosition.set(0,0, y);
         charactersPosition.setX(0, x);
         charactersPosition.setY(0, y);
     }
-
-    public String getDirection() {
-        return imagePath.substring(imagePath.lastIndexOf('/')+1, imagePath.lastIndexOf('.'));
-    }
-    public synchronized int getX() {
-        return x;
-    }
-    public synchronized int getY() {
-        return y;
-    }
-//    private int directionStrToInt(String direction){
-//        switch (direction) {
-//            case "up":
-//                return 0;
-//            case "left":
-//                return 1;
-//            case "down":
-//                return 2;
-//            case "right":
-//                return 3;
-//        }
-//        return 0;
-//    }
-
-    public void setSuper(boolean isSuper) {
-        this.isSuper = isSuper;
-        if (isSuper) {
-            eventManager.sevenSecondsInHeaven();
-            imagePath = "src/images/pacman/super/" + getDirection() + ".png";
-            ImageIcon originalIcon = new ImageIcon(imagePath);
-            Image originalImage = originalIcon.getImage();
-            Image scaledImageDot = originalImage.getScaledInstance(20, 20, Image.SCALE_SMOOTH);
-            setImage(new ImageIcon(scaledImageDot).getImage());
-        }
-    }
     public void eaten() {
+        //se è stato mangiato torna alla posizione di partenza
         eventManager.getTable().clearPacman(x,y);
         x=13;
         y=26;
-        //charactersPosition.set(0, 0, 14);
-        //charactersPosition.set(0, 1, 23);
         charactersPosition.setX(0, x);
         charactersPosition.setY(0, y);
         setDirection("right");
