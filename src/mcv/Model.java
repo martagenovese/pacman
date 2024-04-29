@@ -219,7 +219,6 @@ public class Model {
     }
     public int collision() {
         for (int i = 1; i < 5; i++) {
-            // lo stronzo ha deciso di non andare
             if ((charactersPosition.get(i, 0) == charactersPosition.get(0, 0)) && (charactersPosition.get(i, 1) == charactersPosition.get(0, 1))) {
                 System.out.println("Collision with ghost " + i);
                 System.out.println("Pacman: " + charactersPosition.get(0, 0) + " " + charactersPosition.get(0, 1));

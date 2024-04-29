@@ -36,7 +36,7 @@ import java.awt.*;
         targetReached=true;
         xTarget=0;
         yTarget=0;
-        waitingTime=400;
+        waitingTime=200;
     }
     public void setEventManager(EventManager eventManager) {
         this.eventManager = eventManager;

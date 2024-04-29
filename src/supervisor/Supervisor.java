@@ -40,9 +40,12 @@ public class Supervisor implements Runnable{
                     boolean isPacmanAlive = model.collisionProcedure(n);
                     if (!isPacmanAlive) {
                         eventManager.setStartGhost(2);
-                        lives--;
+                        model.lives--;
+                        if (model.lives==2) eventManager.getTable().clearTile(6, 35);
+                        else if (model.lives==1) eventManager.getTable().clearTile(4, 35);
+                        else if (model.lives==0) eventManager.getTable().clearTile(2, 35);
                         System.out.println("lives: " + lives);
-                        if (lives == 0) {
+                        if (model.lives < 0) {
                             System.out.println("Game Over");
                             eventManager.stopGame(false);
                         }

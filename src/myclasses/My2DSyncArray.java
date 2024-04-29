@@ -3,6 +3,8 @@ package myclasses;
 public class My2DSyncArray {
     private int[][] array;
 
+
+
     public My2DSyncArray(int rows, int cols) {
         array = new int[rows][cols];
     }

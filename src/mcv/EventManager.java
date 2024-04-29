@@ -146,6 +146,7 @@ public class EventManager implements KeyListener {
             model.c.setStatus(5);
             model.p.setStatus(5);
             model.o.setStatus(5);
+            startGhost=1;
         }
 
         if (isListenerActive) {
