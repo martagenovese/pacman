@@ -304,27 +304,5 @@ public class Model {
         sThread.start();
     }
 
-    /*
-    public boolean getDotsCounter() {
-        return (dotsCounter==70 || dotsCounter==240);
-    }
-    public boolean isGameOver() {
-        return lives == 0;
-    }
-    public Thread getRedGhostThread() {
-        return rThread;
-    }
-    public Thread getPinkGhostThread() {
-        return pThread;
-    }
-    public Thread getCyanGhostThread() {
-        return cThread;
-    }
-    public Thread getOrangeGhostThread() {
-        return oThread;
-    }
-    public int getLives() {
-        return lives;
-    }
-     */
+
 }

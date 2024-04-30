@@ -49,7 +49,8 @@ public class EventManager implements KeyListener {
                     else if (i>33) table.tiles[i][j].setBackground(Color.BLACK);
                     else if (i == 15 && (j == 13 || j == 14)) table.tiles[i][j].setBackground(Color.BLACK);
                     else if ((i>=16 && i<=18) && (j>=11 && j<=16)) table.tiles[i][j].setBackground(Color.BLACK);
-                    else table.tiles[i][j].setBackground(Color.BLUE);
+                    //else table.tiles[i][j].setBackground(Color.BLUE);
+                    else table.setBrick(j,i);
                 } else if (model.tiles[i][j] instanceof CrossableTile) {
                     CrossableTile tile = (CrossableTile) model.tiles[i][j];
                     if (tile.isDot()) {

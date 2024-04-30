@@ -72,6 +72,12 @@ public class Table extends JFrame {
         Image scaledImageSFood = originalImage.getScaledInstance(25, 25, Image.SCALE_SMOOTH);
         tiles[y][x].setIcon(new ImageIcon(scaledImageSFood));
     }
+    public void setBrick(int x, int y){
+        ImageIcon originalIcon = new ImageIcon("src/meme/Brick.png");
+        Image originalImage = originalIcon.getImage();
+        Image scaledImageSFood = originalImage.getScaledInstance(25, 25, Image.SCALE_SMOOTH);
+        tiles[y][x].setIcon(new ImageIcon(scaledImageSFood));
+    }
     public void clearPacman(int x, int y) {
         tiles[y][x].setIcon(null);
     }
