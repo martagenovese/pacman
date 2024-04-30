@@ -44,12 +44,11 @@ public class Supervisor implements Runnable{
                         if (model.lives==2) eventManager.getTable().clearTile(6, 35);
                         else if (model.lives==1) eventManager.getTable().clearTile(4, 35);
                         else if (model.lives==0) eventManager.getTable().clearTile(2, 35);
-                        eventManager.getTable().playSound("meme/audio/morte.wav");
                         //System.out.println("lives: " + lives);
                         if (model.lives < 0) {
                             System.out.println("Game Over");
                             eventManager.stopGame(false);
-                        }
+                        } else eventManager.getTable().playSound("meme/audio/morte.wav");
                         isPacmanAlive = true;
                     } else {
                         eventManager.getTable().playSound("meme/audio/urlo.wav");
