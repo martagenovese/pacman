@@ -27,24 +27,33 @@ public class OrangeGhost extends Ghost {
             turnAround();
             status = 0;
         }
+
+        distanceFromPacman =  Math.sqrt(Math.pow(y - charactersPosition.getY(0), 2) + Math.pow(x - charactersPosition.getX(0), 2));
+        if (distanceFromPacman>8) {
+
+            if(x==xTarget&&y==yTarget) {
+                targetReached=true;
+            }
+
+            if(targetReached){
+                targetReached = false;
+                xTarget=charactersPosition.getX(0);
+                yTarget=charactersPosition.getY(0);
+            }
+            xTarget=charactersPosition.getX(0);
+            yTarget=charactersPosition.getY(0);
+        }else{
+            targetReached= false;
+            //altrimenti punta al suo target in scatter
+            xTarget=27;
+            yTarget=35;
+        }
         //controlla se il target è stato raqggiunto
         if(x==xTarget&&y==yTarget) {
             targetReached=true;
         }
         //se è stato raggiunto acquisice un nuovo target
-        if(targetReached){
-            targetReached = false;
-            distanceFromPacman =  Math.sqrt(Math.pow(y - charactersPosition.getY(0), 2) + Math.pow(x - charactersPosition.getX(0), 2));
-            //se la distanza da pacman è maggiore di 8 targhetta la posizione di pacman
-            if (distanceFromPacman>8) {
-                xTarget=charactersPosition.getX(0);
-                yTarget=charactersPosition.getY(0);
-            }else{
-                //altrimenti punta al suo target in scatter
-                xTarget=27;
-                yTarget=35;
-            }
-        }
+
         reachTarget(xTarget, yTarget);
     }
     @Override

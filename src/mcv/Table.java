@@ -13,12 +13,6 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import java.io.IOException;
 import java.net.URL;
-import javafx.application.Platform;
-import javafx.embed.swing.JFXPanel;
-import javafx.scene.Scene;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
-import javafx.scene.media.MediaView;
 
 import javax.swing.*;
 import java.io.File;
@@ -206,6 +200,7 @@ public class Table extends JFrame {
         tiles[y][x].setIcon(null);
     } 
 
+    /*
     public void playVideo(String videoFileName) {
         int videoWidth = 500;
         int videoHeight = 700;
@@ -237,5 +232,5 @@ public class Table extends JFrame {
                 mediaPlayer.play();
             });
         }).start();
-    }
+    } */
 }

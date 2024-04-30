@@ -126,7 +126,7 @@ public class EventManager implements KeyListener {
     @Override
     public void keyPressed(KeyEvent e) {
         if (isListenerActive) {
-            disableListenerFor(180);
+            disableListenerFor(150);
 
             int key = e.getKeyCode();
             String s;
@@ -186,10 +186,10 @@ public class EventManager implements KeyListener {
             //if (model.isFruitEaten) table.playVideo("src/meme/video/crocchi.mp4");
             if (model.isFruitEaten) table.playSound("meme/audio/crocchi.wav");
             if (dotEaten != model.dotsCounter && Math.random()>0.95) table.playSound("meme/audio/bubii/"+(int) (Math.random()*7+1) + ".wav");
-            if (model.dotsCounter<0) stopGame(true);
             table.updateScore(model.getScore());
             model.updatePosition();
             table.updatePosition();
+            if (model.dotsCounter<0 && model.isFruitEaten) stopGame(true);
         }
     }
     @Override
