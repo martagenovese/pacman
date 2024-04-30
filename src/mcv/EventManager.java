@@ -56,6 +56,8 @@ public class EventManager implements KeyListener {
                         table.setDot(i, j);
                     } else if (tile.isSuperFood()) {
                         table.setSuperFood(i, j);
+                    } else if(tile.isTardis()) {
+                        table.setTardis(i,j);
                     }
                     table.tiles[i][j].setBackground(Color.BLACK);
                 }
@@ -88,6 +90,7 @@ public class EventManager implements KeyListener {
         boolean isDot = model.tiles[ghost.getY()][ghost.getX()].isDot();
         boolean isSuperFood = model.tiles[ghost.getY()][ghost.getX()].isSuperFood();
         boolean isFruit = model.tiles[ghost.getY()][ghost.getX()].isFruit();
+        boolean isTardis = model.tiles[ghost.getY()][ghost.getX()].isTardis();
         table.clearGhost(ghost.getX(), ghost.getY(), isDot, isSuperFood, isFruit);
     }
     public void updateGhostPosition(Ghost ghost) {
@@ -166,6 +169,13 @@ public class EventManager implements KeyListener {
             boolean pacmanStatus1 = model.getPacman().isSuper();
             int dotEaten = model.dotsCounter;
             table.clearPacman(model.getPacman().getX(), model.getPacman().getY());
+            if(model.getPacman().getX()==0)  {
+                model.setTardis(0,17);
+                table.setTardis(0,17);
+            } else if(model.getPacman().getX()==27) {
+                model.setTardis(27,17);
+                table.setTardis(27,17);
+            }
             try {
                 model.keepDirection(s);
             } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException ex) {

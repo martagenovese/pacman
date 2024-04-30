@@ -66,6 +66,12 @@ public class Table extends JFrame {
         Image scaledImageSFood = originalImage.getScaledInstance(25, 25, Image.SCALE_SMOOTH);
         tiles[y][x].setIcon(new ImageIcon(scaledImageSFood));
     }
+    public void setTardis(int x, int y){
+        ImageIcon originalIcon = new ImageIcon("src/meme/Tardis.png");
+        Image originalImage = originalIcon.getImage();
+        Image scaledImageSFood = originalImage.getScaledInstance(25, 25, Image.SCALE_SMOOTH);
+        tiles[y][x].setIcon(new ImageIcon(scaledImageSFood));
+    }
     public void clearPacman(int x, int y) {
         tiles[y][x].setIcon(null);
     }
@@ -181,6 +187,7 @@ public class Table extends JFrame {
         if (!isDot && !isSuperFood && !isFruit) tiles[y][x].setIcon(null);
         else if (isSuperFood) setSuperFood(y, x);
         else if (isFruit) setFruitInTable(x, y);
+        else if (isTardis)
         else setDot(y, x);
     }
     public void updateGhost(Ghost ghost) {

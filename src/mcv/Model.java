@@ -147,6 +147,9 @@ public class Model {
     public void setFruit(int x, int y) {
         tiles[y][x].setFruit(true);
     }
+    public void setTardis(int x, int y) {
+        tiles[y][x].setTardis(true);
+    }
 
     public Pacman getPacman() {
         return pacman;

@@ -8,10 +8,12 @@ public abstract class Tile {
     public abstract boolean isGhost();
     public abstract boolean isDot();
     public abstract boolean isSuperFood();
+    public boolean isTardis(){}
     public void setPacman(boolean b) {
     }
     public void setIntersection(boolean b) {
     }
+    public void setTardis(boolean b){}
 
     public abstract boolean isIntersection();
 
