@@ -35,7 +35,7 @@ import java.awt.*;
         targetReached=true;
         xTarget=0;
         yTarget=0;
-        waitingTime=200;
+        waitingTime=1000;
     }
 
     public void setEventManager(EventManager eventManager) {
@@ -100,8 +100,6 @@ import java.awt.*;
                 break;
             }
         }
-        //charactersPosition.set(nGhost,0, x);
-        //charactersPosition.set(nGhost,1, y);
         charactersPosition.setX(nGhost, x);
         charactersPosition.setY(nGhost, y);
         eventManager.updateGhostPosition(this);

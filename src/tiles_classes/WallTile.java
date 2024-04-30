@@ -34,4 +34,5 @@ public class WallTile extends Tile {
     public boolean isIntersection() {
         return false;
     }
+    public boolean isTardis(){return false;}
 }

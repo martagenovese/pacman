@@ -183,11 +183,11 @@ public class Table extends JFrame {
         tiles[character.getY()][character.getX()].setIcon(character);
         //tiles[redGhost.getY()][redGhost.getX()].setIcon(redGhost);
     }
-    public void clearGhost(int x, int y, boolean isDot, boolean isSuperFood, boolean isFruit) {
-        if (!isDot && !isSuperFood && !isFruit) tiles[y][x].setIcon(null);
+    public void clearGhost(int x, int y, boolean isDot, boolean isSuperFood, boolean isFruit, boolean isTardis) {
+        if (!isDot && !isSuperFood && !isFruit && !isTardis) tiles[y][x].setIcon(null);
         else if (isSuperFood) setSuperFood(y, x);
         else if (isFruit) setFruitInTable(x, y);
-        else if (isTardis)
+        else if (isTardis) setTardis(x, y);
         else setDot(y, x);
     }
     public void updateGhost(Ghost ghost) {

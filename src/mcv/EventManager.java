@@ -57,7 +57,7 @@ public class EventManager implements KeyListener {
                     } else if (tile.isSuperFood()) {
                         table.setSuperFood(i, j);
                     } else if(tile.isTardis()) {
-                        table.setTardis(i,j);
+                        table.setTardis(j,i);
                     }
                     table.tiles[i][j].setBackground(Color.BLACK);
                 }
@@ -91,7 +91,7 @@ public class EventManager implements KeyListener {
         boolean isSuperFood = model.tiles[ghost.getY()][ghost.getX()].isSuperFood();
         boolean isFruit = model.tiles[ghost.getY()][ghost.getX()].isFruit();
         boolean isTardis = model.tiles[ghost.getY()][ghost.getX()].isTardis();
-        table.clearGhost(ghost.getX(), ghost.getY(), isDot, isSuperFood, isFruit);
+        table.clearGhost(ghost.getX(), ghost.getY(), isDot, isSuperFood, isFruit, isTardis);
     }
     public void updateGhostPosition(Ghost ghost) {
         table.updateGhost(ghost);
@@ -117,6 +117,8 @@ public class EventManager implements KeyListener {
         }, 7000);
     }
     public void stopGame(boolean victory) {
+        charactersPosition.setX(0,0);
+        charactersPosition.setY(0,0);
         if (victory) {
             table.endGame("Victory!", "<html>Hai vinto!<br>Adesso puoi rubare questo gatto</html>", "src/meme/vittoria.jpg");
         } else {
@@ -170,9 +172,11 @@ public class EventManager implements KeyListener {
             int dotEaten = model.dotsCounter;
             table.clearPacman(model.getPacman().getX(), model.getPacman().getY());
             if(model.getPacman().getX()==0)  {
+                table.playSound("meme/audio/Tardis.wav");
                 model.setTardis(0,17);
                 table.setTardis(0,17);
             } else if(model.getPacman().getX()==27) {
+                table.playSound("meme/audio/Tardis.wav");
                 model.setTardis(27,17);
                 table.setTardis(27,17);
             }

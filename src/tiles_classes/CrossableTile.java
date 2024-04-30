@@ -37,7 +37,9 @@ public class CrossableTile extends Tile {
     public void setSuperFood(boolean isSuperFood) {
         this.isSuperFood = isSuperFood;
     }
-    public void setTardis(boolean isTardis){this.isTardis=isTardis;}
+    public void setTardis(boolean isTardis){
+        this.isTardis=isTardis;
+    }
 
     @Override
     public boolean isWall() {
@@ -67,6 +69,7 @@ public class CrossableTile extends Tile {
     public boolean isIntersection() {
         return isIntersection;
     }
+    @Override
     public boolean isTardis(){return isTardis;}
 
     @Override

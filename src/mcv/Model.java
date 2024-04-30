@@ -57,6 +57,9 @@ public class Model {
         arrangeIntersections();
         arrangeDots();
         tiles[26][13].setPacman(true);
+        setTardis(0,17);
+        setTardis(27,17);
+
 
         score = 0;
         lives = 3; //3
@@ -154,6 +157,7 @@ public class Model {
     public Pacman getPacman() {
         return pacman;
     }
+
     public Tile getLeftTile() {
         try {
             leftTile = tiles[pacman.getY()][pacman.getX() - 1];
