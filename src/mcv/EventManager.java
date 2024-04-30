@@ -49,8 +49,8 @@ public class EventManager implements KeyListener {
                     else if (i>33) table.tiles[i][j].setBackground(Color.BLACK);
                     else if (i == 15 && (j == 13 || j == 14)) table.tiles[i][j].setBackground(Color.BLACK);
                     else if ((i>=16 && i<=18) && (j>=11 && j<=16)) table.tiles[i][j].setBackground(Color.BLACK);
-                    //else table.tiles[i][j].setBackground(Color.BLUE);
-                    else table.setBrick(j,i);
+                    else table.tiles[i][j].setBackground(Color.BLUE);
+                    //else table.setBrick(j,i);
                 } else if (model.tiles[i][j] instanceof CrossableTile) {
                     CrossableTile tile = (CrossableTile) model.tiles[i][j];
                     if (tile.isDot()) {
@@ -78,7 +78,7 @@ public class EventManager implements KeyListener {
         return table;
     }
 
-    public void disableListenerFor(int milliseconds) {
+    public synchronized void disableListenerFor(int milliseconds) {
         isListenerActive = false;
         new Timer().schedule(new TimerTask() {
             @Override
@@ -160,7 +160,6 @@ public class EventManager implements KeyListener {
                 startGhost = 1;
             }else if(startGhost==2){
                 //fa partire i fantasmi dopo che hanno mangiato pacman
-                table.playSound("meme/audio/musichetta.wav");
                 model.r.setStatus(5);
                 model.c.setStatus(5);
                 model.p.setStatus(5);
