@@ -2,15 +2,13 @@ package characters_classes;
 
 import myclasses.My2DSyncArray;
 import tiles_classes.*;
-import javax.swing.*;
-import java.awt.*;
 
 import static java.lang.Thread.sleep;
 
 public class RedGhost extends Ghost {
 
 
-    public RedGhost(My2DSyncArray charactersPosition, Tile[][] tiles, Pacman pacman, String colour){
+    public RedGhost(My2DSyncArray charactersPosition, Tile[][] tiles, Pacman pacman, int colour){
         super(charactersPosition, tiles, pacman, colour);
         x=12;
         y=17;

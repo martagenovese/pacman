@@ -1,16 +1,12 @@
 package characters_classes;
 
 import myclasses.My2DSyncArray;
-import myclasses.SVGIcon;
 import tiles_classes.Tile;
 import tiles_classes.WallTile;
 
-import javax.swing.*;
-import java.awt.*;
-
 public class CyanGhost extends Ghost {
 
-    public CyanGhost(My2DSyncArray charactersPosition, Tile[][] tiles, Pacman pacman, String colour){
+    public CyanGhost(My2DSyncArray charactersPosition, Tile[][] tiles, Pacman pacman, int colour){
             super(charactersPosition, tiles, pacman, colour);
             x=13;
             y=17;
@@ -42,7 +38,7 @@ public class CyanGhost extends Ghost {
 
             //a seconda della direzione di pacman, targhetta la seconda casella in avanti
             switch (pacman.getDirection()){
-                case "up": {
+                case 3: {
                     for(int i=2; i>=0; i--)  {
                         if( yTarget-i>=0){
                             yTarget=yTarget-i;
@@ -50,7 +46,7 @@ public class CyanGhost extends Ghost {
                         }
                     }
                 }
-                case "left": {
+                case 1: {
                     for(int i=2; i>=0; i--)  {
                         if( xTarget-i>=0){
                             xTarget=xTarget-i;
@@ -58,7 +54,7 @@ public class CyanGhost extends Ghost {
                         }
                     }
                 }
-                case "down": {
+                case 4: {
                     for(int i=2; i>=0; i--)  {
                         if( yTarget+i<=35){
                             yTarget=yTarget+i;
@@ -66,7 +62,7 @@ public class CyanGhost extends Ghost {
                         }
                     }
                 }
-                case "right": {
+                case 0: {
                     for(int i=2; i>=0; i--)  {
                         if( xTarget+i<=27 ){
                             xTarget=xTarget+i;

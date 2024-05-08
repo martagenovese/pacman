@@ -13,46 +13,55 @@ public class Pacman extends ImageIcon {
     private My2DSyncArray charactersPosition;
     protected boolean isSuper;
     protected EventManager eventManager;
+    //0->right, 1->left, 2->up, 3->down
+    private Image[] pacmanImages = new Image[4];
+    private Image[] superPacmanImages = new Image[4];
+    protected int direction;
 
     public Pacman(My2DSyncArray charactersPosition) {
-        imagePath = "src/images/pacman/right.png";
-        ImageIcon originalIcon = new ImageIcon(imagePath);
-        Image originalImage = originalIcon.getImage();
-        Image scaledImageDot = originalImage.getScaledInstance(20, 20, Image.SCALE_SMOOTH);
-        setImage(new ImageIcon(scaledImageDot).getImage());
+        pacmanImages[0] = createImage("right.png");
+        pacmanImages[1] = createImage("left.png");
+        pacmanImages[2] = createImage("up.png");
+        pacmanImages[3] = createImage("down.png");
+        superPacmanImages[0] = createImage("super/right.png");
+        superPacmanImages[1] = createImage("super/left.png");
+        superPacmanImages[2] = createImage("super/up.png");
+        superPacmanImages[3] = createImage("super/down.png");
+        setImage(pacmanImages[0]);
+        direction=0;
+
         this.charactersPosition=charactersPosition;
         x=13;
         y=26;
+    }
+    private Image createImage(String imagePath){
+        ImageIcon originalIcon = new ImageIcon("src/images/pacman/"+imagePath);
+        Image originalImage = originalIcon.getImage();
+        Image scaledImageDot = originalImage.getScaledInstance(25, 23, Image.SCALE_SMOOTH);
+        return new ImageIcon(scaledImageDot).getImage();
     }
 
     public void setEventManager(EventManager eventManager) {
         this.eventManager = eventManager;
     }
-    private void setDirection(String direction) {
-        imagePath = "src/images/pacman/" + direction + ".png";
-        ImageIcon originalIcon = new ImageIcon(imagePath);
-        Image originalImage = originalIcon.getImage();
-        Image scaledImageDot = originalImage.getScaledInstance(20, 20, Image.SCALE_SMOOTH);
-        setImage(new ImageIcon(scaledImageDot).getImage());
-
+    private void setDirection(int direction) {
+        if (isSuper) setImage(superPacmanImages[direction]);
+        else setImage(pacmanImages[direction]);
+        this.direction = direction;
     }
     public void setSuper(boolean isSuper) {
         this.isSuper = isSuper;
         if (isSuper) {
             eventManager.muchoMachoPacman();
-            imagePath = "src/images/pacman/super/" + getDirection() + ".png";
-            ImageIcon originalIcon = new ImageIcon(imagePath);
-            Image originalImage = originalIcon.getImage();
-            Image scaledImageDot = originalImage.getScaledInstance(20, 20, Image.SCALE_SMOOTH);
-            setImage(new ImageIcon(scaledImageDot).getImage());
+            setImage(superPacmanImages[direction]);
         }
     }
 
     public boolean isSuper() {
         return isSuper;
     }
-    public String getDirection() {
-        return imagePath.substring(imagePath.lastIndexOf('/')+1, imagePath.lastIndexOf('.'));
+    public int getDirection() {
+        return direction;
     }
     public synchronized int getX() {
         return x;
@@ -61,25 +70,24 @@ public class Pacman extends ImageIcon {
         return y;
     }
 
-    public void move(String direction) {
-        if (isSuper) setDirection("super/"+direction);
-        else setDirection(direction);
+    public void move(int direction) {
+        setDirection(direction);
         switch (direction) {
-            case "left" : {
+            case 1 : {
                 if (x == 0) x = 27;
                 else x-=1;
                 break;
             }
-            case "right" : {
+            case 0 : {
                 if (x == 27) x = 0;
                 else x++;
                 break;
             }
-            case "up" : {
+            case 2 : {
                 y-=1;
                 break;
             }
-            case "down" : {
+            case 3 : {
                 y++;
                 break;
             }
@@ -94,7 +102,7 @@ public class Pacman extends ImageIcon {
         y=26;
         charactersPosition.setX(0, x);
         charactersPosition.setY(0, y);
-        setDirection("right");
+        setDirection(0);
         eventManager.getTable().updatePosition();
     }
 }

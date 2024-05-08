@@ -13,49 +13,63 @@ import java.awt.*;
     protected String direction;
     //0-> chase, 1->scatter, 2->frightened, 3->eaten, 4->pacmanEaten
     protected int status, nGhost, waitingTime;
+    //0->pacman 1->red 2->cyan 3->pink 4->orange
     protected My2DSyncArray charactersPosition;
     protected Tile[][] tiles;
     protected EventManager eventManager;
     protected Pacman pacman;
     protected boolean targetReached;
     protected int xTarget, yTarget;
-    protected String colour;
+    protected int colour;
+    protected Image normal, scared;
 
-    public Ghost(My2DSyncArray charactersPosition, Tile[][] tiles, Pacman pacman, String colour){
+    public Ghost(My2DSyncArray charactersPosition, Tile[][] tiles, Pacman pacman, int colour){
         this.charactersPosition=charactersPosition;
         this.tiles=tiles;
         this.pacman=pacman;
         this.colour=colour;
-        String imagePath = "src/images/ghosts/"+colour+".png";
-        ImageIcon originalIcon = new ImageIcon(imagePath);
-        Image originalImage = originalIcon.getImage();
-        Image scaledImageDot = originalImage.getScaledInstance(25, 23, Image.SCALE_SMOOTH);
-        setImage(new ImageIcon(scaledImageDot).getImage());
+        normal = createImage("src/images/ghosts/"+switchColor()+".png");
+        setImage(normal);
+        scared = createImage("src/images/ghosts/scared.png");
+
 
         targetReached=true;
         xTarget=0;
         yTarget=0;
-        waitingTime=200;
+        waitingTime=400;
+    }
+    private Image createImage(String imagePath){
+        ImageIcon originalIcon = new ImageIcon(imagePath);
+        Image originalImage = originalIcon.getImage();
+        Image scaledImageDot = originalImage.getScaledInstance(25, 23, Image.SCALE_SMOOTH);
+        return new ImageIcon(scaledImageDot).getImage();
+    }
+    private String switchColor(){
+        switch(colour){
+            case 1:
+                return "red";
+            case 2:
+                return "cyan";
+            case 3:
+                return "pink";
+            case 4:
+                return "orange";
+            default:
+                return "scared";
+        }
     }
 
     public void setEventManager(EventManager eventManager) {
         this.eventManager = eventManager;
     }
-    private void setImagePath(String colour){
-        String imagePath = "src/images/ghosts/"+colour+".png";
-        ImageIcon originalIcon = new ImageIcon(imagePath);
-        Image originalImage = originalIcon.getImage();
-        Image scaledImageDot = originalImage.getScaledInstance(25, 23, Image.SCALE_SMOOTH);
-        setImage(new ImageIcon(scaledImageDot).getImage());
-    }
-    public void setScared(boolean scared){
-         if(scared){
-             setImagePath("scared");
-             status=2;
-         } else {
-             setImagePath(colour);
-             status=0;
-         }
+    public void setScared(boolean isScared){
+        if (isScared) {
+            setImage(scared);
+            status=2;
+        } else {
+            setImage(normal);
+            status=0;
+        }
     }
     public void setStatus(int n){
          status=n;

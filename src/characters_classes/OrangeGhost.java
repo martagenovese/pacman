@@ -9,7 +9,7 @@ import java.awt.*;
 
 public class OrangeGhost extends Ghost {
 
-    public OrangeGhost(My2DSyncArray charactersPosition, Tile[][] tiles, Pacman pacman, String colour){
+    public OrangeGhost(My2DSyncArray charactersPosition, Tile[][] tiles, Pacman pacman, int colour){
         super(charactersPosition, tiles, pacman, colour);
         x=15;
         y=17;

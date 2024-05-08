@@ -1,17 +1,12 @@
 package characters_classes;
 
 import myclasses.My2DSyncArray;
-import myclasses.SVGIcon;
 import tiles_classes.Tile;
 import tiles_classes.WallTile;
 
-import javax.swing.*;
-import java.awt.*;
-import java.sql.SQLOutput;
-
 public class PinkGhost extends Ghost {
 
-    public PinkGhost(My2DSyncArray charactersPosition, Tile[][] tiles, Pacman pacman, String colour){
+    public PinkGhost(My2DSyncArray charactersPosition, Tile[][] tiles, Pacman pacman, int colour){
         super(charactersPosition, tiles, pacman, colour);
         x=14;
         y=17;
@@ -46,7 +41,7 @@ public class PinkGhost extends Ghost {
             //a seconda della direzione di pacman, targhetta la quarta casella in avanti
             //prova a puntare alla quarta in avanti, se è un muro o fuori dalla griglia prova con quella prima
             switch (pacman.getDirection()){
-                case "up": {
+                case 2: {
                     for(int i=4; i>=0; i--)  {
                         if( yTarget-i>=0 && !(tiles[yTarget-i][xTarget] instanceof WallTile) ) {
                                 yTarget = yTarget - i;
@@ -55,7 +50,7 @@ public class PinkGhost extends Ghost {
                     }
                     break;
                 }
-                case "left": {
+                case 1: {
                     for(int i=4; i>=0; i--)  {
                         if( xTarget-i>=0 && !(tiles[yTarget][xTarget-i] instanceof WallTile) ){
                             xTarget=xTarget-i;
@@ -64,7 +59,7 @@ public class PinkGhost extends Ghost {
                     }
                     break;
                 }
-                case "down": {
+                case 3: {
                     for(int i=4; i>=0; i--)  {
                         if( yTarget+i<=35 && !(tiles[yTarget+i][xTarget] instanceof WallTile) ){
                             yTarget=yTarget+i;
@@ -73,7 +68,7 @@ public class PinkGhost extends Ghost {
                     }
                     break;
                 }
-                case "right": {
+                case 0: {
                     for(int i=4; i>=0; i--)  {
                         if( xTarget+i<=27 && !(tiles[yTarget][xTarget+i] instanceof WallTile) ){
                             xTarget=xTarget+i;

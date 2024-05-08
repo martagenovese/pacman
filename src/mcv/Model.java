@@ -65,10 +65,10 @@ public class Model {
         lives = 3; //3
         dotsCounter = 0;
         fruit = 2;
-        r = new RedGhost(charactersPosition, tiles, pacman, "red");
-        c = new CyanGhost(charactersPosition, tiles, pacman, "cyan");
-        p = new PinkGhost(charactersPosition, tiles, pacman, "pink");
-        o = new OrangeGhost(charactersPosition, tiles, pacman, "orange");
+        r = new RedGhost(charactersPosition, tiles, pacman, 1);
+        c = new CyanGhost(charactersPosition, tiles, pacman, 2);
+        p = new PinkGhost(charactersPosition, tiles, pacman, 3);
+        o = new OrangeGhost(charactersPosition, tiles, pacman, 4);
 
         rThread = new Thread(r);
         pThread = new Thread(p);
@@ -209,7 +209,7 @@ public class Model {
         charactersPosition.setX(0, pacman.getX());
         charactersPosition.setY(0, pacman.getY());
     }
-    public void movePacman(String direction, Tile tile, Tile myTile) {
+    public void movePacman(int direction, Tile tile, Tile myTile) {
         isFruitEaten = false;
         if (tile==null) { return; }
         if (!(tile instanceof WallTile)) {
@@ -292,7 +292,16 @@ public class Model {
         } else {
             lastDirection = nextDirection;
         }
-        movePacman(lastDirection, (Tile) method.invoke(this), getMyTile());
+        movePacman(switchDirection(lastDirection), (Tile) method.invoke(this), getMyTile());
+    }
+    private int switchDirection(String direction) {
+        switch (direction) {
+            case "left": return 1;
+            case "right": return 0;
+            case "up": return 2;
+            case "down": return 3;
+            default: return -1;
+        }
     }
 
     public void startRedGhost(){rThread.start();}
