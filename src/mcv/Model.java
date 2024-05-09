@@ -27,8 +27,8 @@ public class Model {
     // x, y
     protected My2DSyncArray charactersPosition;
 
-    protected Tile leftTile, rightTile, upTile, downTile, myTile;
-    protected String lastDirection, nextDirection;
+    protected Tile leftTile, rightTile, upTile, downTile, myTile, lastTile;
+    protected int lastDirection, nextDirection;
     protected Thread rThread, pThread, cThread, oThread, sThread, gThread;
     protected RedGhost r;
     protected PinkGhost p;
@@ -282,7 +282,7 @@ public class Model {
             return false;
         }
     }
-    public void keepDirection(String direction) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+    /*    public void keepDirection(String direction) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
         Method method = this.getClass().getMethod("get"+direction+"Tile");
         Tile nextTile = (Tile) method.invoke(this);
         if (lastDirection == null) lastDirection = direction.toLowerCase();
@@ -293,7 +293,50 @@ public class Model {
             lastDirection = nextDirection;
         }
         movePacman(switchDirection(lastDirection), (Tile) method.invoke(this), getMyTile());
+    } */
+    public boolean isNextTileWall(int direction) {
+        switch (direction) {
+            case 1: {
+                return getLeftTile() instanceof WallTile;
+            }
+            case 0: {
+                return getRightTile() instanceof WallTile;
+            }
+            case 2: {
+                return getUpTile() instanceof WallTile;
+            }
+            case 3: {
+                return getDownTile() instanceof WallTile;
+            }
+            default: return false;
+        }
     }
+    public void keepDirection(int direction) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+        if (isNextTileWall(direction)) direction = lastDirection;
+        switch (direction) {
+            case 1: {
+                lastDirection = 1;
+                movePacman(1, getLeftTile(), getMyTile());
+                break;
+            }
+            case 0: {
+                lastDirection = 0;
+                movePacman(0, getRightTile(), getMyTile());
+                break;
+            }
+            case 2: {
+                lastDirection = 2;
+                movePacman(2, getUpTile(), getMyTile());
+                break;
+            }
+            case 3: {
+                lastDirection = 3;
+                movePacman(3, getDownTile(), getMyTile());
+                break;
+            }
+        }
+    }
+
     private int switchDirection(String direction) {
         switch (direction) {
             case "left": return 1;

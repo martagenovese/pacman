@@ -135,16 +135,21 @@ public class EventManager implements KeyListener {
             disableListenerFor(150);
 
             int key = e.getKeyCode();
-            String s;
+            //String s;
+            int d;
             
             if (key == KeyEvent.VK_LEFT) {
-                s = "Left";
+                //s = "Left";
+                d = 1;
             } else if (key == KeyEvent.VK_RIGHT) {
-                s = "Right";
+                //s = "Right";
+                d = 0;
             } else if (key == KeyEvent.VK_UP) {
-                s = "Up";
+                //s = "Up";
+                d = 2;
             } else if (key == KeyEvent.VK_DOWN) {
-                s = "Down";
+                //s = "Down";
+                d = 3;
             } else {
                 return;
             }
@@ -181,7 +186,7 @@ public class EventManager implements KeyListener {
                 table.setTardis(27,17);
             }
             try {
-                model.keepDirection(s);
+                model.keepDirection(d);
             } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException ex) {
                 throw new RuntimeException(ex);
             }

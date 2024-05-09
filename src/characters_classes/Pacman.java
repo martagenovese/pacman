@@ -7,7 +7,6 @@ import java.awt.*;
 
 
 public class Pacman extends ImageIcon {
-    //TODO: (optimization) n Icons for each direction
     protected int x, y;
     private String imagePath;
     private My2DSyncArray charactersPosition;
