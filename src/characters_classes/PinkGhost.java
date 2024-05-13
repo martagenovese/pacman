@@ -96,9 +96,9 @@ public class PinkGhost extends Ghost {
         try {
             Thread.sleep(waitingTime*7);
         } catch (InterruptedException ignored) {}
-        move("up");
-        move("up");
-        move("up");
+        move(2);
+        move(2);
+        move(2);
         status=1;
     }
     @Override

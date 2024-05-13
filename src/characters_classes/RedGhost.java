@@ -16,10 +16,10 @@ public class RedGhost extends Ghost {
         charactersPosition.setY(nGhost, y);
     }
     public void startGame() {
-        move("up");
-        move("right");
-        move("up");
-        move("up");
+        move(2);
+        move(0);
+        move(2);
+        move(2);
         status=1;
     }
     @Override

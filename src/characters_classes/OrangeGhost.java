@@ -67,10 +67,10 @@ public class OrangeGhost extends Ghost {
         try {
             Thread.sleep(waitingTime*10);
         } catch (InterruptedException ignored) {}
-        move("up");
-        move("left");
-        move("up");
-        move("up");
+        move(2);
+        move(1);
+        move(2);
+        move(2);
         status=1;
     }
     @Override

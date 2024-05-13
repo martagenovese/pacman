@@ -11,6 +11,8 @@ import java.awt.*;
 
     protected int x, y;
     protected String direction;
+    //0->right, 1->left, 2->up, 3->down
+    protected int directionInt;
     //0-> chase, 1->scatter, 2->frightened, 3->eaten, 4->pacmanEaten
     protected int status, nGhost, waitingTime;
     //0->pacman 1->red 2->cyan 3->pink 4->orange
@@ -84,29 +86,26 @@ import java.awt.*;
          return y;
     }
 
-    public void move(String dir) {
+    public void move(int dir) {
         eventManager.clearGhostPosition(this);
+        directionInt=dir;
         switch (dir) {
-            case "left" : {
+            case 1 : {
                 if (x == 0) x = 27;
                 else x--;
-                this.direction="left";
                 break;
             }
-            case "right" : {
+            case 0 : {
                 if (x == 27) x = 0;
                 else x++;
-                this.direction="right";
                 break;
             }
-            case "up" : {
+            case 2 : {
                 y--;
-                this.direction="up";
                 break;
             }
-            case "down" : {
+            case 3 : {
                 y++;
-                this.direction="down";
                 break;
             }
         }
@@ -127,20 +126,20 @@ import java.awt.*;
         int back;
 
         //salvo la direzione in cui sta andando pacman e la direzione opposta
-        switch(direction){
-            case "up":
+        switch(directionInt){
+            case 2 :
                 chosenDirection=0;
                 back=2;
                 break;
-            case "left":
+            case 1 :
                 chosenDirection=1;
                 back=3;
                 break;
-            case "down":
+            case 3 :
                 chosenDirection=2;
                 back=0;
                 break;
-            case "right":
+            case 0 :
                 chosenDirection=3;
                 back=1;
                 break;
@@ -167,16 +166,16 @@ import java.awt.*;
         //converto la direzione da int in stringa
         switch (chosenDirection) {
             case 0:
-                move("up");
+                move(2);
                 break;
             case 1:
-                move("left");
+                move(1);
                 break;
             case 2:
-                move("down");
+                move(3);
                 break;
             case 3:
-                move("right");
+                move(0);
                 break;
         }
     }
@@ -213,18 +212,18 @@ import java.awt.*;
     }
     protected abstract void restorePosition();
     public void turnAround(){
-        switch (direction) {
-            case "up":
-                if(!(tiles[y-1][x] instanceof WallTile)){move("down");}
+        switch (directionInt) {
+            case 2 :
+                if(!(tiles[y-1][x] instanceof WallTile)){move(3);}
                 break;
-            case "left":
-                if(!(tiles[y][x-1] instanceof WallTile)){move("right");}
+            case 1 :
+                if(!(tiles[y][x-1] instanceof WallTile)){move(0);}
                 break;
-            case "down":
-                if(!(tiles[y+1][x] instanceof WallTile)){move("up");}
+            case 3 :
+                if(!(tiles[y+1][x] instanceof WallTile)){move(2);}
                 break;
-            case "right":
-                if(!(tiles[y][x+1] instanceof WallTile)){move("left");}
+            case 0 :
+                if(!(tiles[y][x+1] instanceof WallTile)){move(1);}
                 break;
         }
     }
