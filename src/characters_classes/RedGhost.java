@@ -3,8 +3,6 @@ package characters_classes;
 import myclasses.My2DSyncArray;
 import tiles_classes.*;
 
-import static java.lang.Thread.sleep;
-
 public class RedGhost extends Ghost {
 
 
@@ -14,8 +12,6 @@ public class RedGhost extends Ghost {
         y=17;
         status=1;
         nGhost=1;
-        //charactersPosition.set(nGhost,0,x);
-        //charactersPosition.set(nGhost,1,y);
         charactersPosition.setX(nGhost, x);
         charactersPosition.setY(nGhost, y);
     }

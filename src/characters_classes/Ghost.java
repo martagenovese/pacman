@@ -4,8 +4,8 @@ import myclasses.My2DSyncArray;
 import tiles_classes.*;
 import javax.swing.*;
 import mcv.*;
-
 import java.awt.*;
+
 
  public abstract class Ghost extends ImageIcon implements Runnable {
 
@@ -91,26 +91,22 @@ import java.awt.*;
                 if (x == 0) x = 27;
                 else x--;
                 this.direction="left";
-                //charactersPosition.set(nGhost,0, 1);
                 break;
             }
             case "right" : {
                 if (x == 27) x = 0;
                 else x++;
                 this.direction="right";
-                //charactersPosition.set(nGhost,0, 3);
                 break;
             }
             case "up" : {
                 y--;
                 this.direction="up";
-                //charactersPosition.set(nGhost,0, 0);
                 break;
             }
             case "down" : {
                 y++;
                 this.direction="down";
-                //charactersPosition.set(nGhost,0, 2);
                 break;
             }
         }
@@ -118,7 +114,7 @@ import java.awt.*;
         charactersPosition.setY(nGhost, y);
         eventManager.updateGhostPosition(this);
         try {
-            Thread.sleep(waitingTime);//195
+            Thread.sleep(waitingTime);
         } catch (InterruptedException ignored) {}
     }
     public void reachTarget(int xTarget, int yTarget){
@@ -217,8 +213,6 @@ import java.awt.*;
     }
     protected abstract void restorePosition();
     public void turnAround(){
-        int[][] directions = {{y + 1, x}, {y, x - 1}, {y - 1, x}, {y, x + 1}};
-        //TODO: CONTROLLA MURI
         switch (direction) {
             case "up":
                 if(!(tiles[y-1][x] instanceof WallTile)){move("down");}

@@ -1,11 +1,7 @@
 package characters_classes;
 
 import myclasses.My2DSyncArray;
-import myclasses.SVGIcon;
 import tiles_classes.Tile;
-
-import javax.swing.*;
-import java.awt.*;
 
 public class OrangeGhost extends Ghost {
 
@@ -84,8 +80,6 @@ public class OrangeGhost extends Ghost {
         }
         x=15;
         y=17;
-        //charactersPosition.set(nGhost,0, x);
-        //charactersPosition.set(nGhost,1, y);
         charactersPosition.setX(nGhost, x);
         charactersPosition.setY(nGhost, y);
         eventManager.updateGhostPosition(this);

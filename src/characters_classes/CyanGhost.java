@@ -132,6 +132,4 @@ public class CyanGhost extends Ghost {
         eventManager.updateGhostPosition(this);
     }
 
-
-
 }

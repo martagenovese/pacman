@@ -8,7 +8,6 @@ import java.awt.*;
 
 public class Pacman extends ImageIcon {
     protected int x, y;
-    private String imagePath;
     private My2DSyncArray charactersPosition;
     protected boolean isSuper;
     protected EventManager eventManager;

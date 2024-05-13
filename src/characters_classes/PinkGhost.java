@@ -5,7 +5,6 @@ import tiles_classes.Tile;
 import tiles_classes.WallTile;
 
 public class PinkGhost extends Ghost {
-
     public PinkGhost(My2DSyncArray charactersPosition, Tile[][] tiles, Pacman pacman, int colour){
         super(charactersPosition, tiles, pacman, colour);
         x=14;
