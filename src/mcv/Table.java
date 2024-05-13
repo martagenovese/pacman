@@ -2,10 +2,7 @@ package mcv;
 
 import javax.swing.*;
 import java.awt.*;
-
-// my packages
 import characters_classes.*;
-
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
@@ -14,16 +11,12 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 import java.io.IOException;
 import java.net.URL;
 
-import javax.swing.*;
-import java.io.File;
-
-
 public class Table extends JFrame {
-
     protected JLabel[][] tiles;
     protected EventManager eventManager;
     protected Pacman character;
     protected Ghost redGhost, cyanGhost, pinkGhost, orangeGhost;
+    protected Image scaledImageDot, scaledImageSFood, scaledImageTardis, scaledImageFruit, scaledImageBrick, scaledImagePacman;
 
 
     public Table() {
@@ -39,11 +32,32 @@ public class Table extends JFrame {
                 add(tiles[i][j]);
             }
         }
-
         setSize(224 * 3, 288 * 3);
         setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
+
+
+        ImageIcon originalIcon = new ImageIcon("src/images/dot.png");
+        Image originalImage = originalIcon.getImage();
+        scaledImageDot = originalImage.getScaledInstance(10, 10, Image.SCALE_SMOOTH);
+        scaledImageSFood = originalImage.getScaledInstance(25, 25, Image.SCALE_SMOOTH);
+
+        originalIcon = new ImageIcon("src/meme/Tardis.png");
+        originalImage = originalIcon.getImage();
+        scaledImageTardis = originalImage.getScaledInstance(25, 25, Image.SCALE_SMOOTH);
+
+        originalIcon = new ImageIcon("src/meme/Brick.png");
+        originalImage = originalIcon.getImage();
+        scaledImageBrick = originalImage.getScaledInstance(25, 25, Image.SCALE_SMOOTH);
+
+        originalIcon = new ImageIcon("src/images/fruit.png");
+        originalImage = originalIcon.getImage();
+        scaledImageFruit = originalImage.getScaledInstance(20, 20, Image.SCALE_SMOOTH);
+
+        originalIcon = new ImageIcon("src/images/pacman/right.png");
+        originalImage = originalIcon.getImage();
+        scaledImagePacman = originalImage.getScaledInstance(20, 20, Image.SCALE_SMOOTH);
     }
 
     public void setEventManager(EventManager eventManager) {
@@ -53,32 +67,19 @@ public class Table extends JFrame {
 
 
     public void setDot(int y, int x) {
-        ImageIcon originalIcon = new ImageIcon("src/images/dot.png");
-        //SVGIcon originalIcon = new SVGIcon("src/images/dot.svg");
-        Image originalImage = originalIcon.getImage();
-        Image scaledImageDot = originalImage.getScaledInstance(10, 10, Image.SCALE_SMOOTH);
         tiles[y][x].setIcon(new ImageIcon(scaledImageDot));
     }
     public void setSuperFood(int y, int x) {
-        ImageIcon originalIcon = new ImageIcon("src/images/dot.png");
-        //SVGIcon originalIcon = new SVGIcon("src/images/dot.svg");
-        Image originalImage = originalIcon.getImage();
-        Image scaledImageSFood = originalImage.getScaledInstance(25, 25, Image.SCALE_SMOOTH);
         tiles[y][x].setIcon(new ImageIcon(scaledImageSFood));
     }
     public void setTardis(int x, int y){
-        ImageIcon originalIcon = new ImageIcon("src/meme/Tardis.png");
-        Image originalImage = originalIcon.getImage();
-        Image scaledImageSFood = originalImage.getScaledInstance(25, 25, Image.SCALE_SMOOTH);
-        tiles[y][x].setIcon(new ImageIcon(scaledImageSFood));
+        tiles[y][x].setIcon(new ImageIcon(scaledImageTardis));
     }
 
     public void setBrick(int x, int y){
-        ImageIcon originalIcon = new ImageIcon("src/meme/Brick.png");
-        Image originalImage = originalIcon.getImage();
-        Image scaledImageSFood = originalImage.getScaledInstance(25, 25, Image.SCALE_SMOOTH);
-        tiles[y][x].setIcon(new ImageIcon(scaledImageSFood));
+        tiles[y][x].setIcon(new ImageIcon(scaledImageBrick));
     }
+
     public void clearPacman(int x, int y) {
         tiles[y][x].setIcon(null);
     }
@@ -117,33 +118,18 @@ public class Table extends JFrame {
         tiles[1][18].setText("0");
     }
     public void setLives(){
-        ImageIcon pacman = new ImageIcon("src/images/pacman/right.png");
-        Image originalImage = pacman.getImage();
-        Image scaledImageDot = originalImage.getScaledInstance(20, 20, Image.SCALE_SMOOTH);
-        pacman.setImage(new ImageIcon(scaledImageDot).getImage());
-        tiles[35][2].setIcon(pacman);
-        //tiles[35][2].repaint();
-        tiles[35][4].setIcon(pacman);
-        //tiles[35][4].repaint();
-        tiles[35][6].setIcon(pacman);
-        //tiles[6][35].repaint();
+        tiles[35][2].setIcon(new ImageIcon(scaledImagePacman));
+        tiles[35][4].setIcon(new ImageIcon(scaledImagePacman));
+        tiles[35][6].setIcon(new ImageIcon(scaledImagePacman));
     }
     public void  setFruit() {
-        ImageIcon fruit = new ImageIcon("src/images/fruit.png");
-        Image originalImage = fruit.getImage();
-        Image scaledImageDot = originalImage.getScaledInstance(20, 20, Image.SCALE_SMOOTH);
-        fruit.setImage(new ImageIcon(scaledImageDot).getImage());
-        tiles[35][25].setIcon(fruit);
-        tiles[35][23].setIcon(fruit);
+        tiles[35][25].setIcon(new ImageIcon(scaledImageFruit));
+        tiles[35][23].setIcon(new ImageIcon(scaledImageFruit));
     }
     public void setFruitInTable(int x, int y) {
         if (x==9) tiles[35][23].setIcon(null);
         else tiles[35][25].setIcon(null);
-        ImageIcon fruit = new ImageIcon("src/images/fruit.png");
-        Image originalImage = fruit.getImage();
-        Image scaledImageDot = originalImage.getScaledInstance(20, 20, Image.SCALE_SMOOTH);
-        fruit.setImage(new ImageIcon(scaledImageDot).getImage());
-        tiles[y][x].setIcon(fruit);
+        tiles[y][x].setIcon(new ImageIcon(scaledImageFruit));
     }
 
     public void playSound(String soundFileName) {
@@ -188,7 +174,6 @@ public class Table extends JFrame {
 
     public void updatePosition() {
         tiles[character.getY()][character.getX()].setIcon(character);
-        //tiles[redGhost.getY()][redGhost.getX()].setIcon(redGhost);
     }
     public void clearGhost(int x, int y, boolean isDot, boolean isSuperFood, boolean isFruit, boolean isTardis) {
         if (!isDot && !isSuperFood && !isFruit && !isTardis) tiles[y][x].setIcon(null);
@@ -212,39 +197,5 @@ public class Table extends JFrame {
     }
     public void clearTile(int x, int y){
         tiles[y][x].setIcon(null);
-    } 
-
-    /*
-    public void playVideo(String videoFileName) {
-        int videoWidth = 500;
-        int videoHeight = 700;
-        JFXPanel jfxPanel = new JFXPanel();
-        JFrame videoFrame = new JFrame();
-        videoFrame.add(jfxPanel);
-        videoFrame.setSize(videoWidth, videoHeight);
-
-        Point mainFrameLocation = this.getLocation();
-        videoFrame.setLocation(mainFrameLocation.x - videoFrame.getWidth(), mainFrameLocation.y);
-        videoFrame.setVisible(true);
-
-        // Create a new Thread for video playback
-        new Thread(() -> {
-            Platform.runLater(() -> {
-                File videoFile = new File(videoFileName);
-                Media media = new Media(videoFile.toURI().toString());
-                MediaPlayer mediaPlayer = new MediaPlayer(media);
-                MediaView mediaView = new MediaView(mediaPlayer);
-
-                // Set the width and height of the MediaView
-                mediaView.setFitWidth(videoWidth);
-                mediaView.setFitHeight(videoHeight);
-
-                Scene scene = new Scene(new javafx.scene.Group(mediaView));
-                jfxPanel.setScene(scene);
-
-                // Start the video
-                mediaPlayer.play();
-            });
-        }).start();
-    } */
+    }
 }

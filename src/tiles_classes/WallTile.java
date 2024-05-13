@@ -1,7 +1,5 @@
 package tiles_classes;
 
-import java.awt.*;
-
 public class WallTile extends Tile {
     public WallTile() {}
 

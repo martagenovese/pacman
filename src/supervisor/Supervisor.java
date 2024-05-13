@@ -1,7 +1,6 @@
 package supervisor;
 
 import mcv.EventManager;
-import mcv.Main;
 import mcv.Model;
 import myclasses.My2DSyncArray;
 

@@ -26,9 +26,8 @@ public class Model {
     // 0 - pacman, 1 - red ghost, 2 - cyan ghost, 3 - pink ghost, 4 - orange ghost
     // x, y
     protected My2DSyncArray charactersPosition;
-
-    protected Tile leftTile, rightTile, upTile, downTile, myTile, lastTile;
-    protected int lastDirection, nextDirection;
+    protected Tile leftTile, rightTile, upTile, downTile, myTile;
+    protected int lastDirection;
     protected Thread rThread, pThread, cThread, oThread, sThread, gThread;
     protected RedGhost r;
     protected PinkGhost p;
@@ -37,7 +36,6 @@ public class Model {
     protected Supervisor supervisor;
     protected GhostSupervisor ghostSupervisor;
     protected boolean isFruitEaten;
-
 
     public Model() {
         charactersPosition = new My2DSyncArray(5);
@@ -60,9 +58,8 @@ public class Model {
         setTardis(0,17);
         setTardis(27,17);
 
-
         score = 0;
-        lives = 3; //3
+        lives = 3;
         dotsCounter = 0;
         fruit = 2;
         r = new RedGhost(charactersPosition, tiles, pacman, 1);
@@ -106,7 +103,6 @@ public class Model {
                 else if ((i>=16 && i<=18) && (j>=11 && j<=16)) tiles[i][j] = new WallTile();
             }
         }
-
         tiles[15][13] = new WallTile();
         tiles[15][14] = new WallTile();
     }
@@ -121,7 +117,6 @@ public class Model {
                 int i = Integer.parseInt(coordinates[0]);
                 int j = Integer.parseInt(coordinates[1]);
                 tiles[i][j].setIntersection(true);
-                //tiles[i][j].setBackground(Color.PINK);
             }
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
@@ -141,7 +136,6 @@ public class Model {
                     tiles[i][j] = new CrossableTile(i, j);
                     ((CrossableTile) tiles[i][j]).setSuperFood(true);
                 } else ((CrossableTile) tiles[i][j]).setDot(true);
-                //tiles[i][j].setBackground(Color.PINK);
             }
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
@@ -244,12 +238,8 @@ public class Model {
     }
     public int collision() {
         for (int i = 1; i < 5; i++) {
-            if ((charactersPosition.getX(i) == charactersPosition.getX(0)) && (charactersPosition.getY(i) == charactersPosition.getY(0))) {
-//                System.out.println("Collision with ghost " + i);
-//                System.out.println("Pacman: " + charactersPosition.getX(0) + " " + charactersPosition.getY(0));
-//                System.out.println("Ghost "+ i +":"+ charactersPosition.getX(i) + " " + charactersPosition.getY(i));
-                return i;
-            }
+            if ((charactersPosition.getX(i) == charactersPosition.getX(0)) &&
+                    (charactersPosition.getY(i) == charactersPosition.getY(0))) return i;
         }
         return -1;
     }
@@ -282,18 +272,7 @@ public class Model {
             return false;
         }
     }
-    /*    public void keepDirection(String direction) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
-        Method method = this.getClass().getMethod("get"+direction+"Tile");
-        Tile nextTile = (Tile) method.invoke(this);
-        if (lastDirection == null) lastDirection = direction.toLowerCase();
-        nextDirection = direction.toLowerCase();
-        if (nextTile instanceof WallTile) {
-            method = this.getClass().getMethod("get"+(lastDirection.charAt(0)+"").toUpperCase()+lastDirection.substring(1)+"Tile");
-        } else {
-            lastDirection = nextDirection;
-        }
-        movePacman(switchDirection(lastDirection), (Tile) method.invoke(this), getMyTile());
-    } */
+
     public boolean isNextTileWall(int direction) {
         switch (direction) {
             case 1: {
@@ -337,16 +316,6 @@ public class Model {
         }
     }
 
-    private int switchDirection(String direction) {
-        switch (direction) {
-            case "left": return 1;
-            case "right": return 0;
-            case "up": return 2;
-            case "down": return 3;
-            default: return -1;
-        }
-    }
-
     public void startRedGhost(){rThread.start();}
     public void startCyanGhost(){cThread.start();}
     public void startPinkGhost(){pThread.start();}
@@ -355,6 +324,4 @@ public class Model {
         gThread.start();
         sThread.start();
     }
-
-
 }

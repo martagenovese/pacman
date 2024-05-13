@@ -16,7 +16,6 @@ public class EventManager implements KeyListener {
     protected Table table;
     protected Model model;
     protected boolean isListenerActive;
-    protected String nextDirection, lastDirection;
     protected int startGhost;
 
     public EventManager() {
@@ -49,8 +48,7 @@ public class EventManager implements KeyListener {
                     else if (i>33) table.tiles[i][j].setBackground(Color.BLACK);
                     else if (i == 15 && (j == 13 || j == 14)) table.tiles[i][j].setBackground(Color.BLACK);
                     else if ((i>=16 && i<=18) && (j>=11 && j<=16)) table.tiles[i][j].setBackground(Color.BLACK);
-                    else table.tiles[i][j].setBackground(Color.BLUE);
-                    //else table.setBrick(j,i);
+                    else table.setBrick(j, i);
                 } else if (model.tiles[i][j] instanceof CrossableTile) {
                     CrossableTile tile = (CrossableTile) model.tiles[i][j];
                     if (tile.isDot()) {
@@ -133,26 +131,14 @@ public class EventManager implements KeyListener {
     public void keyPressed(KeyEvent e) {
         if (isListenerActive) {
             disableListenerFor(150);
-
             int key = e.getKeyCode();
-            //String s;
             int d;
             
-            if (key == KeyEvent.VK_LEFT) {
-                //s = "Left";
-                d = 1;
-            } else if (key == KeyEvent.VK_RIGHT) {
-                //s = "Right";
-                d = 0;
-            } else if (key == KeyEvent.VK_UP) {
-                //s = "Up";
-                d = 2;
-            } else if (key == KeyEvent.VK_DOWN) {
-                //s = "Down";
-                d = 3;
-            } else {
-                return;
-            }
+            if (key == KeyEvent.VK_LEFT) { d = 1;
+            } else if (key == KeyEvent.VK_RIGHT) { d = 0;
+            } else if (key == KeyEvent.VK_UP) { d = 2;
+            } else if (key == KeyEvent.VK_DOWN) { d = 3;
+            } else return;
 
             //la prima volta che viene mosso pacman partono anche i fantasmi
             if (startGhost==0) {
@@ -202,7 +188,6 @@ public class EventManager implements KeyListener {
                     table.setFruitInTable(18, 17);
                 }
             }
-            //if (model.isFruitEaten) table.playVideo("src/meme/video/crocchi.mp4");
             if (model.isFruitEaten) table.playSound("meme/audio/crocchi.wav");
             if (dotEaten != model.dotsCounter && Math.random()>0.95) table.playSound("meme/audio/bubii/"+(int) (Math.random()*7+1) + ".wav");
             table.updateScore(model.getScore());

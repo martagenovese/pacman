@@ -1,14 +1,10 @@
 package tiles_classes;
 
-import characters_classes.Pacman;
-
 import javax.swing.*;
-import java.awt.*;
 
 public class CrossableTile extends Tile {
     public int x, y;
     boolean isPacman, isGhost, isDot, isSuperFood, isIntersection, isFruit, isTardis;
-    Icon dotIcon, superFoodIcon;
 
     public CrossableTile(int x, int y) {
         this.x = x;

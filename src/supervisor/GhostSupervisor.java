@@ -28,11 +28,9 @@ public class GhostSupervisor implements Runnable{
     public void run(){
         while(true){
             if(getAStatus()==1){
-                //System.out.println("scatter");
                 try {
                     Thread.sleep(7000);
                 } catch (InterruptedException ignored) {}
-                //System.out.println("finescatter");
                 setAllStatus(0);
             }else if(getAStatus()==0){
                 try {
@@ -41,8 +39,5 @@ public class GhostSupervisor implements Runnable{
                 setAllStatus(1);
             }
         }
-
-
     }
-
 }
