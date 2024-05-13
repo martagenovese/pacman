@@ -25,16 +25,14 @@ public class CyanGhost extends Ghost {
         }
 
         //controlla se il target è stato raqggiunto
-        if(x==xTarget&&y==yTarget) {
-            targetReached=true;
-        }
+        if(x==xTarget&&y==yTarget) targetReached=true;
+
 
         //se è stato raggiunto acquisice un nuovo target
         if(targetReached){
             targetReached=false;
             xTarget=charactersPosition.getX(0);
             yTarget=charactersPosition.getY(0);
-
 
             //a seconda della direzione di pacman, targhetta la seconda casella in avanti
             switch (pacman.getDirection()){
@@ -113,7 +111,7 @@ public class CyanGhost extends Ghost {
     @Override
     public void startGame() {
         try {
-            Thread.sleep(waitingTime*4);
+            Thread.sleep(waitingTime* 4L);
         } catch (InterruptedException ignored) {}
         move(2);
         move(2);
@@ -131,5 +129,4 @@ public class CyanGhost extends Ghost {
         charactersPosition.setY(nGhost, y);
         eventManager.updateGhostPosition(this);
     }
-
 }

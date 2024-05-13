@@ -44,20 +44,16 @@ public class Table extends JFrame {
         scaledImageSFood = originalImage.getScaledInstance(25, 25, Image.SCALE_SMOOTH);
 
         originalIcon = new ImageIcon("src/meme/Tardis.png");
-        originalImage = originalIcon.getImage();
-        scaledImageTardis = originalImage.getScaledInstance(25, 25, Image.SCALE_SMOOTH);
+        scaledImageTardis = originalIcon.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH);
 
         originalIcon = new ImageIcon("src/meme/Brick.png");
-        originalImage = originalIcon.getImage();
-        scaledImageBrick = originalImage.getScaledInstance(25, 25, Image.SCALE_SMOOTH);
+        scaledImageBrick = originalIcon.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH);
 
         originalIcon = new ImageIcon("src/images/fruit.png");
-        originalImage = originalIcon.getImage();
-        scaledImageFruit = originalImage.getScaledInstance(20, 20, Image.SCALE_SMOOTH);
+        scaledImageFruit = originalIcon.getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH);
 
         originalIcon = new ImageIcon("src/images/pacman/right.png");
-        originalImage = originalIcon.getImage();
-        scaledImagePacman = originalImage.getScaledInstance(20, 20, Image.SCALE_SMOOTH);
+        scaledImagePacman = originalIcon.getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH);
     }
 
     public void setEventManager(EventManager eventManager) {

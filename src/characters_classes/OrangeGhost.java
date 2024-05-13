@@ -4,7 +4,6 @@ import myclasses.My2DSyncArray;
 import tiles_classes.Tile;
 
 public class OrangeGhost extends Ghost {
-
     public OrangeGhost(My2DSyncArray charactersPosition, Tile[][] tiles, Pacman pacman, int colour){
         super(charactersPosition, tiles, pacman, colour);
         x=15;
@@ -27,9 +26,7 @@ public class OrangeGhost extends Ghost {
         distanceFromPacman =  Math.sqrt(Math.pow(y - charactersPosition.getY(0), 2) + Math.pow(x - charactersPosition.getX(0), 2));
         if (distanceFromPacman>8) {
 
-            if(x==xTarget&&y==yTarget) {
-                targetReached=true;
-            }
+            if(x==xTarget&&y==yTarget) targetReached=true;
 
             if(targetReached){
                 targetReached = false;
@@ -49,7 +46,6 @@ public class OrangeGhost extends Ghost {
             targetReached=true;
         }
         //se è stato raggiunto acquisice un nuovo target
-
         reachTarget(xTarget, yTarget);
     }
     @Override
@@ -65,7 +61,7 @@ public class OrangeGhost extends Ghost {
     @Override
     public void startGame() {
         try {
-            Thread.sleep(waitingTime*10);
+            Thread.sleep(waitingTime* 10L);
         } catch (InterruptedException ignored) {}
         move(2);
         move(1);
@@ -84,5 +80,4 @@ public class OrangeGhost extends Ghost {
         charactersPosition.setY(nGhost, y);
         eventManager.updateGhostPosition(this);
     }
-
 }

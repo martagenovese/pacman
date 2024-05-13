@@ -5,7 +5,6 @@ import myclasses.My2DSyncArray;
 import javax.swing.*;
 import java.awt.*;
 
-
 public class Pacman extends ImageIcon {
     protected int x, y;
     private My2DSyncArray charactersPosition;

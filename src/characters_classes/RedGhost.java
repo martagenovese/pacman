@@ -4,8 +4,6 @@ import myclasses.My2DSyncArray;
 import tiles_classes.*;
 
 public class RedGhost extends Ghost {
-
-
     public RedGhost(My2DSyncArray charactersPosition, Tile[][] tiles, Pacman pacman, int colour){
         super(charactersPosition, tiles, pacman, colour);
         x=12;
@@ -40,19 +38,14 @@ public class RedGhost extends Ghost {
             status = 0;
         }
         //controlla se il target è stato raqggiunto
-        if(x==xTarget&&y==yTarget) {
-            targetReached=true;
-        }
+        if(x==xTarget&&y==yTarget) targetReached=true;
 
         //se è stato raggiunto acquisice un nuovo target
         if(targetReached){
             targetReached=false;
-            //xTarget=charactersPosition.get(0,0);
-            //yTarget=charactersPosition.get(0,1);
             xTarget=charactersPosition.getX(0);
             yTarget=charactersPosition.getY(0);
         }
-
         reachTarget(xTarget, yTarget);
     }
     @Override

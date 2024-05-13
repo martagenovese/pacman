@@ -3,7 +3,6 @@ package mcv;
 import characters_classes.Ghost;
 import myclasses.My2DSyncArray;
 import tiles_classes.*;
-
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -62,7 +61,6 @@ public class EventManager implements KeyListener {
                 }
             }
         }
-
         table.setScoreBar();
         table.setLives();
         table.setFruit();

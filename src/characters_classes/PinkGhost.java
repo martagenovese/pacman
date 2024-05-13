@@ -25,9 +25,7 @@ public class PinkGhost extends Ghost {
         }
 
         //controlla se il target è stato raqggiunto
-        if(x==xTarget&&y==yTarget) {
-            targetReached=true;
-        }
+        if(x==xTarget&&y==yTarget) targetReached=true;
 
         //se è stato raggiunto acquisice un nuovo target
         if(targetReached){
@@ -94,7 +92,7 @@ public class PinkGhost extends Ghost {
     @Override
     public void startGame() {
         try {
-            Thread.sleep(waitingTime*7);
+            Thread.sleep(waitingTime* 7L);
         } catch (InterruptedException ignored) {}
         move(2);
         move(2);
@@ -113,6 +111,5 @@ public class PinkGhost extends Ghost {
         charactersPosition.setY(nGhost, y);
         eventManager.updateGhostPosition(this);
     }
-
 }
 

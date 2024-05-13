@@ -6,23 +6,16 @@ import tiles_classes.CrossableTile;
 import tiles_classes.Tile;
 import tiles_classes.WallTile;
 import supervisor.*;
-
-
-import javax.swing.*;
-import java.awt.*;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.Scanner;
-
 
 public class Model {
     protected Tile[][] tiles;
     protected Pacman pacman;
     public int score, lives, dotsCounter, fruit, ghostsEaten;
-
     // 0 - pacman, 1 - red ghost, 2 - cyan ghost, 3 - pink ghost, 4 - orange ghost
     // x, y
     protected My2DSyncArray charactersPosition;
@@ -96,7 +89,6 @@ public class Model {
                 if (i==3) i=13;
                 else if ( ((i>12 && i<16) || (i>18 && i<22)) && j==5 ) j=23;
                 else if (i==22) i=34;
-
                 if (i<3) tiles[i][j] = new WallTile();
                 else if (( (i>12 && i<16) || (i>18 && i<22) ) && (j<5 || j>22)) tiles[i][j] = new WallTile();
                 else if (i>33) tiles[i][j] = new WallTile();
@@ -181,16 +173,16 @@ public class Model {
         return myTile;
     }
     public RedGhost getRedGhost() {
-        return (RedGhost) r;
+        return  r;
     }
     public PinkGhost getPinkGhost() {
-        return (PinkGhost) p;
+        return  p;
     }
     public CyanGhost getCyanGhost() {
-        return (CyanGhost) c;
+        return c;
     }
     public OrangeGhost getOrangeGhost() {
-        return (OrangeGhost) o;
+        return o;
     }
     public int getScore() {
         return score;
@@ -275,18 +267,10 @@ public class Model {
 
     public boolean isNextTileWall(int direction) {
         switch (direction) {
-            case 1: {
-                return getLeftTile() instanceof WallTile;
-            }
-            case 0: {
-                return getRightTile() instanceof WallTile;
-            }
-            case 2: {
-                return getUpTile() instanceof WallTile;
-            }
-            case 3: {
-                return getDownTile() instanceof WallTile;
-            }
+            case 1: return getLeftTile() instanceof WallTile;
+            case 0: return getRightTile() instanceof WallTile;
+            case 2: return getUpTile() instanceof WallTile;
+            case 3: return getDownTile() instanceof WallTile;
             default: return false;
         }
     }

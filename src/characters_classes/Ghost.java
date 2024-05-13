@@ -6,7 +6,6 @@ import javax.swing.*;
 import mcv.*;
 import java.awt.*;
 
-
  public abstract class Ghost extends ImageIcon implements Runnable {
 
     protected int x, y;
@@ -33,8 +32,6 @@ import java.awt.*;
         normal = createImage("src/images/ghosts/"+switchColor()+".png");
         setImage(normal);
         scared = createImage("src/images/ghosts/scared.png");
-
-
         targetReached=true;
         xTarget=0;
         yTarget=0;
@@ -267,5 +264,4 @@ import java.awt.*;
              }
          }
      }
-
 }
