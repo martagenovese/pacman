@@ -34,7 +34,6 @@ public class Supervisor implements Runnable{
         while (true) {
             int n = model.collision();
             if (n>=0) {
-                System.out.println(charactersPosition);
                 try {
                     boolean isPacmanAlive = model.collisionProcedure(n);
                     if (!isPacmanAlive) {
@@ -47,7 +46,6 @@ public class Supervisor implements Runnable{
                             System.out.println("Game Over");
                             eventManager.stopGame(false);
                         } else eventManager.getTable().playSound("meme/audio/morte.wav");
-                        isPacmanAlive = true;
                     } else {
                         eventManager.getTable().playSound("meme/audio/urlo.wav");
                         eventManager.getTable().clearPacman(model.getPacman().getX(), model.getPacman().getY());
