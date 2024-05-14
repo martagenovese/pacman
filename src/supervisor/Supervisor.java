@@ -43,7 +43,6 @@ public class Supervisor implements Runnable{
                         if (model.lives==2) eventManager.getTable().clearTile(6, 35);
                         else if (model.lives==1) eventManager.getTable().clearTile(4, 35);
                         else if (model.lives==0) eventManager.getTable().clearTile(2, 35);
-                        //System.out.println("lives: " + lives);
                         if (model.lives < 0) {
                             System.out.println("Game Over");
                             eventManager.stopGame(false);
@@ -58,7 +57,6 @@ public class Supervisor implements Runnable{
                             model.score += 100 * (int) Math.pow(2, ghostsEaten);
                             nGhostsBefore = ghostsEaten;
                         }
-                        //System.out.println("ghostsEaten: " + ghostsEaten);
                     }
                 } catch (InterruptedException ex) {
                     throw new RuntimeException(ex);

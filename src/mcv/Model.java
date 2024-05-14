@@ -17,7 +17,6 @@ public class Model {
     protected Pacman pacman;
     public int score, lives, dotsCounter, fruit, ghostsEaten;
     // 0 - pacman, 1 - red ghost, 2 - cyan ghost, 3 - pink ghost, 4 - orange ghost
-    // x, y
     protected My2DSyncArray charactersPosition;
     protected Tile leftTile, rightTile, upTile, downTile, myTile;
     protected int lastDirection;
