@@ -71,11 +71,9 @@ public class Table extends JFrame {
     public void setTardis(int x, int y){
         tiles[y][x].setIcon(new ImageIcon(scaledImageTardis));
     }
-
     public void setBrick(int x, int y){
         tiles[y][x].setIcon(new ImageIcon(scaledImageBrick));
     }
-
     public void clearPacman(int x, int y) {
         tiles[y][x].setIcon(null);
     }

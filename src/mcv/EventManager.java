@@ -191,7 +191,7 @@ public class EventManager implements KeyListener {
             table.updateScore(model.getScore());
             model.updatePosition();
             table.updatePosition();
-            if (model.dotsCounter<0 && model.isFruitEaten) stopGame(true);
+            if (model.dotsCounter<0 && model.fruit==0) stopGame(true);
         }
     }
     @Override
